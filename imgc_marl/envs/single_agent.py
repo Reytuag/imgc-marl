@@ -330,7 +330,7 @@ class MultiGoalEnv(gym.GoalEnv):
         return observations
 
     def compute_reward(self, achieved_goal, desired_goal, info) -> np.float32:
-        return self.agent.reward
+        return np.array_equal(achieved_goal, desired_goal)
 
     def render(self, mode=None):
         return (255 * self.engine.generate_agent_image(self.agent)).astype(np.uint8)

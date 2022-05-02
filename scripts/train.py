@@ -24,6 +24,10 @@ ENVIRONMENTS = {
         "env": single_agent.MultiGoalEnv,
         "timelimit": single_agent.GOALCONDITIONED_TIMELIMIT,
     },
+    "goal_conditioned_HER": {
+        "env": single_agent.MultiGoalEnv,
+        "timelimit": single_agent.GOALCONDITIONED_TIMELIMIT,
+    },
 }
 
 
@@ -31,7 +35,10 @@ ENVIRONMENTS = {
 @click.option("--logdir", help="Directory to store training logs.")
 @click.option(
     "--environment",
-    type=click.Choice(["single_agent", "goal_conditioned"], case_sensitive=True),
+    type=click.Choice(
+        ["single_agent", "goal_conditioned", "goal_conditioned_HER"],
+        case_sensitive=True,
+    ),
 )
 def train(logdir, environment):
     """Training loop"""
@@ -53,6 +60,21 @@ def train(logdir, environment):
     elif environment == "goal_conditioned":
         model = PPO(
             "MultiInputPolicy", env, verbose=1, tensorboard_log=logdir, seed=SEED
+        )
+    elif environment == "goal_conditioned_HER":
+        model = SAC(
+            "MultiInputPolicy",
+            env,
+            replay_buffer_class=HerReplayBuffer,
+            replay_buffer_kwargs=dict(
+                n_sampled_goal=4,
+                goal_selection_strategy="future",
+                online_sampling=True,
+                max_episode_length=timelimit,
+            ),
+            verbose=1,
+            tensorboard_log=logdir,
+            seed=SEED,
         )
 
     eval_callback = EvalCallback(
