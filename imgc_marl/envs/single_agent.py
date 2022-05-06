@@ -261,19 +261,29 @@ class MultiGoalEnv(gym.GoalEnv):
 
     def process_obs(self):
         """Process observations to match Gym API"""
-        obs = np.zeros(self.observation_space["observation"].shape, dtype=np.float32)
         try:
-            obs = np.array(list(self.agent.observations.values()[0]))
-            # raw_obs = list(self.agent.observations.values())[0]
+            # obs = np.array(list(self.agent.observations.values()[0]))
             # for raw_o in raw_obs:
             #     # Sorting observations, each coordinate corresponds to the same object always
             #     # TODO: Discuss if this is needed or not!
-            #     start = int(raw_o.entity.name) * 2
+            #     # start = int(raw_o.entity.name) * 2
             #     end = start + 2
             #     obs[start:end] = np.array((raw_o.distance, raw_o.angle))
+
+            raw_obs = list(self.agent.observations.values())[0]
+            obs = np.array(
+                [[raw_o.distance, raw_o.angle] for raw_o in raw_obs]
+            ).flatten()
+            if obs.shape != self.observation_space["observation"].shape:
+                # this avoid the error when the agent is over the objects and gets empty observations!
+                obs = np.pad(
+                    obs, (0, self.observation_space["observation"].shape[0] - len(obs))
+                )
         except:
             # this avoid the error when the agent is over the objects and gets empty observations!
-            pass
+            obs = np.zeros(
+                self.observation_space["observation"].shape, dtype=np.float32
+            )
         return obs
 
     def step(self, action):

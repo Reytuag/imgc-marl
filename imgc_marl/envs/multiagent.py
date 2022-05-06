@@ -133,9 +133,20 @@ class SimpleEnv(MultiAgentEnv):
         for agent in self.playground.agents:
             agent_obs = np.zeros(self.observation_space.shape, dtype=np.float32)
             try:
-                agent_obs = np.array(list(agent.observations.values()[0]))
+                raw_obs = list(agent.observations.values()[0])
+                agent_obs = np.array(
+                    [[raw_o.distance, raw_o.angle] for raw_o in raw_obs]
+                ).flatten()
+                if agent_obs.shape != self.observation_space.shape:
+                    # this avoid the error when the agent is over the objects and gets empty observations!
+                    agent_obs = np.pad(
+                        agent_obs,
+                        (0, self.observation_space.shape[0] - len(agent_obs)),
+                    )
             except:
-                pass
+                # this avoid the error when the agent is over the objects and gets empty observations!
+                agent_obs = np.zeros(self.observation_space.shape, dtype=np.float32)
+
             obs[agent.name] = agent_obs
         return obs
 
