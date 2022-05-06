@@ -1,3 +1,8 @@
+# Supressing pygame greeting msg
+import os
+
+os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = ""
+
 import random
 
 import gym
@@ -9,7 +14,6 @@ from simple_playgrounds.agent.agents import BaseAgent
 from simple_playgrounds.agent.controllers import External
 from simple_playgrounds.common.position_utils import CoordinateSampler
 from simple_playgrounds.device.sensors.semantic import PerfectSemantic
-from simple_playgrounds.element.elements.activable import RewardOnActivation
 from simple_playgrounds.element.elements.basic import Wall
 from simple_playgrounds.engine import Engine
 from simple_playgrounds.playground.layouts import SingleRoom
@@ -123,13 +127,13 @@ class SimpleEnv(gym.Env):
 
         if not self.continuous:
             for actuator, act in zip(actuators, action):
-                if isinstance(actuators, ContinuousActuator):
+                if isinstance(actuator, ContinuousActuator):
                     actions_dict[actuator] = [-1, 0, 1][act]
                 else:
                     actions_dict[actuator] = [0, 1][act]
         else:
             for actuator, act in zip(actuators, action):
-                if isinstance(actuators, ContinuousActuator):
+                if isinstance(actuator, ContinuousActuator):
                     actions_dict[actuator] = act
                 else:
                     actions_dict[actuator] = round(act)
@@ -259,12 +263,14 @@ class MultiGoalEnv(gym.GoalEnv):
         """Process observations to match Gym API"""
         obs = np.zeros(self.observation_space["observation"].shape, dtype=np.float32)
         try:
-            raw_obs = list(self.agent.observations.values())[0]
-            for raw_o in raw_obs:
-                # Sorting observations, each coordinate corresponds to the same object always
-                start = int(raw_o.entity.name) * 2
-                end = start + 2
-                obs[start:end] = np.array((raw_o.distance, raw_o.angle))
+            obs = np.array(list(self.agent.observations.values()[0]))
+            # raw_obs = list(self.agent.observations.values())[0]
+            # for raw_o in raw_obs:
+            #     # Sorting observations, each coordinate corresponds to the same object always
+            #     # TODO: Discuss if this is needed or not!
+            #     start = int(raw_o.entity.name) * 2
+            #     end = start + 2
+            #     obs[start:end] = np.array((raw_o.distance, raw_o.angle))
         except:
             # this avoid the error when the agent is over the objects and gets empty observations!
             pass
@@ -274,7 +280,7 @@ class MultiGoalEnv(gym.GoalEnv):
         actions_dict = {}
         actuators = self.agent.controller.controlled_actuators
         for actuator, act in zip(actuators, action):
-            if isinstance(actuators, ContinuousActuator):
+            if isinstance(actuator, ContinuousActuator):
                 actions_dict[actuator] = act
             else:
                 actions_dict[actuator] = round(act)
