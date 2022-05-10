@@ -1,5 +1,5 @@
 import os
-from typing import Any, Dict
+from typing import Any, Dict, List
 
 import gym
 import moviepy.video.io.ImageSequenceClip
@@ -72,39 +72,46 @@ def after_training_eval_rllib(
     eval_env: gym.Env,
     eval_episodes: int = 5,
     multiagent: bool = True,
+    goal_dict: Dict[str, List] = None,
 ) -> None:
     """Final evaluation function called after rllib training loop"""
-    obs = eval_env.reset()
-    num_episodes = 0
-    episode_reward = 0.0
     frames = []
-    while num_episodes < eval_episodes:
-        frames.append(eval_env.render())
-        # Compute an action
-        if not multiagent:
-            a = trainer.compute_single_action(
-                observation=obs,
-                explore=False,
-            )
-            # Send the computed action `a` to the env.
-            obs, reward, done, _ = eval_env.step(a)
-            episode_reward += reward
+    if goal_dict is not None:
+        eval_episodes = len(list(goal_dict.values())[0])
+    for n in range(eval_episodes):
+        not_done = True
+        if goal_dict is not None:
+            obs = eval_env.reset({agent: goal[n] for agent, goal in goal_dict.items()})
         else:
-            action = {}
-            for agent_id, agent_obs in obs.items():
-                policy_id = trainer.config["multiagent"]["policy_mapping_fn"](agent_id)
-                action[agent_id] = trainer.compute_single_action(
-                    agent_obs, policy_id=policy_id, explore=False
-                )
-            obs, reward, done, info = eval_env.step(action)
-            done = done["__all__"]
-            # sum up reward for all agents
-            episode_reward += sum(reward.values())
-        # Is the episode `done`? -> Reset.
-        if done:
-            print(f"Episode done: Total reward = {episode_reward}")
             obs = eval_env.reset()
-            num_episodes += 1
-            episode_reward = 0.0
+        episode_reward = 0.0
+        while not_done:
+            frames.append(eval_env.render())
+            # Compute an action
+            if not multiagent:
+                a = trainer.compute_single_action(
+                    observation=obs,
+                    explore=False,
+                )
+                # Send the computed action `a` to the env.
+                obs, reward, done, _ = eval_env.step(a)
+                episode_reward += reward
+            else:
+                action = {}
+                for agent_id, agent_obs in obs.items():
+                    policy_id = trainer.config["multiagent"]["policy_mapping_fn"](
+                        agent_id
+                    )
+                    action[agent_id] = trainer.compute_single_action(
+                        agent_obs, policy_id=policy_id, explore=False
+                    )
+                obs, reward, done, info = eval_env.step(action)
+                done = done["__all__"]
+                # sum up reward for all agents
+                episode_reward += sum(reward.values())
+            # Is the episode `done`? -> Reset.
+            if done:
+                print(f"Episode done: Total reward = {episode_reward}")
+                not_done = False
     clip = moviepy.video.io.ImageSequenceClip.ImageSequenceClip(frames, fps=30)
     clip.write_videofile(os.path.join(trainer.logdir, "trained_agent.mp4"))

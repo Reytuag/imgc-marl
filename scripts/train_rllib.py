@@ -1,4 +1,5 @@
 import random
+from copy import deepcopy
 
 import click
 import imgc_marl.envs.multiagent as multiagent
@@ -10,13 +11,7 @@ from ray.rllib.policy.policy import PolicySpec
 from ray.tune.logger import pretty_print
 
 SEED = 42
-TRAINING_STEPS = 150
-ENVIRONMENTS = {
-    "single_agent": {
-        "env": single_agent.SimpleEnv,
-        "timelimit": single_agent.SIMPLE_TIMELIMIT,
-    },
-}
+TRAINING_STEPS = 500
 NUM_WORKERS = 8
 
 
@@ -24,7 +19,7 @@ NUM_WORKERS = 8
 @click.option(
     "--environment",
     type=click.Choice(
-        ["single_agent", "basic_marl"],
+        ["single_agent", "basic_marl", "goal_lines"],
         case_sensitive=True,
     ),
 )
@@ -38,6 +33,7 @@ def train(environment):
     config["framework"] = "torch"
     config["seed"] = SEED
     multiagent_flag = True
+    goal_dict = None
 
     # Train
     if environment == "single_agent":
@@ -49,7 +45,10 @@ def train(environment):
 
     elif environment == "basic_marl":
         config["horizon"] = multiagent.SIMPLE_TIMELIMIT
-        config["env_config"] = {"n_agents": 2, "continuous": True}
+        config["env_config"] = {
+            "n_agents": 2,
+            "continuous": True,
+        }
         config["multiagent"] = {
             "policies": {
                 "agent_0": PolicySpec(
@@ -63,8 +62,32 @@ def train(environment):
             if agent_id.startswith("agent_0")
             else "agent_1",
         }
-        trainer = PPOTrainer(config=config, env=multiagent.SimpleEnv)
-        eval_env = multiagent.SimpleEnv(config["env_config"])
+        trainer = PPOTrainer(config=config, env=multiagent.OneBoxEnv)
+        eval_env = multiagent.OneBoxEnv(config["env_config"])
+
+    elif environment == "goal_lines":
+        goal_dict = {
+            "agent_0": list(range(6)),
+            "agent_1": list(range(6))
+        }
+        config["horizon"] = multiagent.GOAL_LINES_TIMELIMIT
+        config["env_config"] = {"continuous": True}
+        config["multiagent"] = {
+            "policies": {
+                "agent_0": PolicySpec(
+                    policy_class=None, observation_space=None, action_space=None
+                ),
+                "agent_1": PolicySpec(
+                    policy_class=None, observation_space=None, action_space=None
+                ),
+            },
+            "policy_mapping_fn": lambda agent_id: "agent_0"
+            if agent_id.startswith("agent_0")
+            else "agent_1",
+        }
+        eval_config = deepcopy(config)
+        trainer = PPOTrainer(config=config, env=multiagent.GoalLinesEnv)
+        eval_env = multiagent.GoalLinesEnv(eval_config["env_config"])
 
     # Run it for n training iterations. A training iteration includes
     # parallel sample collection by the environment workers as well as
@@ -74,7 +97,7 @@ def train(environment):
         print(pretty_print(result))
 
     # After training has completed, evaluate the agent
-    after_training_eval_rllib(trainer, eval_env, multiagent=multiagent_flag)
+    after_training_eval_rllib(trainer, eval_env, multiagent=multiagent_flag, goal_dict=goal_dict)
 
 
 if __name__ == "__main__":
