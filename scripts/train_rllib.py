@@ -66,12 +66,9 @@ def train(environment):
         eval_env = multiagent.OneBoxEnv(config["env_config"])
 
     elif environment == "goal_lines":
-        goal_dict = {
-            "agent_0": list(range(6)),
-            "agent_1": list(range(6))
-        }
+        goal_dict = {"agent_0": list(range(6)), "agent_1": list(range(6))}
         config["horizon"] = multiagent.GOAL_LINES_TIMELIMIT
-        config["env_config"] = {"continuous": True}
+        config["env_config"] = {"continuous": True, "centralized": True}
         config["multiagent"] = {
             "policies": {
                 "agent_0": PolicySpec(
@@ -97,7 +94,9 @@ def train(environment):
         print(pretty_print(result))
 
     # After training has completed, evaluate the agent
-    after_training_eval_rllib(trainer, eval_env, multiagent=multiagent_flag, goal_dict=goal_dict)
+    after_training_eval_rllib(
+        trainer, eval_env, multiagent=multiagent_flag, goal_dict=goal_dict
+    )
 
 
 if __name__ == "__main__":

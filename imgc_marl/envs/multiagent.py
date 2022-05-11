@@ -215,7 +215,10 @@ class GoalLinesEnv(MultiAgentEnv):
     def __init__(self, config):
         super(MultiAgentEnv, self).__init__()
 
+        # If action space is continuous or discrete
         self.continuous = config["continuous"]
+        # If agents should sample goals centralized or decentralized
+        self.centralized = config.get("centralized", False)
 
         self.episodes = 0
         self.time_steps = 0
@@ -459,8 +462,13 @@ class GoalLinesEnv(MultiAgentEnv):
         self._active_agents = self.playground.agents.copy()
         # Each agent samples its own goal if not provided externally
         if external_goals is None:
-            for agent in self.playground.agents:
-                agent.goal = POSSIBLE_GOAL_LINES[np.random.randint(0, N_GOAL_LINES)]
+            if self.centralized:
+                goal = POSSIBLE_GOAL_LINES[np.random.randint(0, N_GOAL_LINES)]
+                for agent in self.playground.agents:
+                    agent.goal = goal
+            else:
+                for agent in self.playground.agents:
+                    agent.goal = POSSIBLE_GOAL_LINES[np.random.randint(0, N_GOAL_LINES)]
         else:
             # We can externally provide the goals as
             ## {"agent_name": goal_index}
