@@ -5,6 +5,7 @@ os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = ""
 
 import numpy as np
 from gym import spaces
+from imgc_marl.envs.utils import MetaSampler
 from ray.rllib.env import MultiAgentEnv
 from simple_playgrounds.agent.actuators import ContinuousActuator
 from simple_playgrounds.agent.agents import BaseAgent
@@ -224,31 +225,31 @@ class GoalLinesEnv(MultiAgentEnv):
         self.playground = SingleRoom(size=(400, 400))
         zone_0 = RewardZone(
             reward=1,
-            limit=10000,
+            limit=1e6,
             physical_shape="rectangle",
             texture=[255, 0, 0],
-            size=(50, 250),
+            size=(25, 150),
             name="001",
         )
         zone_1 = RewardZone(
             reward=2,
-            limit=10000,
+            limit=1e6,
             physical_shape="rectangle",
             texture=[0, 0, 255],
-            size=(50, 250),
+            size=(25, 150),
             name="010",
         )
         zone_2 = RewardZone(
             reward=3,
-            limit=10000,
+            limit=1e6,
             physical_shape="rectangle",
             texture=[255, 255, 255],
-            size=(50, 250),
+            size=(25, 150),
             name="100",
         )
-        self.playground.add_element(zone_0, ((100, 175), 0))
-        self.playground.add_element(zone_1, ((200, 175), 0))
-        self.playground.add_element(zone_2, ((300, 175), 0))
+        self.playground.add_element(zone_0, ((125, 200), 0))
+        self.playground.add_element(zone_1, ((200, 200), 0))
+        self.playground.add_element(zone_2, ((275, 200), 0))
 
         self.playground.walls = [
             elem for elem in self.playground.elements if isinstance(elem, Wall)
@@ -256,6 +257,15 @@ class GoalLinesEnv(MultiAgentEnv):
 
         # Add agents
         self._agent_ids = set()
+
+        sampler1 = CoordinateSampler((200, 50), area_shape="rectangle", size=(400, 100))
+        sampler2 = CoordinateSampler(
+            (200, 350), area_shape="rectangle", size=(400, 100)
+        )
+        sampler3 = CoordinateSampler((50, 200), area_shape="rectangle", size=(25, 200))
+        sampler4 = CoordinateSampler((350, 200), area_shape="rectangle", size=(25, 200))
+        agent_sampler = MetaSampler([sampler1, sampler2, sampler3, sampler4])
+
         # Agent 0
         agent = BaseAgent(
             controller=External(),
@@ -276,7 +286,7 @@ class GoalLinesEnv(MultiAgentEnv):
                 normalize=True,
             )
         )
-        self.playground.add_agent(agent, ((50, 25), np.pi / 2))
+        self.playground.add_agent(agent, agent_sampler)
         self._agent_ids.add("agent_0")
         # Agent 1
         agent = BaseAgent(
@@ -298,7 +308,7 @@ class GoalLinesEnv(MultiAgentEnv):
                 normalize=True,
             )
         )
-        self.playground.add_agent(agent, ((350, 25), np.pi / 2))
+        self.playground.add_agent(agent, agent_sampler)
         self._agent_ids.add("agent_1")
 
         # Init engine
@@ -352,10 +362,13 @@ class GoalLinesEnv(MultiAgentEnv):
             dtype=np.float64,
         )
 
+        # List of active agents, agents can exit early if completed their goal
+        self._active_agents = self.playground.agents.copy()
+
     def process_obs(self):
         """Process observations to match RLlib API (a dict with obs for each agent) and append goal"""
         obs = dict()
-        for agent in self.playground.agents:
+        for agent in self._active_agents:
             agent_obs = np.zeros(self.observation_space.shape, dtype=np.float32)
             # append agents goal at the end of the obs
             agent_obs[-3:] = agent.goal
@@ -384,20 +397,21 @@ class GoalLinesEnv(MultiAgentEnv):
         collective_achieved_goal = np.bitwise_or.reduce(
             individual_achieved_goals, axis=1
         )
-        # Checking if achieved goal is desired goal
-        for i, agent in enumerate(self.playground.agents):
+        # Checking if achieved goal is desired goal (only for active agents)
+        for i, agent in enumerate(self._active_agents):
             if (
                 np.sum(agent.goal) > 1
                 and np.all(agent.goal == collective_achieved_goal)
             ) or (np.all(agent.goal == individual_achieved_goals[:, i])):
-                reward = 1 / 150
+                reward = 1
+                # If agent achieved its goal, its removed from the active list
+                self._active_agents.pop(i)
             else:
                 reward = 0
             rewards[agent.name] = reward
-            dones[agent.name] = self.playground.done or not self.engine.game_on
-        # If both agents solved their goal the episode will end before the timelimit
-        if sum(rewards.values()) == 2:
-            dones = dict.fromkeys(dones, True)
+            dones[agent.name] = (
+                reward or self.playground.done or not self.engine.game_on
+            )
         dones["__all__"] = all(dones.values())
         return rewards, dones
 
@@ -405,7 +419,7 @@ class GoalLinesEnv(MultiAgentEnv):
         actions = {}
         for agent_name, agent_action in action_dict.items():
             agent = [
-                agent for agent in self.playground.agents if agent.name == agent_name
+                agent for agent in self._active_agents if agent.name == agent_name
             ][0]
             actions[agent] = {}
             actuators = agent.controller.controlled_actuators
@@ -431,6 +445,8 @@ class GoalLinesEnv(MultiAgentEnv):
 
     def reset(self, external_goals: Dict[str, int] = None):
         self.engine.reset()
+        # All agents become active again
+        self._active_agents = self.playground.agents.copy()
         # Each agent samples its own goal if not provided externally
         if external_goals is None:
             for agent in self.playground.agents:
