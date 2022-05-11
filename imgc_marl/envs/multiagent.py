@@ -361,6 +361,13 @@ class GoalLinesEnv(MultiAgentEnv):
             ),
             dtype=np.float64,
         )
+        # Mapping to keep consistent coordinates of observations for the same objects
+        # Walls will have the first coordinates and then the agent
+        for j, agent in enumerate(self.playground.agents):
+            agent.COORDINATE_MAP = {
+                wall: 2 * i for i, wall in enumerate(self.playground.walls)
+            }
+            agent.COORDINATE_MAP[self.playground.agents[j - 1].parts[0]] = 8
 
         # List of active agents, agents can exit early if completed their goal
         self._active_agents = self.playground.agents.copy()
@@ -373,8 +380,11 @@ class GoalLinesEnv(MultiAgentEnv):
             # append agents goal at the end of the obs
             agent_obs[-3:] = agent.goal
             raw_obs = list(agent.observations.values())[0]
-            for i, raw_o in enumerate(raw_obs):
-                agent_obs[2 * i : 2 * i + 2] = np.array([raw_o.distance, raw_o.angle])
+            for raw_o in raw_obs:
+                coordinate = agent.COORDINATE_MAP[raw_o.entity]
+                agent_obs[coordinate : coordinate + 2] = np.array(
+                    [raw_o.distance, raw_o.angle]
+                )
             obs[agent.name] = agent_obs
         return obs
 
