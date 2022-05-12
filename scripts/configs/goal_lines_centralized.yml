@@ -1,0 +1,7 @@
+training:
+  training_steps: 5
+  num_workers: 8
+seed: 42
+env_config:
+  centralized: True
+  continuous: True

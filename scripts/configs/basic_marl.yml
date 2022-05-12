@@ -1,0 +1,6 @@
+training:
+  training_steps: 100
+  num_workers: 8
+env_config:
+  n_agents: 2
+  continuous: True
