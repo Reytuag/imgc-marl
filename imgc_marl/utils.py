@@ -1,12 +1,17 @@
 import os
 from typing import Any, Dict, List
 
+import cv2
 import gym
 import moviepy.video.io.ImageSequenceClip
 from stable_baselines3.common.callbacks import BaseCallback
 from stable_baselines3.common.evaluation import evaluate_policy
 
+from imgc_marl.envs.multiagent import POSSIBLE_GOAL_LINES
+
 # from stable_baselines3.common.logger import Video
+
+font = cv2.FONT_HERSHEY_SIMPLEX
 
 
 class VideoRecorderCallback(BaseCallback):
@@ -82,11 +87,26 @@ def after_training_eval_rllib(
         not_done = True
         if goal_dict is not None:
             obs = eval_env.reset({agent: goal[n] for agent, goal in goal_dict.items()})
+            # hack to print the evaluation goal. this is super tied to the goal lines env
+            # TODO: refactor this in the future in a more general and flexible way not tied
+            # to the environment!
+            goals = [POSSIBLE_GOAL_LINES[n] for n in list(goal_dict.values())[0]]
         else:
             obs = eval_env.reset()
         episode_reward = 0.0
         while not_done:
-            frames.append(eval_env.render())
+            frame = eval_env.render()
+            if goal_dict is not None:
+                cv2.putText(
+                    frame,
+                    str(goals[n]),
+                    (10, 35),
+                    font,
+                    1,
+                    (255, 255, 255),
+                    1,
+                )
+            frames.append(frame)
             # Compute an action
             if not multiagent:
                 a = trainer.compute_single_action(

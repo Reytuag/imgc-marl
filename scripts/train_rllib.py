@@ -4,6 +4,7 @@ from copy import deepcopy
 import click
 import imgc_marl.envs.multiagent as multiagent
 import imgc_marl.envs.single_agent as single_agent
+from imgc_marl.callbacks import MultiGoalMultiAgentCallbacks
 import numpy as np
 from imgc_marl.utils import after_training_eval_rllib
 from ray.rllib.agents.ppo import DEFAULT_CONFIG, PPOTrainer
@@ -67,6 +68,7 @@ def train(environment):
 
     elif environment == "goal_lines":
         goal_dict = {"agent_0": list(range(6)), "agent_1": list(range(6))}
+        config["callbacks"] = MultiGoalMultiAgentCallbacks
         config["horizon"] = multiagent.GOAL_LINES_TIMELIMIT
         config["env_config"] = {"continuous": True, "centralized": True}
         config["multiagent"] = {

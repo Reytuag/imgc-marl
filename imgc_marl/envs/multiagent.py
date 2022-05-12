@@ -378,6 +378,7 @@ class GoalLinesEnv(MultiAgentEnv):
     def process_obs(self):
         """Process observations to match RLlib API (a dict with obs for each agent) and append goal"""
         obs = dict()
+        info = dict()
         for agent in self._active_agents:
             agent_obs = np.zeros(self.observation_space.shape, dtype=np.float32)
             # append agents goal at the end of the obs
@@ -389,7 +390,9 @@ class GoalLinesEnv(MultiAgentEnv):
                     [raw_o.distance, raw_o.angle]
                 )
             obs[agent.name] = agent_obs
-        return obs
+            # logging which goal line the agent achieved (-1 means no goal line)
+            info[agent.name] = {"goal_line": agent.reward - 1}
+        return obs, info
 
     def compute_rewards(self):
         """
@@ -417,14 +420,18 @@ class GoalLinesEnv(MultiAgentEnv):
                 and np.all(agent.goal == collective_achieved_goal)
             ) or (np.all(agent.goal == individual_achieved_goals[:, i])):
                 reward = 1
-                # If agent achieved its goal, its removed from the active list
-                self._active_agents.pop(i)
             else:
                 reward = 0
             rewards[agent.name] = reward
             dones[agent.name] = (
-                reward or self.playground.done or not self.engine.game_on
+                bool(reward) or self.playground.done or not self.engine.game_on
             )
+        # Agents that are done are deleted from the list of active agents
+        [
+            self._active_agents.remove(agent)
+            for agent in self._active_agents
+            if dones[agent.name]
+        ]
         dones["__all__"] = all(dones.values())
         return rewards, dones
 
@@ -452,9 +459,9 @@ class GoalLinesEnv(MultiAgentEnv):
 
         self.engine.step(actions)
         self.engine.update_observations()
+        observations, info = self.process_obs()
         rewards, dones = self.compute_rewards()
-        observations = self.process_obs()
-        return observations, rewards, dones, {}
+        return observations, rewards, dones, info
 
     def reset(self, external_goals: Dict[str, int] = None):
         self.engine.reset()
@@ -479,7 +486,7 @@ class GoalLinesEnv(MultiAgentEnv):
         self.episodes += 1
         self.engine.update_observations()
         self.time_steps = 0
-        observations = self.process_obs()
+        observations, info = self.process_obs()
         return observations
 
     def render(self, mode=None):
