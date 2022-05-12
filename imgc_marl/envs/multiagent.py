@@ -437,25 +437,24 @@ class GoalLinesEnv(MultiAgentEnv):
 
     def step(self, action_dict):
         actions = {}
-        for agent_name, agent_action in action_dict.items():
-            agent = [
-                agent for agent in self._active_agents if agent.name == agent_name
-            ][0]
-            actions[agent] = {}
-            actuators = agent.controller.controlled_actuators
+        if action_dict:
+            for agent in self._active_agents:
+                agent_action = action_dict.get(agent.name)
+                actions[agent] = {}
+                actuators = agent.controller.controlled_actuators
 
-            if not self.continuous:
-                for actuator, act in zip(actuators, agent_action):
-                    if isinstance(actuator, ContinuousActuator):
-                        actions[agent][actuator] = [-1, 0, 1][act]
-                    else:
-                        actions[agent][actuator] = [0, 1][act]
-            else:
-                for actuator, act in zip(actuators, agent_action):
-                    if isinstance(actuator, ContinuousActuator):
-                        actions[agent][actuator] = act
-                    else:
-                        actions[agent][actuator] = round(act)
+                if not self.continuous:
+                    for actuator, act in zip(actuators, agent_action):
+                        if isinstance(actuator, ContinuousActuator):
+                            actions[agent][actuator] = [-1, 0, 1][act]
+                        else:
+                            actions[agent][actuator] = [0, 1][act]
+                else:
+                    for actuator, act in zip(actuators, agent_action):
+                        if isinstance(actuator, ContinuousActuator):
+                            actions[agent][actuator] = act
+                        else:
+                            actions[agent][actuator] = round(act)
 
         self.engine.step(actions)
         self.engine.update_observations()

@@ -84,7 +84,7 @@ def after_training_eval_rllib(
     if goal_dict is not None:
         eval_episodes = len(list(goal_dict.values())[0])
     for n in range(eval_episodes):
-        not_done = True
+        done = False
         if goal_dict is not None:
             obs = eval_env.reset({agent: goal[n] for agent, goal in goal_dict.items()})
             # hack to print the evaluation goal. this is super tied to the goal lines env
@@ -94,7 +94,7 @@ def after_training_eval_rllib(
         else:
             obs = eval_env.reset()
         episode_reward = 0.0
-        while not_done:
+        while not done:
             frame = eval_env.render()
             if goal_dict is not None:
                 cv2.putText(
@@ -125,13 +125,12 @@ def after_training_eval_rllib(
                     action[agent_id] = trainer.compute_single_action(
                         agent_obs, policy_id=policy_id, explore=False
                     )
-                obs, reward, done, info = eval_env.step(action)
-                done = done["__all__"]
+                obs, reward, dones, info = eval_env.step(action)
+                done = dones["__all__"]
                 # sum up reward for all agents
                 episode_reward += sum(reward.values())
             # Is the episode `done`? -> Reset.
             if done:
                 print(f"Episode done: Total reward = {episode_reward}")
-                not_done = False
     clip = moviepy.video.io.ImageSequenceClip.ImageSequenceClip(frames, fps=30)
     clip.write_videofile(os.path.join(trainer.logdir, "trained_agent.mp4"))
