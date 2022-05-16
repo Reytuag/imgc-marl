@@ -5,6 +5,7 @@ os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = ""
 
 import numpy as np
 from gym import spaces
+from imgc_marl.envs.elements.zone import MultiAgentRewardZone
 from imgc_marl.envs.utils import MetaSampler
 from ray.rllib.env import MultiAgentEnv
 from simple_playgrounds.agent.actuators import ContinuousActuator
@@ -15,7 +16,6 @@ from simple_playgrounds.common.texture import UniqueCenteredStripeTexture
 from simple_playgrounds.device.sensors.semantic import PerfectSemantic
 from simple_playgrounds.element.elements.activable import RewardOnActivation
 from simple_playgrounds.element.elements.basic import Wall
-from simple_playgrounds.element.elements.zone import RewardZone
 from simple_playgrounds.engine import Engine
 from simple_playgrounds.playground.layouts import SingleRoom
 
@@ -24,7 +24,6 @@ SIMPLE_TIMELIMIT = 100
 GOAL_LINES_TIMELIMIT = 150
 
 POSSIBLE_GOAL_LINES = [[0, 0, 1], [0, 1, 0], [1, 0, 0], [0, 1, 1], [1, 0, 1], [1, 1, 0]]
-
 N_GOAL_LINES = len(POSSIBLE_GOAL_LINES)
 
 
@@ -226,25 +225,22 @@ class GoalLinesEnv(MultiAgentEnv):
         # Create playground
         # One room with 3 goal zones
         self.playground = SingleRoom(size=(400, 400))
-        zone_0 = RewardZone(
+        zone_0 = MultiAgentRewardZone(
             reward=1,
-            limit=1e6,
             physical_shape="rectangle",
             texture=[255, 0, 0],
             size=(25, 150),
             name="001",
         )
-        zone_1 = RewardZone(
-            reward=2,
-            limit=1e6,
+        zone_1 = MultiAgentRewardZone(
+            reward=100,
             physical_shape="rectangle",
             texture=[0, 0, 255],
             size=(25, 150),
             name="010",
         )
-        zone_2 = RewardZone(
-            reward=3,
-            limit=1e6,
+        zone_2 = MultiAgentRewardZone(
+            reward=10_000,
             physical_shape="rectangle",
             texture=[255, 255, 255],
             size=(25, 150),
@@ -378,7 +374,6 @@ class GoalLinesEnv(MultiAgentEnv):
     def process_obs(self):
         """Process observations to match RLlib API (a dict with obs for each agent) and append goal"""
         obs = dict()
-        info = dict()
         for agent in self._active_agents:
             agent_obs = np.zeros(self.observation_space.shape, dtype=np.float32)
             # append agents goal at the end of the obs
@@ -390,9 +385,7 @@ class GoalLinesEnv(MultiAgentEnv):
                     [raw_o.distance, raw_o.angle]
                 )
             obs[agent.name] = agent_obs
-            # logging which goal line the agent achieved (-1 means no goal line)
-            info[agent.name] = {"goal_line": agent.reward - 1}
-        return obs, info
+        return obs
 
     def compute_rewards(self):
         """
@@ -401,24 +394,40 @@ class GoalLinesEnv(MultiAgentEnv):
         goal zones an agent is touching (since both of them are
         required)
         """
-        individual_achieved_goals = np.zeros((3, 2), np.uint8)
+        individual_achieved_goals = {
+            "agent_0": np.zeros(3, dtype=int),
+            "agent_1": np.zeros(3, dtype=int),
+        }
         rewards = {}
         dones = {}
+        info = {}
         # Computing individual achieved goals
-        for i, agent in enumerate(self.playground.agents):
+        for agent in self.playground.agents:
             # Hack for identifying which goal is being activated by this agent
             if agent.reward:
-                individual_achieved_goals[agent.reward - 1, i] = 1
+                if agent.reward < 100:
+                    agent.reward = 1
+                elif agent.reward < 10_000:
+                    agent.reward = 2
+                else:
+                    agent.reward = 3
+                individual_achieved_goals[agent.name][agent.reward - 1] = 1
         # Computing collective goal
         collective_achieved_goal = np.bitwise_or.reduce(
-            individual_achieved_goals, axis=1
+            np.vstack(
+                [
+                    individual_achieved_goals["agent_0"],
+                    individual_achieved_goals["agent_1"],
+                ]
+            ),
+            axis=0,
         )
         # Checking if achieved goal is desired goal (only for active agents)
-        for i, agent in enumerate(self._active_agents):
+        for agent in self._active_agents:
             if (
                 np.sum(agent.goal) > 1
                 and np.all(agent.goal == collective_achieved_goal)
-            ) or (np.all(agent.goal == individual_achieved_goals[:, i])):
+            ) or (np.all(agent.goal == individual_achieved_goals[agent.name])):
                 reward = 1
             else:
                 reward = 0
@@ -426,6 +435,8 @@ class GoalLinesEnv(MultiAgentEnv):
             dones[agent.name] = (
                 bool(reward) or self.playground.done or not self.engine.game_on
             )
+            # logging which goal line the agent achieved (-1 means no goal line)
+            info[agent.name] = {"goal_line": agent.reward - 1}
         # Agents that are done are deleted from the list of active agents
         [
             self._active_agents.remove(agent)
@@ -433,7 +444,7 @@ class GoalLinesEnv(MultiAgentEnv):
             if dones[agent.name]
         ]
         dones["__all__"] = all(dones.values())
-        return rewards, dones
+        return rewards, dones, info
 
     def step(self, action_dict):
         actions = {}
@@ -458,8 +469,8 @@ class GoalLinesEnv(MultiAgentEnv):
 
         self.engine.step(actions)
         self.engine.update_observations()
-        observations, info = self.process_obs()
-        rewards, dones = self.compute_rewards()
+        observations = self.process_obs()
+        rewards, dones, info = self.compute_rewards()
         return observations, rewards, dones, info
 
     def reset(self, external_goals: Dict[str, int] = None):
@@ -485,7 +496,7 @@ class GoalLinesEnv(MultiAgentEnv):
         self.episodes += 1
         self.engine.update_observations()
         self.time_steps = 0
-        observations, info = self.process_obs()
+        observations = self.process_obs()
         return observations
 
     def render(self, mode=None):
