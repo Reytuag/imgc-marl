@@ -4,10 +4,15 @@ from typing import Any, Dict, List
 import cv2
 import gym
 import moviepy.video.io.ImageSequenceClip
+import numpy as np
 from stable_baselines3.common.callbacks import BaseCallback
 from stable_baselines3.common.evaluation import evaluate_policy
 
-from imgc_marl.envs.multiagent import POSSIBLE_GOAL_LINES
+from imgc_marl.envs.multiagent import (
+    N_GOAL_LINES,
+    POSSIBLE_GOAL_LINES,
+    SCALED_POSSIBLE_GOAL_LINES,
+)
 
 # from stable_baselines3.common.logger import Video
 
@@ -90,7 +95,12 @@ def after_training_eval_rllib(
             # hack to print the evaluation goal. this is super tied to the goal lines env
             # TODO: refactor this in the future in a more general and flexible way not tied
             # to the environment!
-            goals = [POSSIBLE_GOAL_LINES[n] for n in list(goal_dict.values())[0]]
+            if trainer._env_id == "GoalLinesEnv":
+                goals = [POSSIBLE_GOAL_LINES[n] for n in list(goal_dict.values())[0]]
+            else:
+                goals = [
+                    SCALED_POSSIBLE_GOAL_LINES[n] for n in list(goal_dict.values())[0]
+                ]
         else:
             obs = eval_env.reset()
         episode_reward = 0.0
@@ -134,3 +144,23 @@ def after_training_eval_rllib(
                 print(f"Episode done: Total reward = {episode_reward}")
     clip = moviepy.video.io.ImageSequenceClip.ImageSequenceClip(frames, fps=30)
     clip.write_videofile(os.path.join(trainer.logdir, "trained_agent.mp4"))
+
+
+def process_results_matrix(result_dict, result_matrices, n_goals=N_GOAL_LINES):
+    """
+    Generates reward matrix for GoalLinesEnv
+    log reward matrix to each agent [own_goal, other_goal] = reward obtained
+    """
+    matrix_0 = np.zeros([n_goals, n_goals])
+    matrix_1 = np.zeros([n_goals, n_goals])
+    for i in range(n_goals):
+        for j in range(n_goals):
+            matrix_0[i, j] = result_dict["custom_metrics"].get(
+                "matrix0" + str(i) + str(j) + "_mean", 0
+            )
+            matrix_1[i, j] = result_dict["custom_metrics"].get(
+                "matrix1" + str(i) + str(j) + "_mean", 0
+            )
+    result_matrices["agent_0"].append(matrix_0)
+    result_matrices["agent_1"].append(matrix_1)
+    return result_matrices

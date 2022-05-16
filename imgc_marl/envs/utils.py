@@ -20,7 +20,7 @@ class MetaSampler(CoordinateSampler):
             for sampler in samplers:
                 areas.append(sampler._length * sampler._width)
             weights = np.array(areas) / np.array(areas).sum()
-        assert sum(weights) == 1
+        assert np.allclose(sum(weights), 1)
         self.weights = weights
         self.samplers = samplers
         self.sampler_indexes = range(len(samplers))

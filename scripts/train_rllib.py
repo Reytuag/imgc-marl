@@ -6,8 +6,12 @@ import imgc_marl.envs.multiagent as multiagent
 import imgc_marl.envs.single_agent as single_agent
 import numpy as np
 import yaml
-from imgc_marl.callbacks import MultiGoalMultiAgentCallbacks
-from imgc_marl.utils import after_training_eval_rllib
+from imgc_marl.callbacks import (
+    GoalLinesCallback,
+    ScaledGoalLinesCallback,
+    goal_lines_last_callback,
+)
+from imgc_marl.utils import after_training_eval_rllib, process_results_matrix
 from ray.rllib.agents.ppo import DEFAULT_CONFIG, PPOTrainer
 from ray.rllib.policy.policy import PolicySpec
 from ray.tune.logger import pretty_print
@@ -17,7 +21,7 @@ from ray.tune.logger import pretty_print
 @click.option(
     "--environment",
     type=click.Choice(
-        ["single_agent", "basic_marl", "goal_lines"],
+        ["single_agent", "basic_marl", "goal_lines", "scaled_goal_lines"],
         case_sensitive=True,
     ),
 )
@@ -76,7 +80,7 @@ def train(environment, config):
         }
         config["horizon"] = multiagent.GOAL_LINES_TIMELIMIT
         config["env_config"] = user_config["env_config"]
-        config["callbacks"] = MultiGoalMultiAgentCallbacks
+        config["callbacks"] = GoalLinesCallback
         config["multiagent"] = {
             "policies": {
                 "agent_0": PolicySpec(
@@ -93,13 +97,59 @@ def train(environment, config):
         eval_config = deepcopy(config)
         trainer = PPOTrainer(config=config, env=multiagent.GoalLinesEnv)
         eval_env = multiagent.GoalLinesEnv(eval_config["env_config"])
+        result_matrices = {
+            "agent_0": [],
+            "agent_1": [],
+        }
+
+    elif environment == "scaled_goal_lines":
+        multiagent_flag = True
+        goal_dict = {
+            "agent_0": list(range(multiagent.N_SCALED_GOAL_LINES)),
+            "agent_1": list(range(multiagent.N_SCALED_GOAL_LINES)),
+        }
+        config["horizon"] = multiagent.GOAL_LINES_TIMELIMIT
+        config["env_config"] = user_config["env_config"]
+        config["callbacks"] = ScaledGoalLinesCallback
+        config["multiagent"] = {
+            "policies": {
+                "agent_0": PolicySpec(
+                    policy_class=None, observation_space=None, action_space=None
+                ),
+                "agent_1": PolicySpec(
+                    policy_class=None, observation_space=None, action_space=None
+                ),
+            },
+            "policy_mapping_fn": lambda agent_id: "agent_0"
+            if agent_id.startswith("agent_0")
+            else "agent_1",
+        }
+        eval_config = deepcopy(config)
+        trainer = PPOTrainer(config=config, env=multiagent.ScaledGoalLinesEnv)
+        eval_env = multiagent.ScaledGoalLinesEnv(eval_config["env_config"])
+        result_matrices = {
+            "agent_0": [],
+            "agent_1": [],
+        }
 
     # Train for training_steps iterations. A training iteration includes
     # parallel sample collection by the environment workers as well as
     # loss calculation on the collected batch and a model update.
     for _ in range(user_config["training"]["training_steps"]):
         result = trainer.train()
+        if environment == "goal_lines":
+            result_matrices = process_results_matrix(result, result_matrices)
+        elif environment == "scaled_goal_lines":
+            result_matrices = process_results_matrix(
+                result, result_matrices, multiagent.N_SCALED_GOAL_LINES
+            )
         print(pretty_print(result))
+
+    # Custom end of training callback
+    if environment == "goal_lines":
+        goal_lines_last_callback(trainer, result_matrices)
+    elif environment == "scaled_goal_lines":
+        goal_lines_last_callback(trainer, result_matrices)
 
     # After training has completed, evaluate the agent
     after_training_eval_rllib(
