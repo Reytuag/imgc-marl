@@ -1,22 +1,13 @@
+from copy import deepcopy
 import os
-from typing import Any, Dict, List
+from typing import Any, Dict
 
-import cv2
 import gym
 import moviepy.video.io.ImageSequenceClip
-import numpy as np
 from stable_baselines3.common.callbacks import BaseCallback
 from stable_baselines3.common.evaluation import evaluate_policy
 
-from imgc_marl.envs.multiagent import (
-    N_GOAL_LINES,
-    POSSIBLE_GOAL_LINES,
-    SCALED_POSSIBLE_GOAL_LINES,
-)
-
 # from stable_baselines3.common.logger import Video
-
-font = cv2.FONT_HERSHEY_SIMPLEX
 
 
 class VideoRecorderCallback(BaseCallback):
@@ -77,90 +68,37 @@ class VideoRecorderCallback(BaseCallback):
         return True
 
 
-def after_training_eval_rllib(
-    trainer,
-    eval_env: gym.Env,
-    eval_episodes: int = 5,
-    multiagent: bool = True,
-    goal_dict: Dict[str, List] = None,
-) -> None:
-    """Final evaluation function called after rllib training loop"""
-    frames = []
-    if goal_dict is not None:
-        eval_episodes = len(list(goal_dict.values())[0])
-    for n in range(eval_episodes):
-        done = False
-        if goal_dict is not None:
-            obs = eval_env.reset({agent: goal[n] for agent, goal in goal_dict.items()})
-            # hack to print the evaluation goal. this is super tied to the goal lines env
-            # TODO: refactor this in the future in a more general and flexible way not tied
-            # to the environment!
-            if trainer._env_id == "GoalLinesEnv":
-                goals = [POSSIBLE_GOAL_LINES[n] for n in list(goal_dict.values())[0]]
-            else:
-                goals = [
-                    SCALED_POSSIBLE_GOAL_LINES[n] for n in list(goal_dict.values())[0]
-                ]
-        else:
-            obs = eval_env.reset()
-        episode_reward = 0.0
-        while not done:
-            frame = eval_env.render()
-            if goal_dict is not None:
-                cv2.putText(
-                    frame,
-                    str(goals[n]),
-                    (10, 35),
-                    font,
-                    1,
-                    (255, 255, 255),
-                    1,
-                )
-            frames.append(frame)
-            # Compute an action
-            if not multiagent:
-                a = trainer.compute_single_action(
-                    observation=obs,
-                    explore=False,
-                )
-                # Send the computed action `a` to the env.
-                obs, reward, done, _ = eval_env.step(a)
-                episode_reward += reward
-            else:
-                action = {}
-                for agent_id, agent_obs in obs.items():
-                    policy_id = trainer.config["multiagent"]["policy_mapping_fn"](
-                        agent_id
-                    )
-                    action[agent_id] = trainer.compute_single_action(
-                        agent_obs, policy_id=policy_id, explore=False
-                    )
-                obs, reward, dones, info = eval_env.step(action)
-                done = dones["__all__"]
-                # sum up reward for all agents
-                episode_reward += sum(reward.values())
-            # Is the episode `done`? -> Reset.
-            if done:
-                print(f"Episode done: Total reward = {episode_reward}")
-    clip = moviepy.video.io.ImageSequenceClip.ImageSequenceClip(frames, fps=30)
-    clip.write_videofile(os.path.join(trainer.logdir, "trained_agent.mp4"))
+def keep_relevant_results(results):
+    results_to_print = deepcopy(results)
+    keep_keys = [
+        "episode_reward_max",
+        "episode_reward_min",
+        "episode_reward_mean",
+        "episode_len_mean",
+        "episodes_this_iter",
+        "policy_reward_min",
+        "policy_reward_max",
+        "policy_reward_mean",
+        "custom_metrics",
+        "timesteps_total",
+        "timesteps_this_iter",
+        "episodes_total",
+        "training_iteration",
+        "time_this_iter_s",
+        "time_total_s",
+    ]
 
-
-def process_results_matrix(result_dict, result_matrices, n_goals=N_GOAL_LINES):
-    """
-    Generates reward matrix for GoalLinesEnv
-    log reward matrix to each agent [own_goal, other_goal] = reward obtained
-    """
-    matrix_0 = np.zeros([n_goals, n_goals])
-    matrix_1 = np.zeros([n_goals, n_goals])
-    for i in range(n_goals):
-        for j in range(n_goals):
-            matrix_0[i, j] = result_dict["custom_metrics"].get(
-                "matrix0" + str(i) + str(j) + "_mean", 0
-            )
-            matrix_1[i, j] = result_dict["custom_metrics"].get(
-                "matrix1" + str(i) + str(j) + "_mean", 0
-            )
-    result_matrices["agent_0"].append(matrix_0)
-    result_matrices["agent_1"].append(matrix_1)
-    return result_matrices
+    keep_custom_keys = [
+        "reward for collective goal_mean",
+        "reward for collective goal_min",
+        "reward for collective goal_max",
+        "reward for individual goal_mean",
+        "reward for individual goal_min",
+        "reward for individual goal_max",
+    ]
+    results_to_print["custom_metrics"] = {
+        key: value
+        for key, value in results["custom_metrics"].items()
+        if key in keep_custom_keys
+    }
+    return {key: value for key, value in results_to_print.items() if key in keep_keys}

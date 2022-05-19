@@ -3,6 +3,9 @@ from typing import Dict
 
 os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = ""
 
+from itertools import combinations
+from typing import List
+
 import numpy as np
 from gym import spaces
 from imgc_marl.envs.elements.zone import MultiAgentRewardZone
@@ -18,22 +21,11 @@ from simple_playgrounds.element.elements.activable import RewardOnActivation
 from simple_playgrounds.element.elements.basic import Wall
 from simple_playgrounds.engine import Engine
 from simple_playgrounds.playground.layouts import SingleRoom
-from itertools import combinations
 
 SIMPLE_PLAYGROUND = (300, 300)
 SIMPLE_TIMELIMIT = 100
 GOAL_LINES_TIMELIMIT = 150
-
-POSSIBLE_GOAL_LINES = [[0, 0, 1], [0, 1, 0], [1, 0, 0], [0, 1, 1], [1, 0, 1], [1, 1, 0]]
-N_GOAL_LINES = len(POSSIBLE_GOAL_LINES)
-
-
 SCALED_REWARD = 1e-6
-SCALED_POSSIBLE_GOAL_LINES = np.eye(9, dtype=np.uint8).tolist()
-SCALED_POSSIBLE_GOAL_LINES += (
-    np.array(list(combinations(SCALED_POSSIBLE_GOAL_LINES, 2))).sum(1).tolist()
-)
-N_SCALED_GOAL_LINES = len(SCALED_POSSIBLE_GOAL_LINES)
 
 
 class OneBoxEnv(MultiAgentEnv):
@@ -227,6 +219,20 @@ class GoalLinesEnv(MultiAgentEnv):
         self.continuous = config["continuous"]
         # If agents should sample goals centralized or decentralized
         self.centralized = config.get("centralized", False)
+        # If goal is fixed or might be updated
+        self.fixed_goal = False
+
+        # Goal space
+        self.goal_space = [
+            [0, 0, 1],
+            [0, 1, 0],
+            [1, 0, 0],
+            [0, 1, 1],
+            [1, 0, 1],
+            [1, 1, 0],
+        ]
+        self.goal_space_dim = len(self.goal_space)
+        self.goal_repr_dim = 3
 
         self.episodes = 0
         self.time_steps = 0
@@ -356,7 +362,7 @@ class GoalLinesEnv(MultiAgentEnv):
                     np.array(
                         [[0, -2 * np.pi] for i in range(number_of_elements)]
                     ).flatten(),
-                    np.zeros(3),
+                    np.zeros(self.goal_repr_dim),
                 )
             ),
             high=np.hstack(
@@ -364,7 +370,7 @@ class GoalLinesEnv(MultiAgentEnv):
                     np.array(
                         [[1, 2 * np.pi] for i in range(number_of_elements)]
                     ).flatten(),
-                    np.ones(3),
+                    np.ones(self.goal_repr_dim),
                 )
             ),
             dtype=np.float64,
@@ -386,7 +392,7 @@ class GoalLinesEnv(MultiAgentEnv):
         for agent in self._active_agents:
             agent_obs = np.zeros(self.observation_space.shape, dtype=np.float32)
             # append agents goal at the end of the obs
-            agent_obs[-3:] = agent.goal
+            agent_obs[-self.goal_repr_dim :] = agent.goal
             raw_obs = list(agent.observations.values())[0]
             for raw_o in raw_obs:
                 coordinate = agent.COORDINATE_MAP[raw_o.entity]
@@ -404,8 +410,8 @@ class GoalLinesEnv(MultiAgentEnv):
         required)
         """
         individual_achieved_goals = {
-            "agent_0": np.zeros(3, dtype=int),
-            "agent_1": np.zeros(3, dtype=int),
+            "agent_0": np.zeros(self.goal_repr_dim, dtype=int),
+            "agent_1": np.zeros(self.goal_repr_dim, dtype=int),
         }
         rewards = {}
         dones = {}
@@ -482,31 +488,35 @@ class GoalLinesEnv(MultiAgentEnv):
         rewards, dones, info = self.compute_rewards()
         return observations, rewards, dones, info
 
-    def reset(self, external_goals: Dict[str, int] = None):
+    def reset(self):
         self.engine.reset()
         # All agents become active again
         self._active_agents = self.playground.agents.copy()
-        # Each agent samples its own goal if not provided externally
-        if external_goals is None:
+        # Each agent samples its own goal if not fixed
+        if not self.fixed_goal:
             if self.centralized:
-                goal = POSSIBLE_GOAL_LINES[np.random.randint(0, N_GOAL_LINES)]
+                goal = self.goal_space[np.random.randint(0, self.goal_space_dim)]
                 for agent in self.playground.agents:
                     agent.goal = goal
             else:
                 for agent in self.playground.agents:
-                    agent.goal = POSSIBLE_GOAL_LINES[np.random.randint(0, N_GOAL_LINES)]
-        else:
-            # We can externally provide the goals as
-            ## {"agent_name": goal_index}
-            for agent in self.playground.agents:
-                agent.goal = POSSIBLE_GOAL_LINES[external_goals[agent.name]]
-
+                    agent.goal = self.goal_space[
+                        np.random.randint(0, self.goal_space_dim)
+                    ]
         self.engine.elapsed_time = 0
         self.episodes += 1
         self.engine.update_observations()
         self.time_steps = 0
         observations = self.process_obs()
         return observations
+
+    def set_external_goal(
+        self, external_goals: Dict[str, int] = None, fix_goal: bool = True
+    ):
+        # Not sample goal on each reset
+        self.fixed_goal = fix_goal
+        for agent in self.playground.agents:
+            agent.goal = self.goal_space[external_goals[agent.name]]
 
     def render(self, mode=None):
         return (255 * self.engine.generate_playground_image()).astype(np.uint8)
@@ -515,7 +525,7 @@ class GoalLinesEnv(MultiAgentEnv):
         self.engine.terminate()
 
 
-class ScaledGoalLinesEnv(MultiAgentEnv):
+class ScaledGoalLinesEnv(GoalLinesEnv):
     """ScaledGoalLinesEnv for multiple agents. Goal conditioned.
     There are different goal areas to be targeted as objectives"""
 
@@ -526,9 +536,19 @@ class ScaledGoalLinesEnv(MultiAgentEnv):
         self.continuous = config["continuous"]
         # If agents should sample goals centralized or decentralized
         self.centralized = config.get("centralized", False)
+        # If goal is fixed or might be updated
+        self.fixed_goal = False
 
         self.episodes = 0
         self.time_steps = 0
+
+        # Goal space
+        self.goal_space = np.eye(9, dtype=np.uint8).tolist()
+        self.goal_space += (
+            np.array(list(combinations(self.goal_space, 2))).sum(1).tolist()
+        )
+        self.goal_space_dim = len(self.goal_space)
+        self.goal_repr_dim = 9
 
         # Create playground
         # One room with 9 goal zones
@@ -549,7 +569,7 @@ class ScaledGoalLinesEnv(MultiAgentEnv):
             reward=SCALED_REWARD * (11**2),
             physical_shape="rectangle",
             texture=[255, 255, 255],
-            size=(50, 150),
+            size=(50, 100),
         )
         zone_3 = MultiAgentRewardZone(
             reward=SCALED_REWARD * (11**3),
@@ -567,7 +587,7 @@ class ScaledGoalLinesEnv(MultiAgentEnv):
             reward=SCALED_REWARD * (11**5),
             physical_shape="rectangle",
             texture=[255, 255, 255],
-            size=(50, 150),
+            size=(50, 100),
         )
         zone_6 = MultiAgentRewardZone(
             reward=SCALED_REWARD * (11**6),
@@ -585,7 +605,7 @@ class ScaledGoalLinesEnv(MultiAgentEnv):
             reward=SCALED_REWARD * (11**8),
             physical_shape="rectangle",
             texture=[255, 255, 255],
-            size=(50, 150),
+            size=(50, 100),
         )
         # 0 1 2
         # 3 4 5
@@ -721,22 +741,6 @@ class ScaledGoalLinesEnv(MultiAgentEnv):
         # List of active agents, agents can exit early if completed their goal
         self._active_agents = self.playground.agents.copy()
 
-    def process_obs(self):
-        """Process observations to match RLlib API (a dict with obs for each agent) and append goal"""
-        obs = dict()
-        for agent in self._active_agents:
-            agent_obs = np.zeros(self.observation_space.shape, dtype=np.float32)
-            # append agents goal at the end of the obs
-            agent_obs[-9:] = agent.goal
-            raw_obs = list(agent.observations.values())[0]
-            for raw_o in raw_obs:
-                coordinate = agent.COORDINATE_MAP[raw_o.entity]
-                agent_obs[coordinate : coordinate + 2] = np.array(
-                    [raw_o.distance, raw_o.angle]
-                )
-            obs[agent.name] = agent_obs
-        return obs
-
     def compute_rewards(self):
         """
         If goal is individual, the agent must solve it by itself.
@@ -807,66 +811,3 @@ class ScaledGoalLinesEnv(MultiAgentEnv):
         ]
         dones["__all__"] = all(dones.values())
         return rewards, dones, info
-
-    def step(self, action_dict):
-        actions = {}
-        if action_dict:
-            for agent in self._active_agents:
-                agent_action = action_dict.get(agent.name)
-                actions[agent] = {}
-                actuators = agent.controller.controlled_actuators
-
-                if not self.continuous:
-                    for actuator, act in zip(actuators, agent_action):
-                        if isinstance(actuator, ContinuousActuator):
-                            actions[agent][actuator] = [-1, 0, 1][act]
-                        else:
-                            actions[agent][actuator] = [0, 1][act]
-                else:
-                    for actuator, act in zip(actuators, agent_action):
-                        if isinstance(actuator, ContinuousActuator):
-                            actions[agent][actuator] = act
-                        else:
-                            actions[agent][actuator] = round(act)
-
-        self.engine.step(actions)
-        self.engine.update_observations()
-        observations = self.process_obs()
-        rewards, dones, info = self.compute_rewards()
-        return observations, rewards, dones, info
-
-    def reset(self, external_goals: Dict[str, int] = None):
-        self.engine.reset()
-        # All agents become active again
-        self._active_agents = self.playground.agents.copy()
-        # Each agent samples its own goal if not provided externally
-        if external_goals is None:
-            if self.centralized:
-                goal = SCALED_POSSIBLE_GOAL_LINES[
-                    np.random.randint(0, N_SCALED_GOAL_LINES)
-                ]
-                for agent in self.playground.agents:
-                    agent.goal = goal
-            else:
-                for agent in self.playground.agents:
-                    agent.goal = SCALED_POSSIBLE_GOAL_LINES[
-                        np.random.randint(0, N_SCALED_GOAL_LINES)
-                    ]
-        else:
-            # We can externally provide the goals as
-            ## {"agent_name": goal_index}
-            for agent in self.playground.agents:
-                agent.goal = SCALED_POSSIBLE_GOAL_LINES[external_goals[agent.name]]
-
-        self.engine.elapsed_time = 0
-        self.episodes += 1
-        self.engine.update_observations()
-        self.time_steps = 0
-        observations = self.process_obs()
-        return observations
-
-    def render(self, mode=None):
-        return (255 * self.engine.generate_playground_image()).astype(np.uint8)
-
-    def close(self):
-        self.engine.terminate()
