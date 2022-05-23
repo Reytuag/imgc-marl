@@ -98,7 +98,7 @@ def keep_relevant_results(results):
     ]
     results_to_print["custom_metrics"] = {
         key: value
-        for key, value in results["custom_metrics"].items()
+        for key, value in results_to_print["custom_metrics"].items()
         if key in keep_custom_keys
     }
     return {key: value for key, value in results_to_print.items() if key in keep_keys}

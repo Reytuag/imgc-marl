@@ -1,3 +1,4 @@
+from copy import deepcopy
 import random
 
 import click
@@ -39,11 +40,11 @@ def train(environment, config):
     np.random.seed(seed)
 
     # General settings of the algorithm
-    config = DEFAULT_CONFIG.copy()
+    config = deepcopy(DEFAULT_CONFIG)
     config["num_workers"] = user_config["training"].get("num_workers", 0)
     config["framework"] = "torch"
     config["seed"] = seed
-    config["evaluation_interval"] = 10
+    config["evaluation_interval"] = 20
     config["evaluation_num_workers"] = 2
 
     # Particular settings dependent on the environment
@@ -95,7 +96,8 @@ def train(environment, config):
         goal_space = eval_env.goal_space
         goal_space_dim = eval_env.goal_space_dim
         config["evaluation_config"] = {
-            "eval_goals": [{"agent_0": i, "agent_1": i} for i in range(goal_space_dim)]
+            "eval_goals": [{"agent_0": i, "agent_1": i} for i in range(goal_space_dim)],
+            "record_env": "videos",
         }
         trainer = PPOTrainer(config=config, env=multiagent.GoalLinesEnv)
 
@@ -128,9 +130,18 @@ def train(environment, config):
     # Train for training_steps iterations. A training iteration includes
     # parallel sample collection by the environment workers as well as
     # loss calculation on the collected batch and a model update.
+    best_reward = 0.0
     for _ in range(user_config["training"]["training_steps"]):
         result = trainer.train()
         print(pretty_print(keep_relevant_results(result)))
+        eval_results = result.get("evaluation")
+        if (
+            eval_results is not None
+            and eval_results["episode_reward_mean"] >= best_reward
+        ):
+            best_reward = eval_results["episode_reward_mean"]
+            save_path = trainer.save()
+            print(f"New best model found, saving it in{save_path}")
 
     # End of training callbacks + evaluation
     if environment == "goal_lines" or environment == "scaled_goal_lines":

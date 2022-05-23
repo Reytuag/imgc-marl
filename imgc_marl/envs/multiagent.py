@@ -1,11 +1,10 @@
 import os
-from typing import Dict
+from itertools import combinations
+from typing import Dict, List
 
 os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = ""
 
-from itertools import combinations
-from typing import List
-
+import cv2
 import numpy as np
 from gym import spaces
 from imgc_marl.envs.elements.zone import MultiAgentRewardZone
@@ -22,9 +21,11 @@ from simple_playgrounds.element.elements.basic import Wall
 from simple_playgrounds.engine import Engine
 from simple_playgrounds.playground.layouts import SingleRoom
 
+font = cv2.FONT_HERSHEY_SIMPLEX
+
 SIMPLE_PLAYGROUND = (300, 300)
 SIMPLE_TIMELIMIT = 100
-GOAL_LINES_TIMELIMIT = 150
+GOAL_LINES_TIMELIMIT = 250
 SCALED_REWARD = 1e-6
 
 
@@ -111,7 +112,7 @@ class OneBoxEnv(MultiAgentEnv):
             # Discrete action space
             act_spaces = []
             for actuator in actuators:
-                if isinstance(actuators, ContinuousActuator):
+                if isinstance(actuator, ContinuousActuator):
                     act_spaces.append(3)
                 else:
                     act_spaces.append(2)
@@ -212,6 +213,8 @@ class GoalLinesEnv(MultiAgentEnv):
     """GoalLinesEnv for multiple agents. Goal conditioned.
     There are different goal areas to be targeted as objectives"""
 
+    metadata = {"render.modes": ["human", "rgb_array"]}
+
     def __init__(self, config):
         super(MultiAgentEnv, self).__init__()
 
@@ -240,45 +243,68 @@ class GoalLinesEnv(MultiAgentEnv):
         # Create playground
         # One room with 3 goal zones
         self.playground = SingleRoom(size=(400, 400))
+        # zone_0 = MultiAgentRewardZone(
+        #     reward=1,
+        #     physical_shape="rectangle",
+        #     texture=[255, 0, 0],
+        #     size=(25, 150),
+        #     name="001",
+        # )
+        # zone_1 = MultiAgentRewardZone(
+        #     reward=100,
+        #     physical_shape="rectangle",
+        #     texture=[0, 0, 255],
+        #     size=(25, 150),
+        #     name="010",
+        # )
+        # zone_2 = MultiAgentRewardZone(
+        #     reward=10_000,
+        #     physical_shape="rectangle",
+        #     texture=[255, 255, 255],
+        #     size=(25, 150),
+        #     name="100",
+        # )
+        # self.playground.add_element(zone_0, ((125, 200), 0))
+        # self.playground.add_element(zone_1, ((200, 200), 0))
+        # self.playground.add_element(zone_2, ((275, 200), 0))
         zone_0 = MultiAgentRewardZone(
             reward=1,
             physical_shape="rectangle",
             texture=[255, 0, 0],
-            size=(25, 150),
+            size=(30, 100),
             name="001",
         )
         zone_1 = MultiAgentRewardZone(
             reward=100,
             physical_shape="rectangle",
             texture=[0, 0, 255],
-            size=(25, 150),
+            size=(100, 30),
             name="010",
         )
         zone_2 = MultiAgentRewardZone(
             reward=10_000,
             physical_shape="rectangle",
             texture=[255, 255, 255],
-            size=(25, 150),
+            size=(30, 100),
             name="100",
         )
-        self.playground.add_element(zone_0, ((125, 200), 0))
-        self.playground.add_element(zone_1, ((200, 200), 0))
-        self.playground.add_element(zone_2, ((275, 200), 0))
-
-        self.playground.walls = [
-            elem for elem in self.playground.elements if isinstance(elem, Wall)
-        ]
+        self.playground.add_element(zone_0, ((15, 350), 0))
+        self.playground.add_element(zone_1, ((200, 15), 0))
+        self.playground.add_element(zone_2, ((385, 350), 0))
 
         # Add agents
         self._agent_ids = set()
 
-        sampler1 = CoordinateSampler((200, 50), area_shape="rectangle", size=(400, 100))
-        sampler2 = CoordinateSampler(
-            (200, 350), area_shape="rectangle", size=(400, 100)
+        # sampler1 = CoordinateSampler((200, 50), area_shape="rectangle", size=(400, 100))
+        # sampler2 = CoordinateSampler(
+        #     (200, 350), area_shape="rectangle", size=(400, 100)
+        # )
+        # sampler3 = CoordinateSampler((50, 200), area_shape="rectangle", size=(25, 200))
+        # sampler4 = CoordinateSampler((350, 200), area_shape="rectangle", size=(25, 200))
+        # agent_sampler = MetaSampler([sampler1, sampler2, sampler3, sampler4])
+        agent_sampler = CoordinateSampler(
+            (200, 200), area_shape="rectangle", size=(300, 300)
         )
-        sampler3 = CoordinateSampler((50, 200), area_shape="rectangle", size=(25, 200))
-        sampler4 = CoordinateSampler((350, 200), area_shape="rectangle", size=(25, 200))
-        agent_sampler = MetaSampler([sampler1, sampler2, sampler3, sampler4])
 
         # Agent 0
         agent = BaseAgent(
@@ -336,7 +362,7 @@ class GoalLinesEnv(MultiAgentEnv):
             # Discrete action space
             act_spaces = []
             for actuator in actuators:
-                if isinstance(actuators, ContinuousActuator):
+                if isinstance(actuator, ContinuousActuator):
                     act_spaces.append(3)
                 else:
                     act_spaces.append(2)
@@ -355,7 +381,7 @@ class GoalLinesEnv(MultiAgentEnv):
             )
 
         # Continuous observation space + goal representation as ohe
-        number_of_elements = len(self.playground.walls) + 1
+        number_of_elements = len(self.playground.elements) + 1
         self.observation_space = spaces.Box(
             low=np.hstack(
                 (
@@ -375,14 +401,16 @@ class GoalLinesEnv(MultiAgentEnv):
             ),
             dtype=np.float64,
         )
+
         # Mapping to keep consistent coordinates of observations for the same objects
-        # Walls will have the first coordinates and then the agent
+        # Elements will have the first coordinates and then the agent
         for j, agent in enumerate(self.playground.agents):
             agent.COORDINATE_MAP = {
-                wall: 2 * i for i, wall in enumerate(self.playground.walls)
+                element: 2 * i for i, element in enumerate(self.playground.elements)
             }
-            agent.COORDINATE_MAP[self.playground.agents[j - 1].parts[0]] = 8
-
+            agent.COORDINATE_MAP[self.playground.agents[j - 1].parts[0]] = (
+                len(self.playground.elements) * 2
+            )
         # List of active agents, agents can exit early if completed their goal
         self._active_agents = self.playground.agents.copy()
 
@@ -519,7 +547,26 @@ class GoalLinesEnv(MultiAgentEnv):
             agent.goal = self.goal_space[external_goals[agent.name]]
 
     def render(self, mode=None):
-        return (255 * self.engine.generate_playground_image()).astype(np.uint8)
+        frame = (255 * self.engine.generate_playground_image()).astype(np.uint8)
+        cv2.putText(
+            frame,
+            str(self.playground.agents[0].goal),
+            (10, 35),
+            font,
+            1,
+            (255, 255, 255),
+            1,
+        )
+        cv2.putText(
+            frame,
+            str(self.playground.agents[1].goal),
+            (250, 35),
+            font,
+            1,
+            (255, 255, 255),
+            1,
+        )
+        return frame
 
     def close(self):
         self.engine.terminate()
@@ -691,7 +738,7 @@ class ScaledGoalLinesEnv(GoalLinesEnv):
             # Discrete action space
             act_spaces = []
             for actuator in actuators:
-                if isinstance(actuators, ContinuousActuator):
+                if isinstance(actuator, ContinuousActuator):
                     act_spaces.append(3)
                 else:
                     act_spaces.append(2)

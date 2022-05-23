@@ -11,7 +11,20 @@ from simple_playgrounds.element.element import InteractiveElement
 from simple_playgrounds.element.elements.zone import ZoneElement
 
 
-class MultiAgentRewardZone(ZoneElement, ABC):
+class VisibleZoneElement(InteractiveElement, ABC):
+    """Base Class for Contact Entities"""
+
+    def __init__(self, **entity_params):
+
+        InteractiveElement.__init__(
+            self, visible_shape=True, invisible_shape=True, **entity_params
+        )
+
+    def _set_shape_collision(self):
+        self.pm_invisible_shape.collision_type = CollisionTypes.CONTACT
+
+
+class MultiAgentRewardZone(VisibleZoneElement, ABC):
     """
     Reward Zones provide a reward to all the agents in the zone.
     """

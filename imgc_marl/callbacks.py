@@ -2,7 +2,6 @@ import json
 import os
 from typing import Dict, List
 
-import cv2
 import gym
 import matplotlib.pyplot as plt
 import moviepy.video.io.ImageSequenceClip
@@ -11,8 +10,6 @@ from ray.rllib.agents.callbacks import DefaultCallbacks
 from ray.rllib.env import BaseEnv
 from ray.rllib.evaluation import Episode, RolloutWorker
 from ray.rllib.policy import Policy
-
-font = cv2.FONT_HERSHEY_SIMPLEX
 
 
 class GoalLinesCallback(DefaultCallbacks):
@@ -121,8 +118,9 @@ def goal_lines_last_callback(trainer, n_goals):
     result_dump = open(os.path.join(trainer.logdir, "result.json"), "r")
     idx = 0
     for result in result_dump:
-        metrics = json.loads(result).get("evaluation").get("custom_metrics")
+        metrics = json.loads(result).get("evaluation")
         if metrics is not None:
+            metrics = metrics.get("custom_metrics")
             matrix_0 = np.zeros([n_goals, n_goals])
             matrix_1 = np.zeros([n_goals, n_goals])
             for i in range(n_goals):
@@ -222,15 +220,6 @@ def after_training_eval_rllib(
             episode_reward = 0.0
             while not done:
                 frame = eval_env.render()
-                cv2.putText(
-                    frame,
-                    goal_name,
-                    (10, 35),
-                    font,
-                    1,
-                    (255, 255, 255),
-                    1,
-                )
                 frames.append(frame)
                 # Compute an action
                 action = {}
@@ -239,15 +228,14 @@ def after_training_eval_rllib(
                         agent_id
                     )
                     action[agent_id] = trainer.compute_single_action(
-                        agent_obs, policy_id=policy_id, explore=False
+                        agent_obs, policy_id=policy_id, explore=True
                     )
                 obs, reward, dones, info = eval_env.step(action)
                 done = dones["__all__"]
                 # sum up reward for all agents
                 episode_reward += sum(reward.values())
-                # Is the episode `done`? -> Reset.
-                if done:
-                    reward_for_this_goal.append(episode_reward)
+            # Is the episode `done`? -> Reset.
+            reward_for_this_goal.append(episode_reward)
         results[goal_name] = np.mean(reward_for_this_goal)
     print("Evaluation results over 10 episodes for each goal")
     print(results)
