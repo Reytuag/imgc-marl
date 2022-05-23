@@ -1,6 +1,9 @@
 # Runs
 runs/
 
+# Env
+marl-env/
+
 # vscode
 .vscode/
 
