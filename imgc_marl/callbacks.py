@@ -42,24 +42,97 @@ class GoalLinesCallback(DefaultCallbacks):
     ):
         goal_space = base_env.envs[0].goal_space
         goal_repr_dim = base_env.envs[0].goal_repr_dim
-
-        # log reward per goal (super hacky way to encode them but it works)
-        # goal_000, goal_010, etc
+        agent_0_info = episode.last_info_for("agent_0")
+        agent_1_info = episode.last_info_for("agent_1")
         agent_0_goal = episode.last_observation_for("agent_0")[-goal_repr_dim:].astype(
             int
         )
         agent_0_goal_name = "".join(str(t) for t in agent_0_goal)
-        episode.custom_metrics[
-            "reward for goal " + agent_0_goal_name
-        ] = episode.last_reward_for("agent_0")
-
+        agent_0_reward = episode.last_reward_for("agent_0")
         agent_1_goal = episode.last_observation_for("agent_1")[-goal_repr_dim:].astype(
             int
         )
         agent_1_goal_name = "".join(str(t) for t in agent_1_goal)
-        episode.custom_metrics[
-            "reward for goal " + agent_1_goal_name
-        ] = episode.last_reward_for("agent_1")
+        agent_1_reward = episode.last_reward_for("agent_1")
+
+        # log learning progress
+        for goal, lp in agent_0_info.get("learning_progress", {}).items():
+            episode.custom_metrics["lp agent_0 " + goal] = lp
+        for goal, lp in agent_1_info.get("learning_progress", {}).items():
+            episode.custom_metrics["lp agent_1 " + goal] = lp
+
+        # log reward per goal (super hacky way to encode them but it works)
+        # goal_000, goal_010, etc
+        # log for each agent and collaborative goal, which position the agent reached when solving it
+        # log reward for collective and individual goals separatelty
+        if agent_0_goal_name == agent_1_goal_name:
+            # If both agents had the same goal, log the mean of the rewards
+            episode.custom_metrics["reward for goal " + agent_0_goal_name] = (
+                agent_0_reward + agent_1_reward
+            ) / 2
+            if sum(agent_0_goal) > 1:
+                # If goal is collective, log collective goal reward + last position
+                episode.custom_metrics["reward for collective goal"] = (
+                    agent_0_reward + agent_1_reward
+                ) / 2
+                # logging position of the agent when solving the goal
+                if agent_0_reward:
+                    episode.hist_data[
+                        "agent 0 position for " + agent_0_goal_name
+                    ].append(agent_0_info["goal_line"])
+                if agent_1_reward:
+                    episode.hist_data[
+                        "agent 1 position for " + agent_1_goal_name
+                    ].append(agent_1_info["goal_line"])
+            else:
+                episode.custom_metrics["reward for individual goal"] = (
+                    agent_0_reward + agent_1_reward
+                ) / 2
+        else:
+            # If agents had different goals, log each of them separately
+            episode.custom_metrics[
+                "reward for goal " + agent_0_goal_name
+            ] = agent_0_reward
+            episode.custom_metrics[
+                "reward for goal " + agent_1_goal_name
+            ] = agent_1_reward
+            if sum(agent_0_goal) > 1:
+                if agent_0_reward:
+                    # logging position of the agent when solving the goal
+                    episode.hist_data[
+                        "agent 0 position for " + agent_0_goal_name
+                    ].append(agent_0_info["goal_line"])
+                if sum(agent_1_goal) > 1:
+                    if agent_1_reward:
+                        episode.hist_data[
+                            "agent 1 position for " + agent_1_goal_name
+                        ].append(agent_1_info["goal_line"])
+                    episode.custom_metrics["reward for collective goal"] = (
+                        agent_0_reward + agent_1_reward
+                    ) / 2
+                else:
+                    episode.custom_metrics[
+                        "reward for collective goal"
+                    ] = agent_0_reward
+                    episode.custom_metrics[
+                        "reward for individual goal"
+                    ] = agent_1_reward
+            else:
+                if sum(agent_1_goal) > 1:
+                    if agent_1_reward:
+                        episode.hist_data[
+                            "agent 1 position for " + agent_1_goal_name
+                        ].append(agent_1_info["goal_line"])
+                    episode.custom_metrics[
+                        "reward for collective goal"
+                    ] = agent_1_reward
+                    episode.custom_metrics[
+                        "reward for individual goal"
+                    ] = agent_0_reward
+                else:
+                    episode.custom_metrics["reward for individual goal"] = (
+                        agent_0_reward + agent_1_reward
+                    ) / 2
 
         # log which goal was sampled
         agent_0_goal_index = [
@@ -71,41 +144,13 @@ class GoalLinesCallback(DefaultCallbacks):
         ][0]
         episode.hist_data["agent 1 goal"].append(agent_1_goal_index)
 
-        # # log reward matrix to each agent [own_goal, other_goal] = reward obtained
+        # log reward matrix to each agent [own_goal, other_goal] = reward obtained
         episode.custom_metrics[
             "matrix0" + str(agent_0_goal_index) + str(agent_1_goal_index)
-        ] = episode.last_reward_for("agent_0")
+        ] = agent_0_reward
         episode.custom_metrics[
             "matrix1" + str(agent_1_goal_index) + str(agent_0_goal_index)
-        ] = episode.last_reward_for("agent_1")
-
-        # log for each agent and collaborative goal, which position the agent reached when solving it
-        # log reward for collective and individual goals separatelty
-        if sum(agent_0_goal) > 1:
-            episode.custom_metrics[
-                "reward for collective goal"
-            ] = episode.last_reward_for("agent_0")
-            if episode.last_reward_for("agent_0"):
-                episode.hist_data["agent 0 position for " + agent_0_goal_name].append(
-                    episode.last_info_for("agent_0")["goal_line"]
-                )
-        else:
-            episode.custom_metrics[
-                "reward for individual goal"
-            ] = episode.last_reward_for("agent_0")
-
-        if sum(agent_1_goal) > 1:
-            episode.custom_metrics[
-                "reward for collective goal"
-            ] = episode.last_reward_for("agent_1")
-            if episode.last_reward_for("agent_1"):
-                episode.hist_data["agent 1 position for " + agent_1_goal_name].append(
-                    episode.last_info_for("agent_1")["goal_line"]
-                )
-        else:
-            episode.custom_metrics[
-                "reward for individual goal"
-            ] = episode.last_reward_for("agent_1")
+        ] = agent_1_reward
 
 
 def goal_lines_last_callback(trainer, n_goals):

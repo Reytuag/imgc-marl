@@ -3,5 +3,6 @@ training:
   num_workers: 6
 seed: 0
 env_config:
-  centralized: True
+  centralized: False
+  learning_progress: True
   continuous: False

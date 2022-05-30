@@ -147,7 +147,9 @@ def train(environment, config):
     if environment == "goal_lines" or environment == "scaled_goal_lines":
         goal_lines_last_callback(trainer, goal_space_dim)
         after_training_eval_rllib(
-            trainer, eval_env, goal_list=config["evaluation_config"]["eval_goals"]
+            trainer,
+            eval_env,
+            goal_list=config["evaluation_config"]["eval_goals"],
         )
     else:
         legacy_after_training_eval_rllib(

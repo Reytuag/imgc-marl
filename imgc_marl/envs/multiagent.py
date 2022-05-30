@@ -222,6 +222,8 @@ class GoalLinesEnv(MultiAgentEnv):
         self.continuous = config["continuous"]
         # If agents should sample goals centralized or decentralized
         self.centralized = config.get("centralized", False)
+        # If use learning progress or not
+        self.learning_progress = config.get("learning_progress", False)
         # If goal is fixed or might be updated
         self.fixed_goal = False
 
@@ -326,6 +328,13 @@ class GoalLinesEnv(MultiAgentEnv):
                 normalize=True,
             )
         )
+        agent.learning_progress = {
+            "".join(str(t) for t in goal): 0.0 for goal in self.goal_space
+        }
+        agent.competence = {
+            "".join(str(t) for t in goal): 0.0 for goal in self.goal_space
+        }
+        agent.counts = {"".join(str(t) for t in goal): 0 for goal in self.goal_space}
         self.playground.add_agent(agent, agent_sampler)
         self._agent_ids.add("agent_0")
         # Agent 1
@@ -348,6 +357,13 @@ class GoalLinesEnv(MultiAgentEnv):
                 normalize=True,
             )
         )
+        agent.learning_progress = {
+            "".join(str(t) for t in goal): 0.0 for goal in self.goal_space
+        }
+        agent.competence = {
+            "".join(str(t) for t in goal): 0.0 for goal in self.goal_space
+        }
+        agent.counts = {"".join(str(t) for t in goal): 0 for goal in self.goal_space}
         self.playground.add_agent(agent, agent_sampler)
         self._agent_ids.add("agent_1")
 
@@ -475,11 +491,21 @@ class GoalLinesEnv(MultiAgentEnv):
             else:
                 reward = 0
             rewards[agent.name] = reward
-            dones[agent.name] = (
-                bool(reward) or self.playground.done or not self.engine.game_on
-            )
+            done = bool(reward) or self.playground.done or not self.engine.game_on
+            dones[agent.name] = done
             # logging which goal line the agent achieved (-1 means no goal line)
             info[agent.name] = {"goal_line": agent.reward - 1}
+            if done and not self.fixed_goal:
+                # If self.fixed_goal we are in evaluation mode, and don't want to update LP
+                agent_goal_name = "".join(str(t) for t in agent.goal)
+                agent.counts[agent_goal_name] += 1
+                agent.learning_progress[agent_goal_name] = (
+                    rewards[agent.name] - agent.competence[agent_goal_name]
+                ) / agent.counts[agent_goal_name]
+                agent.competence[agent_goal_name] += agent.learning_progress[
+                    agent_goal_name
+                ]
+                info[agent.name]["learning_progress"] = agent.learning_progress
         # Agents that are done are deleted from the list of active agents
         [
             self._active_agents.remove(agent)
@@ -526,7 +552,33 @@ class GoalLinesEnv(MultiAgentEnv):
                 goal = self.goal_space[np.random.randint(0, self.goal_space_dim)]
                 for agent in self.playground.agents:
                     agent.goal = goal
+            elif self.learning_progress:
+                for agent in self.playground.agents:
+                    # epsilon greedy
+                    if np.random.random() < 0.2:
+                        agent.goal = self.goal_space[
+                            np.random.randint(0, self.goal_space_dim)
+                        ]
+                    else:
+                        # goals in lp are in the same order than in the goal space
+                        # we can safely assign the weight 001 as the weight to the first int in the random sample
+                        scale_factor = sum(
+                            [abs(lp) for lp in agent.learning_progress.values()]
+                        )
+                        if scale_factor == 0:
+                            weights = [1 / self.goal_space_dim for _ in self.goal_space]
+                        else:
+                            weights = [
+                                abs(w) / scale_factor
+                                for w in agent.learning_progress.values()
+                            ]
+                        agent.goal = self.goal_space[
+                            np.random.choice(range(self.goal_space_dim), 1, p=weights)[
+                                0
+                            ]
+                        ]
             else:
+                # independent uniform sampling
                 for agent in self.playground.agents:
                     agent.goal = self.goal_space[
                         np.random.randint(0, self.goal_space_dim)
