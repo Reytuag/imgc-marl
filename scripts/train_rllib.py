@@ -144,6 +144,8 @@ def train(environment, config):
             print(f"New best model found, saving it in{save_path}")
 
     # End of training callbacks + evaluation
+    # restoring best model from training
+    trainer.restore(save_path)
     if environment == "goal_lines" or environment == "scaled_goal_lines":
         goal_lines_last_callback(trainer, goal_space_dim)
         after_training_eval_rllib(
