@@ -1,3 +1,4 @@
+import collections
 import os
 from itertools import combinations
 from typing import Dict, List
@@ -222,8 +223,10 @@ class GoalLinesEnv(MultiAgentEnv):
         self.continuous = config["continuous"]
         # If agents should sample goals centralized or decentralized
         self.centralized = config.get("centralized", False)
-        # If use learning progress or not
-        self.learning_progress = config.get("learning_progress", False)
+        # If use learning progress or not. learning_progress is the epsilon value in exploration (0 acts as a flag for not using LP)
+        self.learning_progress = config.get("learning_progress", 0)
+        # Number of episodes for updating LP
+        self.update_lp = config.get("update_lp", 100)
         # If goal is fixed or might be updated
         self.fixed_goal = False
 
@@ -331,8 +334,17 @@ class GoalLinesEnv(MultiAgentEnv):
         agent.learning_progress = {
             "".join(str(t) for t in goal): 0.0 for goal in self.goal_space
         }
+        # Old LP
+        # agent.competence = {
+        #     "".join(str(t) for t in goal): 0.0 for goal in self.goal_space
+        # }
+        # New LP
         agent.competence = {
-            "".join(str(t) for t in goal): 0.0 for goal in self.goal_space
+            "".join(str(t) for t in goal): collections.deque(maxlen=2)
+            for goal in self.goal_space
+        }
+        agent.reward_list = {
+            "".join(str(t) for t in goal): [] for goal in self.goal_space
         }
         agent.counts = {"".join(str(t) for t in goal): 0 for goal in self.goal_space}
         self.playground.add_agent(agent, agent_sampler)
@@ -360,8 +372,17 @@ class GoalLinesEnv(MultiAgentEnv):
         agent.learning_progress = {
             "".join(str(t) for t in goal): 0.0 for goal in self.goal_space
         }
+        # Old LP
+        # agent.competence = {
+        #     "".join(str(t) for t in goal): 0.0 for goal in self.goal_space
+        # }
+        # New LP
         agent.competence = {
-            "".join(str(t) for t in goal): 0.0 for goal in self.goal_space
+            "".join(str(t) for t in goal): collections.deque(maxlen=2)
+            for goal in self.goal_space
+        }
+        agent.reward_list = {
+            "".join(str(t) for t in goal): [] for goal in self.goal_space
         }
         agent.counts = {"".join(str(t) for t in goal): 0 for goal in self.goal_space}
         self.playground.add_agent(agent, agent_sampler)
@@ -499,12 +520,25 @@ class GoalLinesEnv(MultiAgentEnv):
                 # If self.fixed_goal we are in evaluation mode, and don't want to update LP
                 agent_goal_name = "".join(str(t) for t in agent.goal)
                 agent.counts[agent_goal_name] += 1
-                agent.learning_progress[agent_goal_name] = (
-                    rewards[agent.name] - agent.competence[agent_goal_name]
-                ) / agent.counts[agent_goal_name]
-                agent.competence[agent_goal_name] += agent.learning_progress[
-                    agent_goal_name
-                ]
+                # OLD LP
+                # agent.learning_progress[agent_goal_name] = (
+                #     rewards[agent.name] - agent.competence[agent_goal_name]
+                # ) / agent.counts[agent_goal_name]
+                # agent.competence[agent_goal_name] += agent.learning_progress[
+                #     agent_goal_name
+                # ]
+                # NEW LP
+                agent.reward_list[agent_goal_name].append(rewards[agent.name])
+                if agent.counts[agent_goal_name] % self.update_lp == 0:
+                    assert len(agent.reward_list[agent_goal_name]) == self.update_lp
+                    agent.competence[agent_goal_name].append(
+                        np.mean(agent.reward_list[agent_goal_name])
+                    )
+                    agent.learning_progress[agent_goal_name] = (
+                        agent.competence[agent_goal_name][-1]
+                        - agent.competence[agent_goal_name][0]
+                    )
+                    agent.reward_list[agent_goal_name] = []
                 info[agent.name]["learning_progress"] = agent.learning_progress
         # Agents that are done are deleted from the list of active agents
         [
@@ -555,7 +589,7 @@ class GoalLinesEnv(MultiAgentEnv):
             elif self.learning_progress:
                 for agent in self.playground.agents:
                     # epsilon greedy
-                    if np.random.random() < 0.2:
+                    if np.random.random() < self.learning_progress:
                         agent.goal = self.goal_space[
                             np.random.randint(0, self.goal_space_dim)
                         ]

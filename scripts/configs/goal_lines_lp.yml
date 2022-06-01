@@ -4,5 +4,6 @@ training:
 seed: 0
 env_config:
   centralized: False
-  learning_progress: True
+  learning_progress: 0.2
+  update_lp: 100
   continuous: False

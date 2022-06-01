@@ -1,19 +1,16 @@
-from copy import deepcopy
 import random
+from copy import deepcopy
 
 import click
 import imgc_marl.envs.multiagent as multiagent
 import imgc_marl.envs.single_agent as single_agent
 import numpy as np
 import yaml
-from imgc_marl.callbacks import (
-    GoalLinesCallback,
-    after_training_eval_rllib,
-    goal_lines_last_callback,
-    legacy_after_training_eval_rllib,
-)
-from imgc_marl.utils import keep_relevant_results
+from imgc_marl.callbacks import (GoalLinesCallback, after_training_eval_rllib,
+                                 goal_lines_last_callback,
+                                 legacy_after_training_eval_rllib)
 from imgc_marl.evaluation import custom_eval_function
+from imgc_marl.utils import keep_relevant_results
 from ray.rllib.agents.ppo import DEFAULT_CONFIG, PPOTrainer
 from ray.rllib.policy.policy import PolicySpec
 from ray.tune.logger import pretty_print
@@ -143,6 +140,8 @@ def train(environment, config):
             save_path = trainer.save()
             print(f"New best model found, saving it in{save_path}")
 
+    # Saving most recent model as well
+    trainer.save()
     # End of training callbacks + evaluation
     # restoring best model from training
     trainer.restore(save_path)
