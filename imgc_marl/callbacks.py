@@ -55,11 +55,33 @@ class GoalLinesCallback(DefaultCallbacks):
         agent_1_goal_name = "".join(str(t) for t in agent_1_goal)
         agent_1_reward = episode.last_reward_for("agent_1")
 
+        # log raw rewards and count of goals that been sampled
+        episode.media["reward_agent_0_" + agent_0_goal_name] = agent_0_reward
+        episode.media["reward_agent_1_" + agent_1_goal_name] = agent_1_reward
+
         # log learning progress
+        # individual LP
         for goal, lp in agent_0_info.get("learning_progress", {}).items():
             episode.custom_metrics["lp agent_0 " + goal] = lp
+            episode.media["lp_agent_0_" + goal] = lp
         for goal, lp in agent_1_info.get("learning_progress", {}).items():
             episode.custom_metrics["lp agent_1 " + goal] = lp
+            episode.media["lp_agent_1_" + goal] = lp
+        for goal, competence in agent_0_info.get("competence", {}).items():
+            episode.custom_metrics["competence agent_0 " + goal] = competence
+            episode.media["competence_agent_0_" + goal] = competence
+        for goal, lp in agent_1_info.get("competence", {}).items():
+            episode.custom_metrics["competence agent_1 " + goal] = competence
+            episode.media["competence_agent_1_" + goal] = competence
+        # joint LP
+        episode.media["lp_matrix_agent_0"] = agent_0_info.get("joint_learning_progress")
+        episode.media["lp_matrix_agent_1"] = agent_1_info.get("joint_learning_progress")
+        episode.media["competence_matrix_agent_0"] = agent_0_info.get(
+            "joint_competence"
+        )
+        episode.media["competence_matrix_agent_1"] = agent_1_info.get(
+            "joint_competence"
+        )
 
         # log reward per goal (super hacky way to encode them but it works)
         # goal_000, goal_010, etc

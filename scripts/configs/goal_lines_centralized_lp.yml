@@ -6,5 +6,5 @@ env_config:
   centralized: True
   continuous: False
   joint_learning_progress: 0
-  learning_progress: 0
-  update_lp: 500
+  learning_progress: 0.4
+  update_lp: 250

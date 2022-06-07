@@ -6,9 +6,12 @@ import imgc_marl.envs.multiagent as multiagent
 import imgc_marl.envs.single_agent as single_agent
 import numpy as np
 import yaml
-from imgc_marl.callbacks import (GoalLinesCallback, after_training_eval_rllib,
-                                 goal_lines_last_callback,
-                                 legacy_after_training_eval_rllib)
+from imgc_marl.callbacks import (
+    GoalLinesCallback,
+    after_training_eval_rllib,
+    goal_lines_last_callback,
+    legacy_after_training_eval_rllib,
+)
 from imgc_marl.evaluation import custom_eval_function
 from imgc_marl.utils import keep_relevant_results
 from ray.rllib.agents.ppo import DEFAULT_CONFIG, PPOTrainer
@@ -73,6 +76,7 @@ def train(environment, config):
 
     elif environment == "goal_lines":
         config["horizon"] = multiagent.GOAL_LINES_TIMELIMIT
+        config["rollout_fragment_length"] = config["horizon"]
         config["env_config"] = user_config["env_config"]
         config["callbacks"] = GoalLinesCallback
         config["multiagent"] = {

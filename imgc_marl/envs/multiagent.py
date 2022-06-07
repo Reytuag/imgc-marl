@@ -225,6 +225,8 @@ class GoalLinesEnv(MultiAgentEnv):
         self.centralized = config.get("centralized", False)
         # If use learning progress or not. learning_progress is the epsilon value in exploration (0 acts as a flag for not using LP)
         self.learning_progress = config.get("learning_progress", 0)
+        # If use joint learning progress or not.
+        self.joint_learning_progress = config.get("joint_learning_progress", 0)
         # Number of episodes for updating LP
         self.update_lp = config.get("update_lp", 100)
         # If goal is fixed or might be updated
@@ -248,30 +250,6 @@ class GoalLinesEnv(MultiAgentEnv):
         # Create playground
         # One room with 3 goal zones
         self.playground = SingleRoom(size=(400, 400))
-        # zone_0 = MultiAgentRewardZone(
-        #     reward=1,
-        #     physical_shape="rectangle",
-        #     texture=[255, 0, 0],
-        #     size=(25, 150),
-        #     name="001",
-        # )
-        # zone_1 = MultiAgentRewardZone(
-        #     reward=100,
-        #     physical_shape="rectangle",
-        #     texture=[0, 0, 255],
-        #     size=(25, 150),
-        #     name="010",
-        # )
-        # zone_2 = MultiAgentRewardZone(
-        #     reward=10_000,
-        #     physical_shape="rectangle",
-        #     texture=[255, 255, 255],
-        #     size=(25, 150),
-        #     name="100",
-        # )
-        # self.playground.add_element(zone_0, ((125, 200), 0))
-        # self.playground.add_element(zone_1, ((200, 200), 0))
-        # self.playground.add_element(zone_2, ((275, 200), 0))
         zone_0 = MultiAgentRewardZone(
             reward=1,
             physical_shape="rectangle",
@@ -300,13 +278,6 @@ class GoalLinesEnv(MultiAgentEnv):
         # Add agents
         self._agent_ids = set()
 
-        # sampler1 = CoordinateSampler((200, 50), area_shape="rectangle", size=(400, 100))
-        # sampler2 = CoordinateSampler(
-        #     (200, 350), area_shape="rectangle", size=(400, 100)
-        # )
-        # sampler3 = CoordinateSampler((50, 200), area_shape="rectangle", size=(25, 200))
-        # sampler4 = CoordinateSampler((350, 200), area_shape="rectangle", size=(25, 200))
-        # agent_sampler = MetaSampler([sampler1, sampler2, sampler3, sampler4])
         agent_sampler = CoordinateSampler(
             (200, 200), area_shape="rectangle", size=(300, 300)
         )
@@ -334,19 +305,20 @@ class GoalLinesEnv(MultiAgentEnv):
         agent.learning_progress = {
             "".join(str(t) for t in goal): 0.0 for goal in self.goal_space
         }
-        # Old LP
-        # agent.competence = {
-        #     "".join(str(t) for t in goal): 0.0 for goal in self.goal_space
-        # }
-        # New LP
         agent.competence = {
-            "".join(str(t) for t in goal): collections.deque(maxlen=2)
-            for goal in self.goal_space
+            "".join(str(t) for t in goal): 0.0 for goal in self.goal_space
         }
         agent.reward_list = {
             "".join(str(t) for t in goal): [] for goal in self.goal_space
         }
-        agent.counts = {"".join(str(t) for t in goal): 0 for goal in self.goal_space}
+        agent.joint_learning_progress = np.zeros(
+            (self.goal_space_dim, self.goal_space_dim)
+        )
+        agent.joint_competence = np.zeros((self.goal_space_dim, self.goal_space_dim))
+        agent.joint_reward_list = {
+            i: {i: [] for i in range(self.goal_space_dim)}
+            for i in range(self.goal_space_dim)
+        }
         self.playground.add_agent(agent, agent_sampler)
         self._agent_ids.add("agent_0")
         # Agent 1
@@ -372,19 +344,20 @@ class GoalLinesEnv(MultiAgentEnv):
         agent.learning_progress = {
             "".join(str(t) for t in goal): 0.0 for goal in self.goal_space
         }
-        # Old LP
-        # agent.competence = {
-        #     "".join(str(t) for t in goal): 0.0 for goal in self.goal_space
-        # }
-        # New LP
         agent.competence = {
-            "".join(str(t) for t in goal): collections.deque(maxlen=2)
-            for goal in self.goal_space
+            "".join(str(t) for t in goal): 0.0 for goal in self.goal_space
         }
         agent.reward_list = {
             "".join(str(t) for t in goal): [] for goal in self.goal_space
         }
-        agent.counts = {"".join(str(t) for t in goal): 0 for goal in self.goal_space}
+        agent.joint_learning_progress = np.zeros(
+            (self.goal_space_dim, self.goal_space_dim)
+        )
+        agent.joint_competence = np.zeros((self.goal_space_dim, self.goal_space_dim))
+        agent.joint_reward_list = {
+            i: {i: [] for i in range(self.goal_space_dim)}
+            for i in range(self.goal_space_dim)
+        }
         self.playground.add_agent(agent, agent_sampler)
         self._agent_ids.add("agent_1")
 
@@ -519,27 +492,57 @@ class GoalLinesEnv(MultiAgentEnv):
             if done and not self.fixed_goal:
                 # If self.fixed_goal we are in evaluation mode, and don't want to update LP
                 agent_goal_name = "".join(str(t) for t in agent.goal)
-                agent.counts[agent_goal_name] += 1
-                # OLD LP
-                # agent.learning_progress[agent_goal_name] = (
-                #     rewards[agent.name] - agent.competence[agent_goal_name]
-                # ) / agent.counts[agent_goal_name]
-                # agent.competence[agent_goal_name] += agent.learning_progress[
-                #     agent_goal_name
-                # ]
-                # NEW LP
-                agent.reward_list[agent_goal_name].append(rewards[agent.name])
-                if agent.counts[agent_goal_name] % self.update_lp == 0:
-                    assert len(agent.reward_list[agent_goal_name]) == self.update_lp
-                    agent.competence[agent_goal_name].append(
-                        np.mean(agent.reward_list[agent_goal_name])
+                agent.reward_list[agent_goal_name].append(reward)
+                # LP
+                if len(agent.reward_list[agent_goal_name]) >= self.update_lp:
+                    agent.competence[agent_goal_name] = np.mean(
+                        agent.reward_list[agent_goal_name][-self.update_lp :]
                     )
-                    agent.learning_progress[agent_goal_name] = (
-                        agent.competence[agent_goal_name][-1]
-                        - agent.competence[agent_goal_name][0]
-                    )
-                    agent.reward_list[agent_goal_name] = []
+                    if len(agent.reward_list[agent_goal_name]) >= 2 * self.update_lp:
+                        agent.learning_progress[agent_goal_name] = agent.competence[
+                            agent_goal_name
+                        ] - np.mean(
+                            agent.reward_list[agent_goal_name][
+                                -2 * self.update_lp : -self.update_lp
+                            ]
+                        )
                 info[agent.name]["learning_progress"] = agent.learning_progress
+                info[agent.name]["competence"] = agent.competence
+
+                # Joint LP
+                agent_goal = self.goal_space.index(agent.goal)
+                other_agent = [a for a in self.playground.agents if a != agent][0]
+                other_agent_goal = self.goal_space.index(other_agent.goal)
+                agent.joint_reward_list[agent_goal][other_agent_goal].append(
+                    rewards[agent.name]
+                )
+                if (
+                    len(agent.joint_reward_list[agent_goal][other_agent_goal])
+                    >= self.update_lp
+                ):
+                    agent.joint_competence[agent_goal][other_agent_goal] = np.mean(
+                        agent.joint_reward_list[agent_goal][other_agent_goal][
+                            -self.update_lp :
+                        ]
+                    )
+                    if (
+                        len(agent.joint_reward_list[agent_goal][other_agent_goal])
+                        >= 2 * self.update_lp
+                    ):
+                        agent.joint_learning_progress[agent_goal][
+                            other_agent_goal
+                        ] = agent.joint_competence[agent_goal][
+                            other_agent_goal
+                        ] - np.mean(
+                            agent.joint_reward_list[agent_goal][other_agent_goal][
+                                -2 * self.update_lp : -self.update_lp
+                            ]
+                        )
+                info[agent.name][
+                    "joint_learning_progress"
+                ] = agent.joint_learning_progress
+                info[agent.name]["joint_competence"] = agent.joint_competence
+
         # Agents that are done are deleted from the list of active agents
         [
             self._active_agents.remove(agent)
@@ -583,7 +586,29 @@ class GoalLinesEnv(MultiAgentEnv):
         # Each agent samples its own goal if not fixed
         if not self.fixed_goal:
             if self.centralized:
-                goal = self.goal_space[np.random.randint(0, self.goal_space_dim)]
+                if (
+                    self.learning_progress
+                    and np.random.random() >= self.learning_progress
+                ):
+                    # Centralized LP strategy
+                    sum_lp = [
+                        l1 + l2
+                        for l1, l2 in zip(
+                            self.playground.agents[0].learning_progress.values(),
+                            self.playground.agents[1].learning_progress.values(),
+                        )
+                    ]
+                    scale_factor = sum([abs(lp) for lp in sum_lp])
+                    if scale_factor == 0:
+                        weights = [1 / self.goal_space_dim for _ in self.goal_space]
+                    else:
+                        weights = [abs(w) / scale_factor for w in sum_lp]
+                    goal = self.goal_space[
+                        np.random.choice(range(self.goal_space_dim), 1, p=weights)[0]
+                    ]
+                else:
+                    # Centralized uniform (or e-greedy if LP)
+                    goal = self.goal_space[np.random.randint(0, self.goal_space_dim)]
                 for agent in self.playground.agents:
                     agent.goal = goal
             elif self.learning_progress:
@@ -606,6 +631,25 @@ class GoalLinesEnv(MultiAgentEnv):
                                 abs(w) / scale_factor
                                 for w in agent.learning_progress.values()
                             ]
+                        agent.goal = self.goal_space[
+                            np.random.choice(range(self.goal_space_dim), 1, p=weights)[
+                                0
+                            ]
+                        ]
+            elif self.joint_learning_progress:
+                for agent in self.playground.agents:
+                    # epsilon greedy
+                    if np.random.random() < self.joint_learning_progress:
+                        agent.goal = self.goal_space[
+                            np.random.randint(0, self.goal_space_dim)
+                        ]
+                    else:
+                        lps = np.max(abs(agent.joint_learning_progress), axis=1)
+                        scale_factor = abs(lps).sum()
+                        if scale_factor == 0:
+                            weights = [1 / self.goal_space_dim for _ in self.goal_space]
+                        else:
+                            weights = abs(lps / scale_factor)
                         agent.goal = self.goal_space[
                             np.random.choice(range(self.goal_space_dim), 1, p=weights)[
                                 0
