@@ -23,7 +23,7 @@ from ray.tune.logger import pretty_print
 @click.option(
     "--environment",
     type=click.Choice(
-        ["single_agent", "basic_marl", "goal_lines", "scaled_goal_lines"],
+        ["single_agent", "basic_marl", "goal_lines"],
         case_sensitive=True,
     ),
 )
@@ -102,32 +102,6 @@ def train(environment, config):
         }
         trainer = PPOTrainer(config=config, env=multiagent.GoalLinesEnv)
 
-    elif environment == "scaled_goal_lines":
-        config["horizon"] = multiagent.GOAL_LINES_TIMELIMIT
-        config["env_config"] = user_config["env_config"]
-        config["callbacks"] = GoalLinesCallback
-        config["multiagent"] = {
-            "policies": {
-                "agent_0": PolicySpec(
-                    policy_class=None, observation_space=None, action_space=None
-                ),
-                "agent_1": PolicySpec(
-                    policy_class=None, observation_space=None, action_space=None
-                ),
-            },
-            "policy_mapping_fn": lambda agent_id: "agent_0"
-            if agent_id.startswith("agent_0")
-            else "agent_1",
-        }
-        config["custom_eval_function"] = custom_eval_function
-        eval_env = multiagent.ScaledGoalLinesEnv(config["env_config"])
-        goal_space = eval_env.goal_space
-        goal_space_dim = eval_env.goal_space_dim
-        config["evaluation_config"] = {
-            "eval_goals": [{"agent_0": i, "agent_1": i} for i in range(goal_space_dim)]
-        }
-        trainer = PPOTrainer(config=config, env=multiagent.ScaledGoalLinesEnv)
-
     # Train for training_steps iterations. A training iteration includes
     # parallel sample collection by the environment workers as well as
     # loss calculation on the collected batch and a model update.
@@ -149,7 +123,7 @@ def train(environment, config):
     # End of training callbacks + evaluation
     # restoring best model from training
     trainer.restore(save_path)
-    if environment == "goal_lines" or environment == "scaled_goal_lines":
+    if environment == "goal_lines":
         goal_lines_last_callback(trainer, goal_space_dim)
         after_training_eval_rllib(
             trainer,
