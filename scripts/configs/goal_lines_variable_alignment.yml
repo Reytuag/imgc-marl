@@ -1,0 +1,11 @@
+training:
+  training_steps: 1000
+  num_workers: 0
+seed: 23
+env_config:
+  centralized: False
+  continuous: False
+  joint_learning_progress: 0
+  learning_progress: 0
+  double_condition: False
+  alignment_percentage: 0.09

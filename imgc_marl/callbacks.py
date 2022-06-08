@@ -70,7 +70,7 @@ class GoalLinesCallback(DefaultCallbacks):
         for goal, competence in agent_0_info.get("competence", {}).items():
             episode.custom_metrics["competence agent_0 " + goal] = competence
             episode.media["competence_agent_0_" + goal] = competence
-        for goal, lp in agent_1_info.get("competence", {}).items():
+        for goal, competence in agent_1_info.get("competence", {}).items():
             episode.custom_metrics["competence agent_1 " + goal] = competence
             episode.media["competence_agent_1_" + goal] = competence
         # joint LP

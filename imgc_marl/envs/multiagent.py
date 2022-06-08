@@ -227,9 +227,13 @@ class GoalLinesEnv(MultiAgentEnv):
         # If use joint learning progress or not.
         self.joint_learning_progress = config.get("joint_learning_progress", 0)
         # Number of episodes for updating LP
-        self.update_lp = config.get("update_lp", 100)
+        self.update_lp = config.get("update_lp", 500)
         # If goal is fixed or might be updated
         self.fixed_goal = False
+        # If policies are conditioned on both goals
+        self.double_condition = config.get("double_condition", False)
+        # If independent agents might get aligned sometimes
+        self.alignment_percentage = config.get("alignment_percentage", 0.0)
 
         # Goal space
         self.goal_space = [
@@ -390,26 +394,50 @@ class GoalLinesEnv(MultiAgentEnv):
             )
 
         # Continuous observation space + goal representation as ohe
+        # if double condition (we condition on both goals) obs space + other goal ohe + own goal ohe
         number_of_elements = len(self.playground.elements) + 1
-        self.observation_space = spaces.Box(
-            low=np.hstack(
-                (
-                    np.array(
-                        [[0, -2 * np.pi] for i in range(number_of_elements)]
-                    ).flatten(),
-                    np.zeros(self.goal_repr_dim),
-                )
-            ),
-            high=np.hstack(
-                (
-                    np.array(
-                        [[1, 2 * np.pi] for i in range(number_of_elements)]
-                    ).flatten(),
-                    np.ones(self.goal_repr_dim),
-                )
-            ),
-            dtype=np.float64,
-        )
+        if not self.double_condition:
+            self.observation_space = spaces.Box(
+                low=np.hstack(
+                    (
+                        np.array(
+                            [[0, -2 * np.pi] for i in range(number_of_elements)]
+                        ).flatten(),
+                        np.zeros(self.goal_repr_dim),
+                    )
+                ),
+                high=np.hstack(
+                    (
+                        np.array(
+                            [[1, 2 * np.pi] for i in range(number_of_elements)]
+                        ).flatten(),
+                        np.ones(self.goal_repr_dim),
+                    )
+                ),
+                dtype=np.float64,
+            )
+        else:
+            self.observation_space = spaces.Box(
+                low=np.hstack(
+                    (
+                        np.array(
+                            [[0, -2 * np.pi] for i in range(number_of_elements)]
+                        ).flatten(),
+                        np.zeros(self.goal_repr_dim),
+                        np.zeros(self.goal_repr_dim),
+                    )
+                ),
+                high=np.hstack(
+                    (
+                        np.array(
+                            [[1, 2 * np.pi] for i in range(number_of_elements)]
+                        ).flatten(),
+                        np.ones(self.goal_repr_dim),
+                        np.ones(self.goal_repr_dim),
+                    )
+                ),
+                dtype=np.float64,
+            )
 
         # Mapping to keep consistent coordinates of observations for the same objects
         # Elements will have the first coordinates and then the agent
@@ -428,8 +456,14 @@ class GoalLinesEnv(MultiAgentEnv):
         obs = dict()
         for agent in self._active_agents:
             agent_obs = np.zeros(self.observation_space.shape, dtype=np.float32)
-            # append agents goal at the end of the obs
+            # append own agents goal at the end of the obs
             agent_obs[-self.goal_repr_dim :] = agent.goal
+            if self.double_condition:
+                # Append other's agent goal before own goal
+                other_agent = [a for a in self.playground.agents if a != agent][0]
+                agent_obs[
+                    -2 * self.goal_repr_dim : -self.goal_repr_dim
+                ] = other_agent.goal
             raw_obs = list(agent.observations.values())[0]
             for raw_o in raw_obs:
                 coordinate = agent.COORDINATE_MAP[raw_o.entity]
@@ -584,7 +618,7 @@ class GoalLinesEnv(MultiAgentEnv):
         self._active_agents = self.playground.agents.copy()
         # Each agent samples its own goal if not fixed
         if not self.fixed_goal:
-            if self.centralized:
+            if self.centralized or np.random.random() < self.alignment_percentage:
                 if (
                     self.learning_progress
                     and np.random.random() >= self.learning_progress
@@ -656,10 +690,29 @@ class GoalLinesEnv(MultiAgentEnv):
                         ]
             else:
                 # independent uniform sampling
+
+                # # Uncomment to only allow incompatible goals
+                # incompatible_goals = True
+                # while incompatible_goals:
+                #     for agent in self.playground.agents:
+                #         agent.goal = self.goal_space[
+                #             np.random.randint(0, self.goal_space_dim)
+                #         ]
+                #     if (
+                #         np.bitwise_or(
+                #             self.playground.agents[0].goal,
+                #             self.playground.agents[1].goal,
+                #         ).sum()
+                #         <= 2
+                #     ):
+                #         incompatible_goals = False
+                #
+                # Uncomment to allow all gols during training
                 for agent in self.playground.agents:
                     agent.goal = self.goal_space[
                         np.random.randint(0, self.goal_space_dim)
                     ]
+
         self.engine.elapsed_time = 0
         self.episodes += 1
         self.engine.update_observations()
