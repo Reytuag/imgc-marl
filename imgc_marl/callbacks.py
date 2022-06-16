@@ -308,3 +308,60 @@ def after_training_eval_rllib(
     print(results)
     clip = moviepy.video.io.ImageSequenceClip.ImageSequenceClip(frames, fps=30)
     clip.write_videofile(os.path.join(trainer.logdir, "trained_agent.mp4"))
+
+
+class NewEnvCallback(DefaultCallbacks):
+    def on_episode_end(
+        self,
+        *,
+        worker: RolloutWorker,
+        base_env: BaseEnv,
+        policies: Dict[str, Policy],
+        episode: Episode,
+        env_index: int,
+        **kwargs,
+    ):
+        goal_space = base_env.envs[0].goal_space
+        goal_repr_dim = base_env.envs[0].goal_repr_dim
+        agent_0_goal = episode.last_observation_for("agent_0")[-goal_repr_dim:].astype(
+            int
+        )
+        agent_0_goal_name = "".join(str(t) for t in agent_0_goal)
+        agent_0_reward = episode.last_reward_for("agent_0")
+        agent_1_goal = episode.last_observation_for("agent_1")[-goal_repr_dim:].astype(
+            int
+        )
+        agent_1_goal_name = "".join(str(t) for t in agent_1_goal)
+        agent_1_reward = episode.last_reward_for("agent_1")
+
+        # log reward per goal and per agent-goal
+        episode.custom_metrics[
+            "reward for agent 0 " + agent_0_goal_name
+        ] = agent_0_reward
+        episode.custom_metrics[
+            "reward for agent 1 " + agent_1_goal_name
+        ] = agent_1_reward
+
+        if np.all(agent_0_goal == agent_1_goal):
+            # If both agents had the same goal, log the mean of the rewards
+            episode.custom_metrics["reward for goal " + agent_0_goal_name] = (
+                agent_0_reward + agent_1_reward
+            ) / 2
+        else:
+            # If agents had different goals, log each of them separately
+            episode.custom_metrics[
+                "reward for goal " + agent_0_goal_name
+            ] = agent_0_reward
+            episode.custom_metrics[
+                "reward for goal " + agent_1_goal_name
+            ] = agent_1_reward
+
+        # log which goal was sampled
+        agent_0_goal_index = [
+            i for i, g in enumerate(goal_space) if all(agent_0_goal == g)
+        ][0]
+        episode.hist_data["agent 0 goal"] = [agent_0_goal_index]
+        agent_1_goal_index = [
+            i for i, g in enumerate(goal_space) if all(agent_1_goal == g)
+        ][0]
+        episode.hist_data["agent 1 goal"] = [agent_1_goal_index]

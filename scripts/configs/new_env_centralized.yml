@@ -1,0 +1,7 @@
+training:
+  training_steps: 250
+  num_workers: 6
+seed: 99
+env_config:
+  centralized: True
+  subgoal: True

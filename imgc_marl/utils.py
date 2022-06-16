@@ -86,6 +86,7 @@ def keep_relevant_results(results):
         "training_iteration",
         "time_this_iter_s",
         "time_total_s",
+        "timers",
     ]
 
     keep_custom_keys = [
@@ -95,6 +96,24 @@ def keep_relevant_results(results):
         "reward for individual goal_mean",
         "reward for individual goal_min",
         "reward for individual goal_max",
+        # "reward for goal 0001_mean",
+        # "reward for goal 0001_min",
+        # "reward for goal 0001_max",
+        # "reward for goal 0010_mean",
+        # "reward for goal 0010_min",
+        # "reward for goal 0010_max",
+        # "reward for goal 0100_mean",
+        # "reward for goal 0100_min",
+        # "reward for goal 0100_max",
+        # "reward for goal 1000_mean",
+        # "reward for goal 1000_min",
+        # "reward for goal 1000_max",
+        "reward for goal 01_mean",
+        "reward for goal 01_min",
+        "reward for goal 01_max",
+        "reward for goal 10_mean",
+        "reward for goal 10_min",
+        "reward for goal 10_max",
     ]
     results_to_print["custom_metrics"] = {
         key: value

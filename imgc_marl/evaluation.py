@@ -49,6 +49,24 @@ def custom_eval_function(trainer, eval_workers: WorkerSet) -> Dict:
         "reward for individual goal_mean",
         "reward for individual goal_min",
         "reward for individual goal_max",
+        "reward for goal 01_mean",
+        "reward for goal 01_min",
+        "reward for goal 01_max",
+        "reward for goal 10_mean",
+        "reward for goal 10_min",
+        "reward for goal 10_max"
+        # "reward for goal 0001_mean",
+        # "reward for goal 0001_min",
+        # "reward for goal 0001_max",
+        # "reward for goal 0010_mean",
+        # "reward for goal 0010_min",
+        # "reward for goal 0010_max",
+        # "reward for goal 0100_mean",
+        # "reward for goal 0100_min",
+        # "reward for goal 0100_max",
+        # "reward for goal 1000_mean",
+        # "reward for goal 1000_min",
+        # "reward for goal 1000_max",
     ]
     metrics_to_print["custom_metrics"] = {
         key: value
