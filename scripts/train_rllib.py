@@ -1,24 +1,23 @@
+import os
 import random
+import tempfile
 from copy import deepcopy
+from datetime import datetime
 
 import click
 import imgc_marl.envs.multiagent as multiagent
 import imgc_marl.envs.single_agent as single_agent
 import numpy as np
 import yaml
-from imgc_marl.callbacks import (
-    GoalLinesCallback,
-    LargeGoalLinesCallback,
-    NewEnvCallback,
-    after_training_eval_rllib,
-    goal_lines_last_callback,
-    legacy_after_training_eval_rllib,
-)
+from imgc_marl.callbacks import (GoalLinesCallback, LargeGoalLinesCallback,
+                                 NewEnvCallback, after_training_eval_rllib,
+                                 goal_lines_last_callback,
+                                 legacy_after_training_eval_rllib)
 from imgc_marl.evaluation import custom_eval_function
 from imgc_marl.utils import keep_relevant_results
 from ray.rllib.agents.ppo import DEFAULT_CONFIG, PPOTrainer
 from ray.rllib.policy.policy import PolicySpec
-from ray.tune.logger import pretty_print
+from ray.tune.logger import UnifiedLogger, pretty_print
 
 
 @click.command()
@@ -30,9 +29,23 @@ from ray.tune.logger import pretty_print
     ),
 )
 @click.argument("config")
+@click.argument(
+    "custom_logdir", required=False, default="/home/elias/ray_results", type=str
+)
 @click.argument("seed", required=False, default=None, type=int)
-def train(environment, config, seed):
+def train(environment, config, custom_logdir, seed):
     """Training loop using RLlib"""
+
+    def custom_logger_creator(config):
+        """Creates a Unified logger with a default logdir prefix
+        containing the agent name and the env id
+        """
+        timestr = datetime.today().strftime("%Y-%m-%d_%H-%M-%S")
+
+        if not os.path.exists(custom_logdir):
+            os.makedirs(custom_logdir)
+        logdir = tempfile.mkdtemp(prefix=timestr, dir=custom_logdir)
+        return UnifiedLogger(config, logdir, loggers=None)
 
     # Loading user config
     with open(config, "r") as f:
@@ -166,7 +179,11 @@ def train(environment, config, seed):
             "eval_goals": [{"agent_0": i, "agent_1": i} for i in range(goal_space_dim)],
             "record_env": "videos",
         }
-        trainer = PPOTrainer(config=config, env=multiagent.VeryLargeGoalLinesEnv)
+        trainer = PPOTrainer(
+            config=config,
+            env=multiagent.VeryLargeGoalLinesEnv,
+            logger_creator=custom_logger_creator,
+        )
 
     # Train for training_steps iterations. A training iteration includes
     # parallel sample collection by the environment workers as well as
