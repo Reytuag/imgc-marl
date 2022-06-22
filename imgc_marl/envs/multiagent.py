@@ -3,6 +3,8 @@ from typing import Dict
 
 os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = ""
 
+from itertools import combinations
+
 import cv2
 import numpy as np
 from gym import spaces
@@ -15,12 +17,12 @@ from simple_playgrounds.common.position_utils import CoordinateSampler
 from simple_playgrounds.common.texture import UniqueCenteredStripeTexture
 from simple_playgrounds.device.sensors.semantic import PerfectSemantic
 from simple_playgrounds.element.elements.activable import (
-    RewardOnActivation,
     OpenCloseSwitch,
+    RewardOnActivation,
 )
 from simple_playgrounds.element.elements.basic import Wall
 from simple_playgrounds.engine import Engine
-from simple_playgrounds.playground.layouts import SingleRoom, LineRooms
+from simple_playgrounds.playground.layouts import LineRooms, SingleRoom
 
 font = cv2.FONT_HERSHEY_SIMPLEX
 
@@ -28,6 +30,7 @@ SIMPLE_PLAYGROUND = (300, 300)
 SIMPLE_TIMELIMIT = 100
 GOAL_LINES_TIMELIMIT = 250
 NEW_ENV_TIMELIMIT = 250
+LARGE_GOAL_LINES_TIMELIMIT = 500
 
 
 class OneBoxEnv(MultiAgentEnv):
@@ -1057,6 +1060,701 @@ class NewEnv(GoalLinesEnv):
                     agent.goal = self.goal_space[
                         np.random.randint(0, self.goal_space_dim)
                     ]
+        self.engine.elapsed_time = 0
+        self.episodes += 1
+        self.engine.update_observations()
+        self.time_steps = 0
+        observations = self.process_obs()
+        return observations
+
+
+class LargeGoalLinesEnv(GoalLinesEnv):
+    metadata = {"render.modes": ["human", "rgb_array"]}
+
+    def __init__(self, config):
+        super(MultiAgentEnv, self).__init__()
+
+        # If action space is continuous or discrete
+        self.continuous = config["continuous"]
+        # If agents should sample goals centralized or decentralized
+        self.centralized = config.get("centralized", False)
+        # If use learning progress or not. learning_progress is the epsilon value in exploration (0 acts as a flag for not using LP)
+        self.learning_progress = config.get("learning_progress", 0)
+        # If use joint learning progress or not.
+        self.joint_learning_progress = config.get("joint_learning_progress", 0)
+        # Number of episodes for updating LP
+        self.update_lp = config.get("update_lp", 500)
+        # If goal is fixed or might be updated
+        self.fixed_goal = False
+        # If policies are conditioned on both goals
+        self.double_condition = config.get("double_condition", False)
+        # If independent agents might get aligned sometimes
+        self.alignment_percentage = config.get("alignment_percentage", 0.0)
+
+        # Goal space
+        landmarks = 4
+        # self.goal_space = np.eye(landmarks, dtype=np.uint8).tolist()
+        # self.goal_space += (
+        #     np.array(list(combinations(self.goal_space, 2))).sum(1).tolist()
+        # )
+        individual_goals = np.eye(landmarks, dtype=np.uint8).tolist()
+        self.goal_space = (
+            np.array(list(combinations(individual_goals, 2))).sum(1).tolist()
+        )
+        self.goal_space_dim = len(self.goal_space)
+        self.goal_repr_dim = landmarks
+
+        self.episodes = 0
+        self.time_steps = 0
+
+        # Create playground
+        self.playground = SingleRoom(size=(400, 400))
+        zone_0 = MultiAgentRewardZone(
+            reward=1,
+            physical_shape="rectangle",
+            texture=[255, 0, 0],
+            size=(100, 20),
+        )
+        zone_1 = MultiAgentRewardZone(
+            reward=100,
+            physical_shape="rectangle",
+            texture=[0, 255, 0],
+            size=(100, 20),
+        )
+        zone_2 = MultiAgentRewardZone(
+            reward=10_000,
+            physical_shape="rectangle",
+            texture=[255, 255, 255],
+            size=(100, 20),
+        )
+        zone_3 = MultiAgentRewardZone(
+            reward=1_000_000,
+            physical_shape="rectangle",
+            texture=[0, 255, 255],
+            size=(100, 20),
+        )
+        self.playground.add_element(zone_0, ((50, 390), 0))
+        self.playground.add_element(zone_1, ((50, 10), 0))
+        self.playground.add_element(zone_2, ((350, 10), 0))
+        self.playground.add_element(zone_3, ((350, 390), 0))
+
+        # Add agents
+        self._agent_ids = set()
+
+        agent_sampler = CoordinateSampler(
+            (200, 200), area_shape="rectangle", size=(300, 300)
+        )
+
+        # Agent 0
+        agent = BaseAgent(
+            controller=External(),
+            interactive=False,
+            name="agent_0",
+            texture=UniqueCenteredStripeTexture(
+                color=(0, 200, 0), color_stripe=(0, 0, 200), size_stripe=4
+            ),
+        )
+        ignore_elements = [agent.parts, agent.base_platform]
+        agent.add_sensor(
+            PerfectSemantic(
+                agent.base_platform,
+                invisible_elements=ignore_elements,
+                min_range=0,
+                max_range=400,
+                name="sensor",
+                normalize=True,
+            )
+        )
+        agent.learning_progress = {
+            "".join(str(t) for t in goal): 0.0 for goal in self.goal_space
+        }
+        agent.competence = {
+            "".join(str(t) for t in goal): 0.0 for goal in self.goal_space
+        }
+        agent.reward_list = {
+            "".join(str(t) for t in goal): [] for goal in self.goal_space
+        }
+        agent.joint_learning_progress = np.zeros(
+            (self.goal_space_dim, self.goal_space_dim)
+        )
+        agent.joint_competence = np.zeros((self.goal_space_dim, self.goal_space_dim))
+        agent.joint_reward_list = {
+            i: {i: [] for i in range(self.goal_space_dim)}
+            for i in range(self.goal_space_dim)
+        }
+        self.playground.add_agent(agent, agent_sampler)
+        self._agent_ids.add("agent_0")
+        # Agent 1
+        agent = BaseAgent(
+            controller=External(),
+            interactive=False,
+            name="agent_1",
+            texture=UniqueCenteredStripeTexture(
+                color=(0, 0, 200), color_stripe=(0, 200, 0), size_stripe=4
+            ),
+        )
+        ignore_elements = [agent.parts, agent.base_platform]
+        agent.add_sensor(
+            PerfectSemantic(
+                agent.base_platform,
+                invisible_elements=ignore_elements,
+                min_range=0,
+                max_range=400,
+                name="sensor",
+                normalize=True,
+            )
+        )
+        agent.learning_progress = {
+            "".join(str(t) for t in goal): 0.0 for goal in self.goal_space
+        }
+        agent.competence = {
+            "".join(str(t) for t in goal): 0.0 for goal in self.goal_space
+        }
+        agent.reward_list = {
+            "".join(str(t) for t in goal): [] for goal in self.goal_space
+        }
+        agent.joint_learning_progress = np.zeros(
+            (self.goal_space_dim, self.goal_space_dim)
+        )
+        agent.joint_competence = np.zeros((self.goal_space_dim, self.goal_space_dim))
+        agent.joint_reward_list = {
+            i: {i: [] for i in range(self.goal_space_dim)}
+            for i in range(self.goal_space_dim)
+        }
+        self.playground.add_agent(agent, agent_sampler)
+        self._agent_ids.add("agent_1")
+
+        # Init engine
+        self.engine = Engine(
+            playground=self.playground, time_limit=GOAL_LINES_TIMELIMIT
+        )
+
+        # Define action and observation space
+        actuators = agent.controller.controlled_actuators
+        if not self.continuous:
+            # Discrete action space
+            act_spaces = []
+            for actuator in actuators:
+                if isinstance(actuator, ContinuousActuator):
+                    act_spaces.append(3)
+                else:
+                    act_spaces.append(2)
+            self.action_space = spaces.MultiDiscrete(act_spaces)
+        else:
+            # Continuous action space
+            lows = []
+            highs = []
+            for actuator in actuators:
+                lows.append(actuator.min)
+                highs.append(actuator.max)
+            self.action_space = spaces.Box(
+                low=np.array(lows).astype(np.float32),
+                high=np.array(highs).astype(np.float32),
+                dtype=np.float32,
+            )
+
+        # Continuous observation space + goal representation as ohe
+        # if double condition (we condition on both goals) obs space + other goal ohe + own goal ohe
+        number_of_elements = len(self.playground.elements) + 1
+        if not self.double_condition:
+            self.observation_space = spaces.Box(
+                low=np.hstack(
+                    (
+                        np.array(
+                            [[0, -2 * np.pi] for i in range(number_of_elements)]
+                        ).flatten(),
+                        np.zeros(self.goal_repr_dim),
+                    )
+                ),
+                high=np.hstack(
+                    (
+                        np.array(
+                            [[1, 2 * np.pi] for i in range(number_of_elements)]
+                        ).flatten(),
+                        np.ones(self.goal_repr_dim),
+                    )
+                ),
+                dtype=np.float64,
+            )
+        else:
+            self.observation_space = spaces.Box(
+                low=np.hstack(
+                    (
+                        np.array(
+                            [[0, -2 * np.pi] for i in range(number_of_elements)]
+                        ).flatten(),
+                        np.zeros(self.goal_repr_dim),
+                        np.zeros(self.goal_repr_dim),
+                    )
+                ),
+                high=np.hstack(
+                    (
+                        np.array(
+                            [[1, 2 * np.pi] for i in range(number_of_elements)]
+                        ).flatten(),
+                        np.ones(self.goal_repr_dim),
+                        np.ones(self.goal_repr_dim),
+                    )
+                ),
+                dtype=np.float64,
+            )
+
+        # Mapping to keep consistent coordinates of observations for the same objects
+        # Elements will have the first coordinates and then the agent
+        for j, agent in enumerate(self.playground.agents):
+            agent.COORDINATE_MAP = {
+                element: 2 * i for i, element in enumerate(self.playground.elements)
+            }
+            agent.COORDINATE_MAP[self.playground.agents[j - 1].parts[0]] = (
+                len(self.playground.elements) * 2
+            )
+        # List of active agents, agents can exit early if completed their goal
+        self._active_agents = self.playground.agents.copy()
+
+    def compute_rewards(self):
+        """
+        If goal is individual, the agent must solve it by itself.
+        If goal is collective, it doesn't matter which of the two
+        goal zones an agent is touching (since both of them are
+        required)
+        """
+        individual_achieved_goals = {
+            "agent_0": np.zeros(self.goal_repr_dim, dtype=int),
+            "agent_1": np.zeros(self.goal_repr_dim, dtype=int),
+        }
+        rewards = {}
+        dones = {}
+        info = {}
+        # Computing individual achieved goals
+        for agent in self.playground.agents:
+            # Hack for identifying which goal is being activated by this agent
+            if agent.reward:
+                if agent.reward < 100:
+                    agent.reward = 1
+                elif agent.reward < 10_000:
+                    agent.reward = 2
+                elif agent.reward < 1_000_000:
+                    agent.reward = 3
+                else:
+                    agent.reward = 4
+                individual_achieved_goals[agent.name][agent.reward - 1] = 1
+        # Computing collective goal
+        collective_achieved_goal = np.bitwise_or.reduce(
+            np.vstack(
+                [
+                    individual_achieved_goals["agent_0"],
+                    individual_achieved_goals["agent_1"],
+                ]
+            ),
+            axis=0,
+        )
+        # Checking if achieved goal is desired goal (only for active agents)
+        for agent in self._active_agents:
+            if (
+                np.sum(agent.goal) > 1
+                and np.all(agent.goal == collective_achieved_goal)
+            ) or (np.all(agent.goal == individual_achieved_goals[agent.name])):
+                reward = 1
+            else:
+                reward = 0
+            rewards[agent.name] = reward
+            done = bool(reward) or self.playground.done or not self.engine.game_on
+            dones[agent.name] = done
+            # logging which goal line the agent achieved (-1 means no goal line)
+            info[agent.name] = {"goal_line": agent.reward - 1}
+            if done and not self.fixed_goal:
+                # If self.fixed_goal we are in evaluation mode, and don't want to update LP
+                agent_goal_name = "".join(str(t) for t in agent.goal)
+                agent.reward_list[agent_goal_name].append(reward)
+                # LP
+                if len(agent.reward_list[agent_goal_name]) >= self.update_lp:
+                    agent.competence[agent_goal_name] = np.mean(
+                        agent.reward_list[agent_goal_name][-self.update_lp :]
+                    )
+                    if len(agent.reward_list[agent_goal_name]) >= 2 * self.update_lp:
+                        agent.learning_progress[agent_goal_name] = agent.competence[
+                            agent_goal_name
+                        ] - np.mean(
+                            agent.reward_list[agent_goal_name][
+                                -2 * self.update_lp : -self.update_lp
+                            ]
+                        )
+                info[agent.name]["learning_progress"] = agent.learning_progress
+                info[agent.name]["competence"] = agent.competence
+
+                # Joint LP
+                agent_goal = self.goal_space.index(agent.goal)
+                other_agent = [a for a in self.playground.agents if a != agent][0]
+                other_agent_goal = self.goal_space.index(other_agent.goal)
+                agent.joint_reward_list[agent_goal][other_agent_goal].append(
+                    rewards[agent.name]
+                )
+                if (
+                    len(agent.joint_reward_list[agent_goal][other_agent_goal])
+                    >= self.update_lp
+                ):
+                    agent.joint_competence[agent_goal][other_agent_goal] = np.mean(
+                        agent.joint_reward_list[agent_goal][other_agent_goal][
+                            -self.update_lp :
+                        ]
+                    )
+                    if (
+                        len(agent.joint_reward_list[agent_goal][other_agent_goal])
+                        >= 2 * self.update_lp
+                    ):
+                        agent.joint_learning_progress[agent_goal][
+                            other_agent_goal
+                        ] = agent.joint_competence[agent_goal][
+                            other_agent_goal
+                        ] - np.mean(
+                            agent.joint_reward_list[agent_goal][other_agent_goal][
+                                -2 * self.update_lp : -self.update_lp
+                            ]
+                        )
+                info[agent.name][
+                    "joint_learning_progress"
+                ] = agent.joint_learning_progress
+                info[agent.name]["joint_competence"] = agent.joint_competence
+
+        # Agents that are done are deleted from the list of active agents
+        [
+            self._active_agents.remove(agent)
+            for agent in self._active_agents
+            if dones[agent.name]
+        ]
+        dones["__all__"] = all(dones.values())
+        return rewards, dones, info
+
+
+class VeryLargeGoalLinesEnv(GoalLinesEnv):
+    metadata = {"render.modes": ["human", "rgb_array"]}
+
+    def __init__(self, config):
+        super(MultiAgentEnv, self).__init__()
+
+        # If action space is continuous or discrete
+        self.continuous = config.get("continuous", False)
+        # If agents should sample goals centralized or decentralized
+        self.centralized = config.get("centralized", False)
+        # If goal is fixed or might be updated
+        self.fixed_goal = False
+        # If policies are conditioned on both goals
+        self.double_condition = config.get("double_condition", False)
+        # If independent agents might get aligned sometimes
+        self.alignment_percentage = config.get("alignment_percentage", 0.0)
+
+        # Goal space
+        landmarks = 6
+        # self.goal_space = np.eye(landmarks, dtype=np.uint8).tolist()
+        # self.goal_space += (
+        #     np.array(list(combinations(self.goal_space, 2))).sum(1).tolist()
+        # )
+        individual_goals = np.eye(landmarks, dtype=np.uint8).tolist()
+        self.goal_space = (
+            np.array(list(combinations(individual_goals, 2))).sum(1).tolist()
+        )
+        self.goal_space_dim = len(self.goal_space)
+        self.goal_repr_dim = landmarks
+
+        self.episodes = 0
+        self.time_steps = 0
+
+        # Create playground
+        self.playground = SingleRoom(size=(400, 400))
+        zone_0 = MultiAgentRewardZone(
+            reward=1e-4,
+            physical_shape="rectangle",
+            texture=[255, 0, 0],
+            size=(100, 20),
+        )
+        zone_1 = MultiAgentRewardZone(
+            reward=0.01,
+            physical_shape="rectangle",
+            texture=[0, 255, 0],
+            size=(20, 100),
+        )
+        zone_2 = MultiAgentRewardZone(
+            reward=1,
+            physical_shape="rectangle",
+            texture=[255, 255, 255],
+            size=(100, 20),
+        )
+        zone_3 = MultiAgentRewardZone(
+            reward=100,
+            physical_shape="rectangle",
+            texture=[0, 255, 255],
+            size=(100, 20),
+        )
+        zone_4 = MultiAgentRewardZone(
+            reward=10_000,
+            physical_shape="rectangle",
+            texture=[0, 0, 255],
+            size=(20, 100),
+        )
+        zone_5 = MultiAgentRewardZone(
+            reward=1_000_000,
+            physical_shape="rectangle",
+            texture=[150, 0, 200],
+            size=(100, 20),
+        )
+        self.playground.add_element(zone_0, ((50, 390), 0))
+        self.playground.add_element(zone_1, ((10, 200), 0))
+        self.playground.add_element(zone_2, ((50, 10), 0))
+        self.playground.add_element(zone_3, ((350, 10), 0))
+        self.playground.add_element(zone_4, ((390, 200), 0))
+        self.playground.add_element(zone_5, ((350, 390), 0))
+
+        # Add agents
+        self._agent_ids = set()
+
+        agent_sampler = CoordinateSampler(
+            (200, 200), area_shape="rectangle", size=(300, 300)
+        )
+
+        # Agent 0
+        agent = BaseAgent(
+            controller=External(),
+            interactive=False,
+            name="agent_0",
+            texture=UniqueCenteredStripeTexture(
+                color=(0, 200, 0), color_stripe=(0, 0, 200), size_stripe=4
+            ),
+        )
+        ignore_elements = [agent.parts, agent.base_platform]
+        agent.add_sensor(
+            PerfectSemantic(
+                agent.base_platform,
+                invisible_elements=ignore_elements,
+                min_range=0,
+                max_range=400,
+                name="sensor",
+                normalize=True,
+            )
+        )
+        self.playground.add_agent(agent, agent_sampler)
+        self._agent_ids.add("agent_0")
+        # Agent 1
+        agent = BaseAgent(
+            controller=External(),
+            interactive=False,
+            name="agent_1",
+            texture=UniqueCenteredStripeTexture(
+                color=(0, 0, 200), color_stripe=(0, 200, 0), size_stripe=4
+            ),
+        )
+        ignore_elements = [agent.parts, agent.base_platform]
+        agent.add_sensor(
+            PerfectSemantic(
+                agent.base_platform,
+                invisible_elements=ignore_elements,
+                min_range=0,
+                max_range=400,
+                name="sensor",
+                normalize=True,
+            )
+        )
+        self.playground.add_agent(agent, agent_sampler)
+        self._agent_ids.add("agent_1")
+
+        # Init engine
+        self.engine = Engine(
+            playground=self.playground, time_limit=LARGE_GOAL_LINES_TIMELIMIT
+        )
+
+        # Define action and observation space
+        actuators = agent.controller.controlled_actuators
+        if not self.continuous:
+            # Discrete action space
+            act_spaces = []
+            for actuator in actuators:
+                if isinstance(actuator, ContinuousActuator):
+                    act_spaces.append(3)
+                else:
+                    act_spaces.append(2)
+            self.action_space = spaces.MultiDiscrete(act_spaces)
+        else:
+            # Continuous action space
+            lows = []
+            highs = []
+            for actuator in actuators:
+                lows.append(actuator.min)
+                highs.append(actuator.max)
+            self.action_space = spaces.Box(
+                low=np.array(lows).astype(np.float32),
+                high=np.array(highs).astype(np.float32),
+                dtype=np.float32,
+            )
+
+        # Continuous observation space + goal representation as ohe
+        # if double condition (we condition on both goals) obs space + other goal ohe + own goal ohe
+        number_of_elements = len(self.playground.elements) + 1
+        if not self.double_condition:
+            self.observation_space = spaces.Box(
+                low=np.hstack(
+                    (
+                        np.array(
+                            [[0, -2 * np.pi] for i in range(number_of_elements)]
+                        ).flatten(),
+                        np.zeros(self.goal_repr_dim),
+                    )
+                ),
+                high=np.hstack(
+                    (
+                        np.array(
+                            [[1, 2 * np.pi] for i in range(number_of_elements)]
+                        ).flatten(),
+                        np.ones(self.goal_repr_dim),
+                    )
+                ),
+                dtype=np.float64,
+            )
+        else:
+            self.observation_space = spaces.Box(
+                low=np.hstack(
+                    (
+                        np.array(
+                            [[0, -2 * np.pi] for i in range(number_of_elements)]
+                        ).flatten(),
+                        np.zeros(self.goal_repr_dim),
+                        np.zeros(self.goal_repr_dim),
+                    )
+                ),
+                high=np.hstack(
+                    (
+                        np.array(
+                            [[1, 2 * np.pi] for i in range(number_of_elements)]
+                        ).flatten(),
+                        np.ones(self.goal_repr_dim),
+                        np.ones(self.goal_repr_dim),
+                    )
+                ),
+                dtype=np.float64,
+            )
+
+        # Mapping to keep consistent coordinates of observations for the same objects
+        # Elements will have the first coordinates and then the agent
+        for j, agent in enumerate(self.playground.agents):
+            agent.COORDINATE_MAP = {
+                element: 2 * i for i, element in enumerate(self.playground.elements)
+            }
+            agent.COORDINATE_MAP[self.playground.agents[j - 1].parts[0]] = (
+                len(self.playground.elements) * 2
+            )
+        # List of active agents, agents can exit early if completed their goal
+        self._active_agents = self.playground.agents.copy()
+
+    def compute_rewards(self):
+        """
+        If goal is individual, the agent must solve it by itself.
+        If goal is collective, it doesn't matter which of the two
+        goal zones an agent is touching (since both of them are
+        required)
+        """
+        individual_achieved_goals = {
+            "agent_0": np.zeros(self.goal_repr_dim, dtype=int),
+            "agent_1": np.zeros(self.goal_repr_dim, dtype=int),
+        }
+        rewards = {}
+        dones = {}
+        info = {}
+        # Computing individual achieved goals
+        for agent in self.playground.agents:
+            # Hack for identifying which goal is being activated by this agent
+            if agent.reward:
+                if agent.reward < 0.01:
+                    agent.reward = 1
+                elif agent.reward < 1:
+                    agent.reward = 2
+                elif agent.reward < 100:
+                    agent.reward = 3
+                elif agent.reward < 10_000:
+                    agent.reward = 4
+                elif agent.reward < 1_000_000:
+                    agent.reward = 5
+                else:
+                    agent.reward = 6
+                individual_achieved_goals[agent.name][agent.reward - 1] = 1
+        # Computing collective goal
+        collective_achieved_goal = np.bitwise_or.reduce(
+            np.vstack(
+                [
+                    individual_achieved_goals["agent_0"],
+                    individual_achieved_goals["agent_1"],
+                ]
+            ),
+            axis=0,
+        )
+        # Checking if achieved goal is desired goal (only for active agents)
+        for agent in self._active_agents:
+            if (
+                np.sum(agent.goal) > 1
+                and np.all(agent.goal == collective_achieved_goal)
+            ) or (np.all(agent.goal == individual_achieved_goals[agent.name])):
+                reward = 1
+            else:
+                reward = 0
+            rewards[agent.name] = reward
+            done = bool(reward) or self.playground.done or not self.engine.game_on
+            dones[agent.name] = done
+            # logging which goal line the agent achieved (-1 means no goal line)
+            info[agent.name] = {"goal_line": agent.reward - 1}
+
+        # Agents that are done are deleted from the list of active agents
+        [
+            self._active_agents.remove(agent)
+            for agent in self._active_agents
+            if dones[agent.name]
+        ]
+        dones["__all__"] = all(dones.values())
+        return rewards, dones, info
+
+    def reset(self):
+        self.engine.reset()
+        # All agents become active again
+        self._active_agents = self.playground.agents.copy()
+        # Each agent samples its own goal if not fixed
+        if not self.fixed_goal:
+            if self.centralized or np.random.random() < self.alignment_percentage:
+                # Centralized uniform (or e-greedy if LP)
+                goal = self.goal_space[np.random.randint(0, self.goal_space_dim)]
+                for agent in self.playground.agents:
+                    agent.goal = goal
+            else:
+                # independent uniform sampling
+
+                # # Uncomment to only allow compatible goals
+                # incompatible_goals = True
+                # while incompatible_goals:
+                #     for agent in self.playground.agents:
+                #         agent.goal = self.goal_space[
+                #             np.random.randint(0, self.goal_space_dim)
+                #         ]
+                #     if (
+                #         np.bitwise_or(
+                #             self.playground.agents[0].goal,
+                #             self.playground.agents[1].goal,
+                #         ).sum()
+                #         <= 2
+                #     ):
+                #         incompatible_goals = False
+                #
+                # # Uncomment to only allow same collective goals
+                # for agent in self.playground.agents:
+                #     agent.goal = self.goal_space[
+                #         np.random.randint(0, self.goal_space_dim)
+                #     ]
+                # if np.sum(self.playground.agents[0].goal) > 1:
+                #     self.playground.agents[1].goal = self.playground.agents[0].goal
+                # elif np.sum(self.playground.agents[1].goal) > 1:
+                #     self.playground.agents[0].goal = self.playground.agents[1].goal
+                #
+                #
+                # Uncomment to allow all gols during training
+                for agent in self.playground.agents:
+                    agent.goal = self.goal_space[
+                        np.random.randint(0, self.goal_space_dim)
+                    ]
+
         self.engine.elapsed_time = 0
         self.episodes += 1
         self.engine.update_observations()

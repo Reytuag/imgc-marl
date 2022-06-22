@@ -1,6 +1,6 @@
 training:
-  training_steps: 300
+  training_steps: 150
   num_workers: 6
 env_config:
-  centralized: False
+  centralized: True
   continuous: False

@@ -1,6 +1,7 @@
 training:
-  training_steps: 300
+  training_steps: 150
   num_workers: 6
 env_config:
   centralized: False
   continuous: False
+  double_condition: True

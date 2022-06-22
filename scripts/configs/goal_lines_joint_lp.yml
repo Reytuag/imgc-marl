@@ -1,10 +1,9 @@
 training:
-  training_steps: 1000
+  training_steps: 300
   num_workers: 0
-seed: 0
 env_config:
   centralized: False
   learning_progress: 0
-  joint_learning_progress: 0.2
-  update_lp: 25
+  joint_learning_progress: 0.3
+  update_lp: 100
   continuous: False

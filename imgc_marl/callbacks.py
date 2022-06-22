@@ -365,3 +365,74 @@ class NewEnvCallback(DefaultCallbacks):
             i for i, g in enumerate(goal_space) if all(agent_1_goal == g)
         ][0]
         episode.hist_data["agent 1 goal"] = [agent_1_goal_index]
+
+
+class LargeGoalLinesCallback(DefaultCallbacks):
+    def on_episode_start(
+        self,
+        *,
+        worker: RolloutWorker,
+        base_env: BaseEnv,
+        policies: Dict[str, Policy],
+        episode: Episode,
+        env_index: int,
+        **kwargs,
+    ):
+        for goal in base_env.envs[0].goal_space:
+            goal_name = "".join(str(t) for t in goal)
+            episode.hist_data["agent 0 position for " + goal_name] = []
+            episode.hist_data["agent 1 position for " + goal_name] = []
+        episode.hist_data["agent 0 goal"] = []
+        episode.hist_data["agent 1 goal"] = []
+
+    def on_episode_end(
+        self,
+        *,
+        worker: RolloutWorker,
+        base_env: BaseEnv,
+        policies: Dict[str, Policy],
+        episode: Episode,
+        env_index: int,
+        **kwargs,
+    ):
+        goal_space = base_env.envs[0].goal_space
+        goal_repr_dim = base_env.envs[0].goal_repr_dim
+        agent_0_info = episode.last_info_for("agent_0")
+        agent_1_info = episode.last_info_for("agent_1")
+        agent_0_goal = episode.last_observation_for("agent_0")[-goal_repr_dim:].astype(
+            int
+        )
+        agent_0_goal_name = "".join(str(t) for t in agent_0_goal)
+        agent_0_reward = episode.last_reward_for("agent_0")
+        agent_1_goal = episode.last_observation_for("agent_1")[-goal_repr_dim:].astype(
+            int
+        )
+        agent_1_goal_name = "".join(str(t) for t in agent_1_goal)
+        agent_1_reward = episode.last_reward_for("agent_1")
+
+        episode.custom_metrics["reward for goal " + agent_0_goal_name] = agent_0_reward
+        episode.custom_metrics["reward for goal " + agent_1_goal_name] = agent_1_reward
+
+        if agent_0_goal_name == agent_1_goal_name:
+            episode.custom_metrics["reward for same goal"] = agent_0_reward + agent_1_reward
+        elif np.bitwise_or.reduce(np.vstack([agent_0_goal, agent_1_goal])).sum() == 3:
+            episode.custom_metrics["reward for compatible goal"] = agent_0_reward + agent_1_reward
+        if agent_0_reward:
+            # logging position of the agent when solving the goal
+            episode.hist_data["agent 0 position for " + agent_0_goal_name].append(
+                agent_0_info["goal_line"]
+            )
+        if agent_1_reward:
+            episode.hist_data["agent 1 position for " + agent_1_goal_name].append(
+                agent_1_info["goal_line"]
+            )
+
+        # log which goal was sampled
+        agent_0_goal_index = [
+            i for i, g in enumerate(goal_space) if all(agent_0_goal == g)
+        ][0]
+        episode.hist_data["agent 0 goal"].append(agent_0_goal_index)
+        agent_1_goal_index = [
+            i for i, g in enumerate(goal_space) if all(agent_1_goal == g)
+        ][0]
+        episode.hist_data["agent 1 goal"].append(agent_1_goal_index)

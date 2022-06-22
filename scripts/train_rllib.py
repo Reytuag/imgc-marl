@@ -8,6 +8,7 @@ import numpy as np
 import yaml
 from imgc_marl.callbacks import (
     GoalLinesCallback,
+    LargeGoalLinesCallback,
     NewEnvCallback,
     after_training_eval_rllib,
     goal_lines_last_callback,
@@ -24,19 +25,21 @@ from ray.tune.logger import pretty_print
 @click.option(
     "--environment",
     type=click.Choice(
-        ["single_agent", "basic_marl", "goal_lines", "new_env"],
+        ["single_agent", "basic_marl", "goal_lines", "new_env", "large_goal_lines"],
         case_sensitive=True,
     ),
 )
 @click.argument("config")
-def train(environment, config):
+@click.argument("seed", required=False, default=None, type=int)
+def train(environment, config, seed):
     """Training loop using RLlib"""
 
     # Loading user config
     with open(config, "r") as f:
         user_config = yaml.safe_load(f)
     # Seeding everything
-    seed = user_config.get("seed", random.randint(0, 1e6))
+    if seed is None:
+        seed = random.randint(0, 1e6)
     random.seed(seed)
     np.random.seed(seed)
 
@@ -132,6 +135,39 @@ def train(environment, config):
         }
         trainer = PPOTrainer(config=config, env=multiagent.NewEnv)
 
+    elif environment == "large_goal_lines":
+        config["evaluation_interval"] = 10
+        config["horizon"] = multiagent.LARGE_GOAL_LINES_TIMELIMIT
+        config["rollout_fragment_length"] = config["horizon"]
+        config["env_config"] = user_config["env_config"]
+        config["train_batch_size"] = 60_000
+        config["sgd_minibatch_size"] = 10_000
+        config["lambda"] = 0.9
+        config["lr"] = 0.0003
+        config["callbacks"] = LargeGoalLinesCallback
+        config["multiagent"] = {
+            "policies": {
+                "agent_0": PolicySpec(
+                    policy_class=None, observation_space=None, action_space=None
+                ),
+                "agent_1": PolicySpec(
+                    policy_class=None, observation_space=None, action_space=None
+                ),
+            },
+            "policy_mapping_fn": lambda agent_id: "agent_0"
+            if agent_id.startswith("agent_0")
+            else "agent_1",
+        }
+        config["custom_eval_function"] = custom_eval_function
+        eval_env = multiagent.VeryLargeGoalLinesEnv(config["env_config"])
+        goal_space = eval_env.goal_space
+        goal_space_dim = eval_env.goal_space_dim
+        config["evaluation_config"] = {
+            "eval_goals": [{"agent_0": i, "agent_1": i} for i in range(goal_space_dim)],
+            "record_env": "videos",
+        }
+        trainer = PPOTrainer(config=config, env=multiagent.VeryLargeGoalLinesEnv)
+
     # Train for training_steps iterations. A training iteration includes
     # parallel sample collection by the environment workers as well as
     # loss calculation on the collected batch and a model update.
@@ -160,7 +196,7 @@ def train(environment, config):
             eval_env,
             goal_list=config["evaluation_config"]["eval_goals"],
         )
-    elif environment == "new_env":
+    elif environment == "new_env" or environment == "large_goal_lines":
         after_training_eval_rllib(
             trainer,
             eval_env,
