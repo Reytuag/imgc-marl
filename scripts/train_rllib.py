@@ -116,7 +116,7 @@ def train(environment, config, custom_logdir, seed):
         goal_space_dim = eval_env.goal_space_dim
         config["evaluation_config"] = {
             "eval_goals": [{"agent_0": i, "agent_1": i} for i in range(goal_space_dim)],
-            "record_env": "videos",
+            # "record_env": "videos",
         }
         trainer = PPOTrainer(config=config, env=multiagent.GoalLinesEnv)
 
@@ -207,7 +207,7 @@ def train(environment, config, custom_logdir, seed):
     # restoring best model from training
     trainer.restore(save_path)
     if environment == "goal_lines":
-        goal_lines_last_callback(trainer, goal_space_dim)
+        # goal_lines_last_callback(trainer, goal_space_dim)
         after_training_eval_rllib(
             trainer,
             eval_env,
