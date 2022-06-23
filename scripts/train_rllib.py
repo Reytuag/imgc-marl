@@ -118,7 +118,11 @@ def train(environment, config, custom_logdir, seed):
             "eval_goals": [{"agent_0": i, "agent_1": i} for i in range(goal_space_dim)],
             # "record_env": "videos",
         }
-        trainer = PPOTrainer(config=config, env=multiagent.GoalLinesEnv)
+        trainer = PPOTrainer(
+            config=config,
+            env=multiagent.GoalLinesEnv,
+            logger_creator=custom_logger_creator,
+        )
 
     elif environment == "new_env":
         config["horizon"] = multiagent.NEW_ENV_TIMELIMIT
