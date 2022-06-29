@@ -1445,17 +1445,21 @@ class VeryLargeGoalLinesEnv(GoalLinesEnv):
         self.alignment_percentage = config.get("alignment_percentage", 0.0)
         # Epsilon greedy exploration for communication policy
         self.eps_communication = config.get("eps_communication", 0.1)
+        # If consider all goals or only collective ones
+        self.all_goals = config.get("all_goals", False)
 
         # Goal space
         landmarks = 6
-        # self.goal_space = np.eye(landmarks, dtype=np.uint8).tolist()
-        # self.goal_space += (
-        #     np.array(list(combinations(self.goal_space, 2))).sum(1).tolist()
-        # )
-        individual_goals = np.eye(landmarks, dtype=np.uint8).tolist()
-        self.goal_space = (
-            np.array(list(combinations(individual_goals, 2))).sum(1).tolist()
-        )
+        if self.all_goals:
+            self.goal_space = np.eye(landmarks, dtype=np.uint8).tolist()
+            self.goal_space += (
+                np.array(list(combinations(self.goal_space, 2))).sum(1).tolist()
+            )
+        else:
+            individual_goals = np.eye(landmarks, dtype=np.uint8).tolist()
+            self.goal_space = (
+                np.array(list(combinations(individual_goals, 2))).sum(1).tolist()
+            )
         self.goal_space_dim = len(self.goal_space)
         self.goal_repr_dim = landmarks
 

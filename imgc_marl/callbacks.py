@@ -419,13 +419,42 @@ class LargeGoalLinesCallback(DefaultCallbacks):
                 agent_0_reward + agent_1_reward
             )
             episode.custom_metrics["goal_alignment"] = 1
-        elif np.bitwise_or.reduce(np.vstack([agent_0_goal, agent_1_goal])).sum() == 3:
-            episode.custom_metrics["reward for partially compatible goal"] = (
-                agent_0_reward + agent_1_reward
-            )
-            episode.custom_metrics["goal_alignment"] = 0
+
+            if sum(agent_0_goal) > 1:
+                episode.custom_metrics["reward for collective goal"] = (
+                    agent_0_reward + agent_1_reward
+                )
+            else:
+                episode.custom_metrics["reward for individual goal"] = (
+                    agent_0_reward + agent_1_reward
+                )
+
         else:
             episode.custom_metrics["goal_alignment"] = 0
+
+            if np.bitwise_or.reduce(np.vstack([agent_0_goal, agent_1_goal])).sum() == 3:
+                episode.custom_metrics["reward for partially compatible goal"] = (
+                    agent_0_reward + agent_1_reward
+                )
+            if np.bitwise_or.reduce(np.vstack([agent_0_goal, agent_1_goal])).sum() == 2:
+                episode.custom_metrics["reward for compatible goal"] = (
+                    agent_0_reward + agent_1_reward
+                )
+            if sum(agent_0_goal) > 1 and sum(agent_1_goal) > 1:
+                episode.custom_metrics["reward for collective goal"] = (
+                    agent_0_reward + agent_1_reward
+                )
+            elif sum(agent_0_goal) <= 1 and sum(agent_1_goal) <= 1:
+                episode.custom_metrics["reward for individual goal"] = (
+                    agent_0_reward + agent_1_reward
+                )
+            elif sum(agent_0_goal) > 1:
+                episode.custom_metrics["reward for collective goal"] = agent_0_reward
+                episode.custom_metrics["reward for individual goal"] = agent_1_reward
+            else:
+                episode.custom_metrics["reward for collective goal"] = agent_1_reward
+                episode.custom_metrics["reward for individual goal"] = agent_0_reward
+
         if agent_0_reward:
             # logging position of the agent when solving the goal
             episode.hist_data["agent 0 position for " + agent_0_goal_name].append(
