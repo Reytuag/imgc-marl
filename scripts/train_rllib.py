@@ -9,13 +9,21 @@ import imgc_marl.envs.multiagent as multiagent
 import imgc_marl.envs.single_agent as single_agent
 import numpy as np
 import yaml
-from imgc_marl.callbacks import (GoalLinesCallback, LargeGoalLinesCallback,
-                                 NewEnvCallback, after_training_eval_rllib,
-                                 goal_lines_last_callback,
-                                 legacy_after_training_eval_rllib)
+from imgc_marl.callbacks import (
+    GoalLinesCallback,
+    LargeGoalLinesCallback,
+    LargeGoalLinesCommunicationCallback,
+    NewEnvCallback,
+    after_training_eval_rllib,
+    goal_lines_last_callback,
+    legacy_after_training_eval_rllib,
+)
 from imgc_marl.evaluation import custom_eval_function
+from imgc_marl.models import CustomNetwork
 from imgc_marl.utils import keep_relevant_results
 from ray.rllib.agents.ppo import DEFAULT_CONFIG, PPOTrainer
+from imgc_marl.policy import CustomPPOTrainer
+from ray.rllib.models import ModelCatalog
 from ray.rllib.policy.policy import PolicySpec
 from ray.tune.logger import UnifiedLogger, pretty_print
 
@@ -153,6 +161,7 @@ def train(environment, config, custom_logdir, seed):
         trainer = PPOTrainer(config=config, env=multiagent.NewEnv)
 
     elif environment == "large_goal_lines":
+        use_communication = user_config.get("communication", False)
         config["evaluation_interval"] = 10
         config["horizon"] = multiagent.LARGE_GOAL_LINES_TIMELIMIT
         config["rollout_fragment_length"] = config["horizon"]
@@ -161,7 +170,6 @@ def train(environment, config, custom_logdir, seed):
         config["sgd_minibatch_size"] = 10_000
         config["lambda"] = 0.9
         config["lr"] = 0.0003
-        config["callbacks"] = LargeGoalLinesCallback
         config["multiagent"] = {
             "policies": {
                 "agent_0": PolicySpec(
@@ -179,15 +187,33 @@ def train(environment, config, custom_logdir, seed):
         eval_env = multiagent.VeryLargeGoalLinesEnv(config["env_config"])
         goal_space = eval_env.goal_space
         goal_space_dim = eval_env.goal_space_dim
+        goal_repr_dim = eval_env.goal_repr_dim
         config["evaluation_config"] = {
             "eval_goals": [{"agent_0": i, "agent_1": i} for i in range(goal_space_dim)],
             # "record_env": "videos",
         }
-        trainer = PPOTrainer(
-            config=config,
-            env=multiagent.VeryLargeGoalLinesEnv,
-            logger_creator=custom_logger_creator,
-        )
+        if use_communication:
+            config["callbacks"] = LargeGoalLinesCommunicationCallback
+            ModelCatalog.register_custom_model("CustomNetwork", CustomNetwork)
+            config["model"] = {
+                "custom_model": "CustomNetwork",
+                "custom_model_config": {
+                    "number_of_messages": goal_space_dim,
+                    "input_dim": goal_repr_dim,
+                },
+            }
+            trainer = CustomPPOTrainer(
+                config=config,
+                env=multiagent.VeryLargeGoalLinesEnv,
+                logger_creator=custom_logger_creator,
+            )
+        else:
+            config["callbacks"] = LargeGoalLinesCallback
+            trainer = PPOTrainer(
+                config=config,
+                env=multiagent.VeryLargeGoalLinesEnv,
+                logger_creator=custom_logger_creator,
+            )
 
     # Train for training_steps iterations. A training iteration includes
     # parallel sample collection by the environment workers as well as

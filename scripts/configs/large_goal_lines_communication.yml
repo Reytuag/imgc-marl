@@ -1,0 +1,8 @@
+training:
+  training_steps: 500
+  num_workers: 12
+env_config:
+  centralized: False
+  continuous: False
+  eps_communication: 0.05
+communication: True

@@ -10,6 +10,7 @@ from ray.rllib.agents.callbacks import DefaultCallbacks
 from ray.rllib.env import BaseEnv
 from ray.rllib.evaluation import Episode, RolloutWorker
 from ray.rllib.policy import Policy
+import torch
 
 
 class GoalLinesCallback(DefaultCallbacks):
@@ -414,9 +415,17 @@ class LargeGoalLinesCallback(DefaultCallbacks):
         episode.custom_metrics["reward for goal " + agent_1_goal_name] = agent_1_reward
 
         if agent_0_goal_name == agent_1_goal_name:
-            episode.custom_metrics["reward for same goal"] = agent_0_reward + agent_1_reward
+            episode.custom_metrics["reward for same goal"] = (
+                agent_0_reward + agent_1_reward
+            )
+            episode.custom_metrics["goal_alignment"] = 1
         elif np.bitwise_or.reduce(np.vstack([agent_0_goal, agent_1_goal])).sum() == 3:
-            episode.custom_metrics["reward for compatible goal"] = agent_0_reward + agent_1_reward
+            episode.custom_metrics["reward for partially compatible goal"] = (
+                agent_0_reward + agent_1_reward
+            )
+            episode.custom_metrics["goal_alignment"] = 0
+        else:
+            episode.custom_metrics["goal_alignment"] = 0
         if agent_0_reward:
             # logging position of the agent when solving the goal
             episode.hist_data["agent 0 position for " + agent_0_goal_name].append(
@@ -436,3 +445,77 @@ class LargeGoalLinesCallback(DefaultCallbacks):
             i for i, g in enumerate(goal_space) if all(agent_1_goal == g)
         ][0]
         episode.hist_data["agent 1 goal"].append(agent_1_goal_index)
+
+
+class LargeGoalLinesCommunicationCallback(LargeGoalLinesCallback):
+    def on_episode_start(
+        self,
+        *,
+        worker: RolloutWorker,
+        base_env: BaseEnv,
+        policies: Dict[str, Policy],
+        episode: Episode,
+        env_index: int,
+        **kwargs,
+    ):
+        # e-greedy threshold
+        e_greedy = base_env.envs[0].eps_communication
+        # decide which agent will take the lead
+        sampled_goal = base_env.envs[0].goal_space[
+            np.random.randint(0, base_env.envs[0].goal_space_dim)
+        ]
+        if np.random.random() > 0.5:
+            # agent 0 lead
+            with torch.no_grad():
+                predicted_values = policies["agent_0"].model._communication_branch(
+                    torch.tensor(sampled_goal, dtype=torch.float)
+                )
+            # e-greedy
+            if np.random.random() < e_greedy:
+                selected_goal_index = np.random.randint(
+                    0, base_env.envs[0].goal_space_dim
+                )
+            else:
+                selected_goal_index = predicted_values.argmax().item()
+
+            agent_1_goal = base_env.envs[0].goal_space[selected_goal_index]
+            agent_0_goal = sampled_goal
+            message = {
+                "agent_0": {
+                    "input_goal": sampled_goal,
+                    "output_goal_index": selected_goal_index,
+                }
+            }
+        else:
+            # agent 1 lead
+            with torch.no_grad():
+                predicted_values = policies["agent_1"].model._communication_branch(
+                    torch.tensor(sampled_goal, dtype=torch.float)
+                )
+            # e-greedy
+            if np.random.random() < e_greedy:
+                selected_goal_index = np.random.randint(
+                    0, base_env.envs[0].goal_space_dim
+                )
+            else:
+                selected_goal_index = predicted_values.argmax().item()
+
+            agent_1_goal = sampled_goal
+            agent_0_goal = base_env.envs[0].goal_space[selected_goal_index]
+            message = {
+                "agent_1": {
+                    "input_goal": sampled_goal,
+                    "output_goal_index": selected_goal_index,
+                }
+            }
+
+        goals = {"agent_0": agent_0_goal, "agent_1": agent_1_goal}
+
+        worker.foreach_env(lambda env: env.set_goal_and_message(goals, message))
+
+        for goal in base_env.envs[0].goal_space:
+            goal_name = "".join(str(t) for t in goal)
+            episode.hist_data["agent 0 position for " + goal_name] = []
+            episode.hist_data["agent 1 position for " + goal_name] = []
+        episode.hist_data["agent 0 goal"] = []
+        episode.hist_data["agent 1 goal"] = []

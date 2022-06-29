@@ -7,6 +7,7 @@ from itertools import combinations
 
 import cv2
 import numpy as np
+import torch
 from gym import spaces
 from imgc_marl.envs.elements.zone import MultiAgentRewardZone
 from ray.rllib.env import MultiAgentEnv
@@ -220,7 +221,7 @@ class GoalLinesEnv(MultiAgentEnv):
     metadata = {"render.modes": ["human", "rgb_array"]}
 
     def __init__(self, config):
-        super(MultiAgentEnv, self).__init__()
+        super().__init__()
 
         # If action space is continuous or discrete
         self.continuous = config["continuous"]
@@ -1442,6 +1443,8 @@ class VeryLargeGoalLinesEnv(GoalLinesEnv):
         self.double_condition = config.get("double_condition", False)
         # If independent agents might get aligned sometimes
         self.alignment_percentage = config.get("alignment_percentage", 0.0)
+        # Epsilon greedy exploration for communication policy
+        self.eps_communication = config.get("eps_communication", 0.1)
 
         # Goal space
         landmarks = 6
@@ -1531,6 +1534,7 @@ class VeryLargeGoalLinesEnv(GoalLinesEnv):
                 normalize=True,
             )
         )
+        agent.message = None
         self.playground.add_agent(agent, agent_sampler)
         self._agent_ids.add("agent_0")
         # Agent 1
@@ -1553,6 +1557,7 @@ class VeryLargeGoalLinesEnv(GoalLinesEnv):
                 normalize=True,
             )
         )
+        agent.message = None
         self.playground.add_agent(agent, agent_sampler)
         self._agent_ids.add("agent_1")
 
@@ -1699,6 +1704,9 @@ class VeryLargeGoalLinesEnv(GoalLinesEnv):
             # logging which goal line the agent achieved (-1 means no goal line)
             info[agent.name] = {"goal_line": agent.reward - 1}
 
+            if done and agent.message is not None:
+                info[agent.name]["message"] = agent.message
+
         # Agents that are done are deleted from the list of active agents
         [
             self._active_agents.remove(agent)
@@ -1754,10 +1762,24 @@ class VeryLargeGoalLinesEnv(GoalLinesEnv):
                     agent.goal = self.goal_space[
                         np.random.randint(0, self.goal_space_dim)
                     ]
-
+        for agent in self.playground.agents:
+            agent.message = None
         self.engine.elapsed_time = 0
         self.episodes += 1
         self.engine.update_observations()
         self.time_steps = 0
         observations = self.process_obs()
         return observations
+
+    def set_goal_and_message(
+        self,
+        external_goals: Dict[str, int],
+        message: Dict[str, torch.Tensor],
+    ):
+        # Not sample goal on each reset
+        # self.fixed_goal = True
+        if not self.fixed_goal:
+            for agent in self.playground.agents:
+                agent.goal = external_goals[agent.name]
+                if agent.name == [k for k in message.keys()][0]:
+                    agent.message = [v for v in message.values()][0]
