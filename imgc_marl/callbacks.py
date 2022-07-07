@@ -1,6 +1,6 @@
 import json
 import os
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 import gym
 import matplotlib.pyplot as plt
@@ -273,6 +273,7 @@ def after_training_eval_rllib(
     trainer,
     eval_env: gym.Env,
     goal_list: List[Dict[str, int]],
+    video_path: Optional[str] = None,
 ) -> None:
     """Final evaluation function called after rllib training loop"""
     print("Starting final evaluation!")
@@ -308,7 +309,12 @@ def after_training_eval_rllib(
     print("Evaluation results over 10 episodes for each goal")
     print(results)
     clip = moviepy.video.io.ImageSequenceClip.ImageSequenceClip(frames, fps=30)
-    clip.write_videofile(os.path.join(trainer.logdir, "trained_agent.mp4"))
+    if video_path is not None:
+        clip.write_videofile(
+            os.path.join(video_path, f"checkpoint_{str(trainer.iteration)}.mp4")
+        )
+    else:
+        clip.write_videofile(os.path.join(trainer.logdir, "trained_agent.mp4"))
 
 
 class NewEnvCallback(DefaultCallbacks):
