@@ -1447,6 +1447,8 @@ class VeryLargeGoalLinesEnv(GoalLinesEnv):
         self.eps_communication = config.get("eps_communication", 0.1)
         # If consider all goals or only collective ones
         self.all_goals = config.get("all_goals", False)
+        # If consider new reward scheme (individual == collective)
+        self.new_reward = config.get("new_reward", False)
 
         # Goal space
         landmarks = 6
@@ -1695,13 +1697,27 @@ class VeryLargeGoalLinesEnv(GoalLinesEnv):
         )
         # Checking if achieved goal is desired goal (only for active agents)
         for agent in self._active_agents:
-            if (
-                np.sum(agent.goal) > 1
-                and np.all(agent.goal == collective_achieved_goal)
-            ) or (np.all(agent.goal == individual_achieved_goals[agent.name])):
-                reward = 1
+            if not self.new_reward:
+                # original reward scheme
+                if (
+                    np.sum(agent.goal) > 1
+                    and np.all(agent.goal == collective_achieved_goal)
+                ) or (np.all(agent.goal == individual_achieved_goals[agent.name])):
+                    reward = 1
+                else:
+                    reward = 0
             else:
-                reward = 0
+                # new reward scheme (individual goals are consistent with collective ones)
+                if (
+                    np.sum(agent.goal) > 1
+                    and np.all(agent.goal == collective_achieved_goal)
+                ) or (
+                    (np.all(agent.goal == individual_achieved_goals["agent_0"]))
+                    or (np.all(agent.goal == individual_achieved_goals["agent_1"]))
+                ):
+                    reward = 1
+                else:
+                    reward = 0
             rewards[agent.name] = reward
             done = bool(reward) or self.playground.done or not self.engine.game_on
             dones[agent.name] = done
