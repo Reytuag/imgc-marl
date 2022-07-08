@@ -14,7 +14,7 @@ torch, nn = try_import_torch()
 logger = logging.getLogger(__name__)
 
 
-class CustomNetwork(TorchModelV2, nn.Module):
+class BasicCommunicationNetwork(TorchModelV2, nn.Module):
     """Generic fully connected network."""
 
     def __init__(
@@ -140,7 +140,7 @@ class CustomNetwork(TorchModelV2, nn.Module):
             torch.nn.Linear(model_config["custom_model_config"]["input_dim"], 64),
             torch.nn.ReLU(),
             torch.nn.Linear(
-                64, model_config["custom_model_config"]["number_of_messages"]
+                64, 1
             ),
         )
 
@@ -171,3 +171,6 @@ class CustomNetwork(TorchModelV2, nn.Module):
             ).squeeze(1)
         else:
             return self._value_branch(self._features).squeeze(1)
+
+
+

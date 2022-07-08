@@ -482,7 +482,7 @@ class LargeGoalLinesCallback(DefaultCallbacks):
         episode.hist_data["agent 1 goal"].append(agent_1_goal_index)
 
 
-class LargeGoalLinesCommunicationCallback(LargeGoalLinesCallback):
+class LargeGoalLinesBasicCommunicationCallback(LargeGoalLinesCallback):
     def on_episode_start(
         self,
         *,

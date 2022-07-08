@@ -1,0 +1,1 @@
+from imgc_marl.models.basic_communication import BasicCommunicationNetwork
