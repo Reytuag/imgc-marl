@@ -14,7 +14,7 @@ torch, nn = try_import_torch()
 logger = logging.getLogger(__name__)
 
 
-class BasicCommunicationNetwork(TorchModelV2, nn.Module):
+class FullCommunicationNetwork(TorchModelV2, nn.Module):
     """Generic fully connected network."""
 
     def __init__(
@@ -139,9 +139,7 @@ class BasicCommunicationNetwork(TorchModelV2, nn.Module):
         self._communication_branch = nn.Sequential(
             torch.nn.Linear(model_config["custom_model_config"]["input_dim"], 64),
             torch.nn.ReLU(),
-            torch.nn.Linear(
-                64, 1
-            ),
+            torch.nn.Linear(64, 1),
         )
 
     def forward_communication(self, input):
@@ -171,6 +169,3 @@ class BasicCommunicationNetwork(TorchModelV2, nn.Module):
             ).squeeze(1)
         else:
             return self._value_branch(self._features).squeeze(1)
-
-
-

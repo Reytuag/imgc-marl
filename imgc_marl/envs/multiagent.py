@@ -1801,5 +1801,6 @@ class VeryLargeGoalLinesEnv(GoalLinesEnv):
         if not self.fixed_goal:
             for agent in self.playground.agents:
                 agent.goal = external_goals[agent.name]
-                if agent.name == [k for k in message.keys()][0]:
-                    agent.message = [v for v in message.values()][0]
+                for name, msg in message.items():
+                    if agent.name == name:
+                        agent.message = msg

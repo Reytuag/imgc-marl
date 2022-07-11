@@ -171,6 +171,3 @@ class BasicCommunicationNetwork(TorchModelV2, nn.Module):
             ).squeeze(1)
         else:
             return self._value_branch(self._features).squeeze(1)
-
-
-

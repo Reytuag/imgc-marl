@@ -6,11 +6,11 @@ import gym
 import matplotlib.pyplot as plt
 import moviepy.video.io.ImageSequenceClip
 import numpy as np
+import torch
 from ray.rllib.agents.callbacks import DefaultCallbacks
 from ray.rllib.env import BaseEnv
 from ray.rllib.evaluation import Episode, RolloutWorker
 from ray.rllib.policy import Policy
-import torch
 
 
 class GoalLinesCallback(DefaultCallbacks):
@@ -547,6 +547,131 @@ class LargeGoalLinesBasicCommunicationCallback(LargeGoalLinesCallback):
         goals = {"agent_0": agent_0_goal, "agent_1": agent_1_goal}
 
         worker.foreach_env(lambda env: env.set_goal_and_message(goals, message))
+
+        for goal in base_env.envs[0].goal_space:
+            goal_name = "".join(str(t) for t in goal)
+            episode.hist_data["agent 0 position for " + goal_name] = []
+            episode.hist_data["agent 1 position for " + goal_name] = []
+        episode.hist_data["agent 0 goal"] = []
+        episode.hist_data["agent 1 goal"] = []
+
+
+class LargeGoalLinesFullCommunicationCallback(LargeGoalLinesCallback):
+    def on_episode_start(
+        self,
+        *,
+        worker: RolloutWorker,
+        base_env: BaseEnv,
+        policies: Dict[str, Policy],
+        episode: Episode,
+        env_index: int,
+        **kwargs,
+    ):
+        # e-greedy threshold
+        e_greedy = base_env.envs[0].eps_communication
+        # n-goals
+        n_goals = base_env.envs[0].goal_space_dim
+        # decide which agent will take the lead
+        sampled_goal = base_env.envs[0].goal_space[np.random.randint(0, n_goals)]
+        sampled_goal_tensor = torch.tensor(sampled_goal, dtype=torch.float)
+        possible_messages = torch.nn.functional.one_hot(
+            torch.arange(0, n_goals),
+        ).float()
+        possible_goals = torch.tensor(base_env.envs[0].goal_space, dtype=torch.float)
+        if np.random.random() > 0.5:
+            # agent 0 is the leader
+            agent_0_goal = sampled_goal
+            # e-greedy
+            if np.random.random() < e_greedy:
+                message_index = np.random.randint(0, n_goals)
+            else:
+                leader_input = torch.cat(
+                    [sampled_goal_tensor.repeat(n_goals, 1), possible_messages], 1
+                )
+                with torch.no_grad():
+                    leader_prediction = policies["agent_0"].model._communication_branch(
+                        leader_input
+                    )
+                    message_index = leader_prediction.argmax().item()
+
+            # agent 1 is the follower
+            message = possible_messages[message_index]
+            # e-greedy
+            if np.random.random() < e_greedy:
+                goal_index = np.random.randint(0, n_goals)
+            else:
+                follower_input = torch.cat(
+                    [possible_goals, message.repeat(n_goals, 1)], 1
+                )
+                with torch.no_grad():
+                    follower_prediction = policies[
+                        "agent_1"
+                    ].model._communication_branch(follower_input)
+                    goal_index = follower_prediction.argmax().item()
+            agent_1_goal = base_env.envs[0].goal_space[goal_index]
+            info = {
+                "agent_0": {
+                    "leader": True,
+                    "follower": False,
+                    "input_goal": sampled_goal_tensor,
+                    "output_message": message,
+                },
+                "agent_1": {
+                    "leader": False,
+                    "follower": True,
+                    "input_message": message,
+                    "output_goal": torch.tensor(agent_1_goal, dtype=torch.float),
+                },
+            }
+        else:
+            # agent 1 is the leader
+            agent_1_goal = sampled_goal
+            # e-greedy
+            if np.random.random() < e_greedy:
+                message_index = np.random.randint(0, n_goals)
+            else:
+                leader_input = torch.cat(
+                    [sampled_goal_tensor.repeat(n_goals, 1), possible_messages], 1
+                )
+                with torch.no_grad():
+                    leader_prediction = policies["agent_1"].model._communication_branch(
+                        leader_input
+                    )
+                    message_index = leader_prediction.argmax().item()
+
+            # agent 0 is the follower
+            message = possible_messages[message_index]
+            # e-greedy
+            if np.random.random() < e_greedy:
+                goal_index = np.random.randint(0, n_goals)
+            else:
+                follower_input = torch.cat(
+                    [possible_goals, message.repeat(n_goals, 1)], 1
+                )
+                with torch.no_grad():
+                    follower_prediction = policies[
+                        "agent_0"
+                    ].model._communication_branch(follower_input)
+                    goal_index = follower_prediction.argmax().item()
+            agent_0_goal = base_env.envs[0].goal_space[goal_index]
+            info = {
+                "agent_0": {
+                    "leader": False,
+                    "follower": True,
+                    "input_message": message,
+                    "output_goal": torch.tensor(agent_0_goal, dtype=torch.float),
+                },
+                "agent_1": {
+                    "leader": True,
+                    "follower": False,
+                    "input_goal": sampled_goal_tensor,
+                    "output_message": message,
+                },
+            }
+
+        goals = {"agent_0": agent_0_goal, "agent_1": agent_1_goal}
+
+        worker.foreach_env(lambda env: env.set_goal_and_message(goals, info))
 
         for goal in base_env.envs[0].goal_space:
             goal_name = "".join(str(t) for t in goal)

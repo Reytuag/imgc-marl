@@ -1,1 +1,2 @@
 from imgc_marl.policies.basic_communication import BasicCommunicationTrainer
+from imgc_marl.policies.full_communication import FullCommunicationTrainer

@@ -1,21 +1,14 @@
 import logging
 from typing import Dict, List, Type, Union
 
-import ray
 from ray.rllib.agents.ppo import PPOTorchPolicy, PPOTrainer
-from ray.rllib.agents.ppo.ppo_tf_policy import setup_config
-from ray.rllib.evaluation.postprocessing import (Postprocessing,
-                                                 compute_gae_for_sample_batch)
+from ray.rllib.evaluation.postprocessing import Postprocessing
 from ray.rllib.models.action_dist import ActionDistribution
 from ray.rllib.models.modelv2 import ModelV2
 from ray.rllib.policy.sample_batch import SampleBatch
-from ray.rllib.policy.torch_policy import (EntropyCoeffSchedule,
-                                           LearningRateSchedule, TorchPolicy)
-from ray.rllib.utils.annotations import override
 from ray.rllib.utils.framework import try_import_torch
 from ray.rllib.utils.numpy import convert_to_numpy
-from ray.rllib.utils.torch_utils import (apply_grad_clipping,
-                                         explained_variance, sequence_mask)
+from ray.rllib.utils.torch_utils import explained_variance, sequence_mask
 from ray.rllib.utils.typing import TensorType
 
 torch, nn = try_import_torch()
@@ -27,7 +20,7 @@ communication_criterion = nn.MSELoss()
 
 class FullCommunicationTrainer(PPOTrainer):
     def get_default_policy_class(self, config):
-        return FullCommunicationTrainer
+        return FullCommunicationPolicy
 
 
 class FullCommunicationPolicy(PPOTorchPolicy):
@@ -135,21 +128,24 @@ class FullCommunicationPolicy(PPOTorchPolicy):
 
         # Add custom communication loss
         if isinstance(train_batch["infos"][0], Dict):
-            input_goals = []
-            output_goal_indexes = []
+            goal_messages = torch.tensor([])
             indices = torch.zeros_like(train_batch["rewards"], dtype=torch.bool)
             for i, info in enumerate(train_batch["infos"]):
                 m = info.get("message")
                 if m is not None:
-                    input_goal = m["input_goal"]
-                    input_goals.append(input_goal)
-                    output_goal_index = m["output_goal_index"]
-                    output_goal_indexes.append(output_goal_index)
+                    is_leader = m["leader"]
+                    if is_leader:
+                        goal_message = torch.cat(
+                            [m["input_goal"], m["output_message"]]
+                        ).unsqueeze(0)
+                    else:
+                        goal_message = torch.cat(
+                            [m["output_goal"], m["input_message"]]
+                        ).unsqueeze(0)
+                    goal_messages = torch.cat([goal_messages, goal_message], 0)
                     indices[i] = True
             rewards_tensor = train_batch["rewards"][indices].float().view(-1, 1)
-            values_tensor = model.forward_communication(
-                torch.tensor(input_goals, dtype=torch.float)
-            ).gather(1, torch.tensor(output_goal_indexes).view(-1, 1))
+            values_tensor = model.forward_communication(goal_messages)
             communication_loss = communication_criterion(values_tensor, rewards_tensor)
             model.tower_stats["communication_loss"] = communication_loss
             total_loss += communication_loss
