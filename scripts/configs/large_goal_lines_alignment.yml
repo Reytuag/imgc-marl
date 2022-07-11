@@ -5,4 +5,5 @@ env_config:
   centralized: False
   continuous: False
   all_goals: True
+  alignment_percentage: 0.5
   new_reward: False
