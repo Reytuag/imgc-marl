@@ -41,6 +41,7 @@ class GoalLinesCallback(DefaultCallbacks):
         env_index: int,
         **kwargs,
     ):
+        allowed_goals = base_env.envs[0].allowed_training_goals
         goal_space = base_env.envs[0].goal_space
         goal_repr_dim = base_env.envs[0].goal_repr_dim
         agent_0_info = episode.last_info_for("agent_0")
@@ -174,6 +175,19 @@ class GoalLinesCallback(DefaultCallbacks):
         episode.custom_metrics[
             "matrix1" + str(agent_1_goal_index) + str(agent_0_goal_index)
         ] = agent_1_reward
+
+        # log 0 shot generalization
+        if (
+            agent_0_goal.tolist() not in allowed_goals
+            and agent_1_goal.tolist() not in allowed_goals
+        ):
+            episode.custom_metrics["reward_zero_shot"] = (
+                agent_0_reward + agent_1_reward
+            ) / 2
+        elif agent_0_goal.tolist() not in allowed_goals:
+            episode.custom_metrics["reward_zero_shot"] = agent_0_reward
+        elif agent_1_goal.tolist() not in allowed_goals:
+            episode.custom_metrics["reward_zero_shot"] = agent_1_reward
 
 
 def goal_lines_last_callback(trainer, n_goals):

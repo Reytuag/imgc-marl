@@ -251,7 +251,8 @@ class GoalLinesEnv(MultiAgentEnv):
         ]
         self.goal_space_dim = len(self.goal_space)
         self.goal_repr_dim = 3
-
+        # Only allowing some goals during training to test generalization
+        self.allowed_training_goals = config.get("allowed_goals", self.goal_space)
         self.episodes = 0
         self.time_steps = 0
 
@@ -515,10 +516,18 @@ class GoalLinesEnv(MultiAgentEnv):
         )
         # Checking if achieved goal is desired goal (only for active agents)
         for agent in self._active_agents:
+            # if (
+            #     np.sum(agent.goal) > 1
+            #     and np.all(agent.goal == collective_achieved_goal)
+            # ) or (np.all(agent.goal == individual_achieved_goals[agent.name])):
+            # new reward scheme to test 0 shot generalization
             if (
                 np.sum(agent.goal) > 1
                 and np.all(agent.goal == collective_achieved_goal)
-            ) or (np.all(agent.goal == individual_achieved_goals[agent.name])):
+            ) or (
+                np.all(agent.goal == individual_achieved_goals["agent_0"])
+                or np.all(agent.goal == individual_achieved_goals["agent_1"])
+            ):
                 reward = 1
             else:
                 reward = 0
@@ -646,7 +655,11 @@ class GoalLinesEnv(MultiAgentEnv):
                     ]
                 else:
                     # Centralized uniform (or e-greedy if LP)
-                    goal = self.goal_space[np.random.randint(0, self.goal_space_dim)]
+                    # goal = self.goal_space[np.random.randint(0, self.goal_space_dim)]
+                    # testing 0 shot generalization
+                    goal = self.allowed_training_goals[
+                        np.random.randint(0, len(self.allowed_training_goals))
+                    ]
                 for agent in self.playground.agents:
                     agent.goal = goal
             elif self.learning_progress:
@@ -725,8 +738,12 @@ class GoalLinesEnv(MultiAgentEnv):
                 #
                 # Uncomment to allow all gols during training
                 for agent in self.playground.agents:
-                    agent.goal = self.goal_space[
-                        np.random.randint(0, self.goal_space_dim)
+                    # agent.goal = self.goal_space[
+                    #     np.random.randint(0, self.goal_space_dim)
+                    # ]
+                    # testing 0 shot
+                    agent.goal = self.allowed_training_goals[
+                        np.random.randint(0, len(self.allowed_training_goals))
                     ]
 
         self.engine.elapsed_time = 0
