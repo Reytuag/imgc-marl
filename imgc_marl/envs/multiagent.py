@@ -239,6 +239,10 @@ class GoalLinesEnv(MultiAgentEnv):
         self.double_condition = config.get("double_condition", False)
         # If independent agents might get aligned sometimes
         self.alignment_percentage = config.get("alignment_percentage", 0.0)
+        # If consider new reward scheme (individual == collective)
+        self.new_reward = config.get("new_reward", False)
+        # If agents will be blind to each other
+        self.blind_agents = config.get("blind_agents", False)
 
         # Goal space
         self.goal_space = [
@@ -253,6 +257,7 @@ class GoalLinesEnv(MultiAgentEnv):
         self.goal_repr_dim = 3
         # Only allowing some goals during training to test generalization
         self.allowed_training_goals = config.get("allowed_goals", self.goal_space)
+        self.n_allowed_training_goals = len(self.allowed_training_goals)
         self.episodes = 0
         self.time_steps = 0
 
@@ -284,7 +289,7 @@ class GoalLinesEnv(MultiAgentEnv):
         self.playground.add_element(zone_1, ((200, 15), 0))
         self.playground.add_element(zone_2, ((385, 350), 0))
 
-        # Add agents
+        # Create agents
         self._agent_ids = set()
 
         agent_sampler = CoordinateSampler(
@@ -292,7 +297,7 @@ class GoalLinesEnv(MultiAgentEnv):
         )
 
         # Agent 0
-        agent = BaseAgent(
+        agent_0 = BaseAgent(
             controller=External(),
             interactive=False,
             name="agent_0",
@@ -300,38 +305,26 @@ class GoalLinesEnv(MultiAgentEnv):
                 color=(0, 200, 0), color_stripe=(0, 0, 200), size_stripe=4
             ),
         )
-        ignore_elements = [agent.parts, agent.base_platform]
-        agent.add_sensor(
-            PerfectSemantic(
-                agent.base_platform,
-                invisible_elements=ignore_elements,
-                min_range=0,
-                max_range=400,
-                name="sensor",
-                normalize=True,
-            )
-        )
-        agent.learning_progress = {
+        agent_0.learning_progress = {
             "".join(str(t) for t in goal): 0.0 for goal in self.goal_space
         }
-        agent.competence = {
+        agent_0.competence = {
             "".join(str(t) for t in goal): 0.0 for goal in self.goal_space
         }
-        agent.reward_list = {
+        agent_0.reward_list = {
             "".join(str(t) for t in goal): [] for goal in self.goal_space
         }
-        agent.joint_learning_progress = np.zeros(
+        agent_0.joint_learning_progress = np.zeros(
             (self.goal_space_dim, self.goal_space_dim)
         )
-        agent.joint_competence = np.zeros((self.goal_space_dim, self.goal_space_dim))
-        agent.joint_reward_list = {
+        agent_0.joint_competence = np.zeros((self.goal_space_dim, self.goal_space_dim))
+        agent_0.joint_reward_list = {
             i: {i: [] for i in range(self.goal_space_dim)}
             for i in range(self.goal_space_dim)
         }
-        self.playground.add_agent(agent, agent_sampler)
-        self._agent_ids.add("agent_0")
+
         # Agent 1
-        agent = BaseAgent(
+        agent_1 = BaseAgent(
             controller=External(),
             interactive=False,
             name="agent_1",
@@ -339,10 +332,31 @@ class GoalLinesEnv(MultiAgentEnv):
                 color=(0, 0, 200), color_stripe=(0, 200, 0), size_stripe=4
             ),
         )
-        ignore_elements = [agent.parts, agent.base_platform]
-        agent.add_sensor(
+        agent_1.learning_progress = {
+            "".join(str(t) for t in goal): 0.0 for goal in self.goal_space
+        }
+        agent_1.competence = {
+            "".join(str(t) for t in goal): 0.0 for goal in self.goal_space
+        }
+        agent_1.reward_list = {
+            "".join(str(t) for t in goal): [] for goal in self.goal_space
+        }
+        agent_1.joint_learning_progress = np.zeros(
+            (self.goal_space_dim, self.goal_space_dim)
+        )
+        agent_1.joint_competence = np.zeros((self.goal_space_dim, self.goal_space_dim))
+        agent_1.joint_reward_list = {
+            i: {i: [] for i in range(self.goal_space_dim)}
+            for i in range(self.goal_space_dim)
+        }
+
+        # Add agents to the playground
+        ignore_elements = [agent_0.parts, agent_0.base_platform]
+        if self.blind_agents:
+            ignore_elements += [agent_1.parts, agent_1.base_platform]
+        agent_0.add_sensor(
             PerfectSemantic(
-                agent.base_platform,
+                agent_0.base_platform,
                 invisible_elements=ignore_elements,
                 min_range=0,
                 max_range=400,
@@ -350,24 +364,22 @@ class GoalLinesEnv(MultiAgentEnv):
                 normalize=True,
             )
         )
-        agent.learning_progress = {
-            "".join(str(t) for t in goal): 0.0 for goal in self.goal_space
-        }
-        agent.competence = {
-            "".join(str(t) for t in goal): 0.0 for goal in self.goal_space
-        }
-        agent.reward_list = {
-            "".join(str(t) for t in goal): [] for goal in self.goal_space
-        }
-        agent.joint_learning_progress = np.zeros(
-            (self.goal_space_dim, self.goal_space_dim)
+        self.playground.add_agent(agent_0, agent_sampler)
+
+        self._agent_ids.add("agent_0")
+        if not self.blind_agents:
+            ignore_elements = [agent_1.parts, agent_1.base_platform]
+        agent_1.add_sensor(
+            PerfectSemantic(
+                agent_1.base_platform,
+                invisible_elements=ignore_elements,
+                min_range=0,
+                max_range=400,
+                name="sensor",
+                normalize=True,
+            )
         )
-        agent.joint_competence = np.zeros((self.goal_space_dim, self.goal_space_dim))
-        agent.joint_reward_list = {
-            i: {i: [] for i in range(self.goal_space_dim)}
-            for i in range(self.goal_space_dim)
-        }
-        self.playground.add_agent(agent, agent_sampler)
+        self.playground.add_agent(agent_1, agent_sampler)
         self._agent_ids.add("agent_1")
 
         # Init engine
@@ -376,7 +388,7 @@ class GoalLinesEnv(MultiAgentEnv):
         )
 
         # Define action and observation space
-        actuators = agent.controller.controlled_actuators
+        actuators = agent_0.controller.controlled_actuators
         if not self.continuous:
             # Discrete action space
             act_spaces = []
@@ -401,7 +413,10 @@ class GoalLinesEnv(MultiAgentEnv):
 
         # Continuous observation space + goal representation as ohe
         # if double condition (we condition on both goals) obs space + other goal ohe + own goal ohe
-        number_of_elements = len(self.playground.elements) + 1
+        if self.blind_agents:
+            number_of_elements = len(self.playground.elements)
+        else:
+            number_of_elements = len(self.playground.elements) + 1
         if not self.double_condition:
             self.observation_space = spaces.Box(
                 low=np.hstack(
@@ -451,9 +466,10 @@ class GoalLinesEnv(MultiAgentEnv):
             agent.COORDINATE_MAP = {
                 element: 2 * i for i, element in enumerate(self.playground.elements)
             }
-            agent.COORDINATE_MAP[self.playground.agents[j - 1].parts[0]] = (
-                len(self.playground.elements) * 2
-            )
+            if not self.blind_agents:
+                agent.COORDINATE_MAP[self.playground.agents[j - 1].parts[0]] = (
+                    len(self.playground.elements) * 2
+                )
         # List of active agents, agents can exit early if completed their goal
         self._active_agents = self.playground.agents.copy()
 
@@ -516,21 +532,27 @@ class GoalLinesEnv(MultiAgentEnv):
         )
         # Checking if achieved goal is desired goal (only for active agents)
         for agent in self._active_agents:
-            # if (
-            #     np.sum(agent.goal) > 1
-            #     and np.all(agent.goal == collective_achieved_goal)
-            # ) or (np.all(agent.goal == individual_achieved_goals[agent.name])):
-            # new reward scheme to test 0 shot generalization
-            if (
-                np.sum(agent.goal) > 1
-                and np.all(agent.goal == collective_achieved_goal)
-            ) or (
-                np.all(agent.goal == individual_achieved_goals["agent_0"])
-                or np.all(agent.goal == individual_achieved_goals["agent_1"])
-            ):
-                reward = 1
+            if not self.new_reward:
+                # original reward scheme
+                if (
+                    np.sum(agent.goal) > 1
+                    and np.all(agent.goal == collective_achieved_goal)
+                ) or (np.all(agent.goal == individual_achieved_goals[agent.name])):
+                    reward = 1
+                else:
+                    reward = 0
             else:
-                reward = 0
+                # new reward scheme (individual goals are consistent with collective ones)
+                if (
+                    np.sum(agent.goal) > 1
+                    and np.all(agent.goal == collective_achieved_goal)
+                ) or (
+                    (np.all(agent.goal == individual_achieved_goals["agent_0"]))
+                    or (np.all(agent.goal == individual_achieved_goals["agent_1"]))
+                ):
+                    reward = 1
+                else:
+                    reward = 0
             rewards[agent.name] = reward
             done = bool(reward) or self.playground.done or not self.engine.game_on
             dones[agent.name] = done
@@ -658,7 +680,7 @@ class GoalLinesEnv(MultiAgentEnv):
                     # goal = self.goal_space[np.random.randint(0, self.goal_space_dim)]
                     # testing 0 shot generalization
                     goal = self.allowed_training_goals[
-                        np.random.randint(0, len(self.allowed_training_goals))
+                        np.random.randint(0, self.n_allowed_training_goals)
                     ]
                 for agent in self.playground.agents:
                     agent.goal = goal
@@ -743,7 +765,7 @@ class GoalLinesEnv(MultiAgentEnv):
                     # ]
                     # testing 0 shot
                     agent.goal = self.allowed_training_goals[
-                        np.random.randint(0, len(self.allowed_training_goals))
+                        np.random.randint(0, self.n_allowed_training_goals)
                     ]
 
         self.engine.elapsed_time = 0
