@@ -1,0 +1,9 @@
+training:
+  training_steps: 1000
+  num_workers: 6
+env_config:
+  centralized: False
+  continuous: False
+  all_goals: True
+  new_reward: False
+communication: "basic_naming"

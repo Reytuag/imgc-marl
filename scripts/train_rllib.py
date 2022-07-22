@@ -15,15 +15,24 @@ from imgc_marl.callbacks import (
     LargeGoalLinesBasicCommunicationCallback,
     LargeGoalLinesFullCommunicationCallback,
     NewEnvCallback,
+    LargeGoalLinesBasicNamingGame,
     after_training_eval_rllib,
     goal_lines_last_callback,
     legacy_after_training_eval_rllib,
 )
 from imgc_marl.evaluation import custom_eval_function
-from imgc_marl.models import BasicCommunicationNetwork, FullCommunicationNetwork
+from imgc_marl.models import (
+    BasicCommunicationNetwork,
+    FullCommunicationNetwork,
+    BasicNamingNetwork,
+)
 from imgc_marl.utils import keep_relevant_results
 from ray.rllib.agents.ppo import DEFAULT_CONFIG, PPOTrainer
-from imgc_marl.policies import BasicCommunicationTrainer, FullCommunicationTrainer
+from imgc_marl.policies import (
+    BasicCommunicationTrainer,
+    FullCommunicationTrainer,
+    BasicNamingTrainer,
+)
 from ray.rllib.models import ModelCatalog
 from ray.rllib.policy.policy import PolicySpec
 from ray.tune.logger import UnifiedLogger, pretty_print
@@ -196,7 +205,9 @@ def train(environment, config, custom_logdir, seed):
         if use_communication:
             if use_communication == "basic":
                 config["callbacks"] = LargeGoalLinesBasicCommunicationCallback
-                ModelCatalog.register_custom_model("BasicCommunicationNetwork", BasicCommunicationNetwork)
+                ModelCatalog.register_custom_model(
+                    "BasicCommunicationNetwork", BasicCommunicationNetwork
+                )
                 config["model"] = {
                     "custom_model": "BasicCommunicationNetwork",
                     "custom_model_config": {
@@ -211,7 +222,9 @@ def train(environment, config, custom_logdir, seed):
                 )
             if use_communication == "full":
                 config["callbacks"] = LargeGoalLinesFullCommunicationCallback
-                ModelCatalog.register_custom_model("FullCommunicationNetwork", FullCommunicationNetwork)
+                ModelCatalog.register_custom_model(
+                    "FullCommunicationNetwork", FullCommunicationNetwork
+                )
                 config["model"] = {
                     "custom_model": "FullCommunicationNetwork",
                     "custom_model_config": {
@@ -219,6 +232,20 @@ def train(environment, config, custom_logdir, seed):
                     },
                 }
                 trainer = FullCommunicationTrainer(
+                    config=config,
+                    env=multiagent.VeryLargeGoalLinesEnv,
+                    logger_creator=custom_logger_creator,
+                )
+            if use_communication == "basic_naming":
+                config["callbacks"] = LargeGoalLinesBasicNamingGame
+                ModelCatalog.register_custom_model(
+                    "BasicNamingNetwork", BasicNamingNetwork
+                )
+                config["model"] = {
+                    "custom_model": "BasicNamingNetwork",
+                    "custom_model_config": {"number_of_goals": goal_space_dim},
+                }
+                trainer = BasicNamingTrainer(
                     config=config,
                     env=multiagent.VeryLargeGoalLinesEnv,
                     logger_creator=custom_logger_creator,

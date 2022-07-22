@@ -693,3 +693,60 @@ class LargeGoalLinesFullCommunicationCallback(LargeGoalLinesCallback):
             episode.hist_data["agent 1 position for " + goal_name] = []
         episode.hist_data["agent 0 goal"] = []
         episode.hist_data["agent 1 goal"] = []
+
+
+class LargeGoalLinesBasicNamingGame(LargeGoalLinesCallback):
+    def on_episode_start(
+        self,
+        *,
+        worker: RolloutWorker,
+        base_env: BaseEnv,
+        policies: Dict[str, Policy],
+        episode: Episode,
+        env_index: int,
+        **kwargs,
+    ):
+        # decide which agent will take the lead
+        leader_goal_index = np.random.randint(0, base_env.envs[0].goal_space_dim)
+        leader_goal = base_env.envs[0].goal_space[leader_goal_index]
+        if np.random.random() > 0.5:
+            # agent 0 lead
+            scores = policies["agent_0"].model._communication_matrix[leader_goal_index]
+            follower_goal_index = np.random.choice(
+                np.flatnonzero(scores == scores.max())
+            )
+            follower_goal = base_env.envs[0].goal_space[follower_goal_index]
+            agent_0_goal = leader_goal
+            agent_1_goal = follower_goal
+            message = {
+                "agent_0": {
+                    "leader_goal": leader_goal_index,
+                    "follower_goal": follower_goal_index,
+                }
+            }
+        else:
+            # agent 1 lead
+            scores = policies["agent_1"].model._communication_matrix[leader_goal_index]
+            follower_goal_index = np.random.choice(
+                np.flatnonzero(scores == scores.max())
+            )
+            follower_goal = base_env.envs[0].goal_space[follower_goal_index]
+            agent_1_goal = leader_goal
+            agent_0_goal = follower_goal
+            message = {
+                "agent_1": {
+                    "leader_goal": leader_goal_index,
+                    "follower_goal": follower_goal_index,
+                }
+            }
+
+        goals = {"agent_0": agent_0_goal, "agent_1": agent_1_goal}
+
+        worker.foreach_env(lambda env: env.set_goal_and_message(goals, message))
+
+        for goal in base_env.envs[0].goal_space:
+            goal_name = "".join(str(t) for t in goal)
+            episode.hist_data["agent 0 position for " + goal_name] = []
+            episode.hist_data["agent 1 position for " + goal_name] = []
+        episode.hist_data["agent 0 goal"] = []
+        episode.hist_data["agent 1 goal"] = []
