@@ -1,6 +1,7 @@
 import logging
 from typing import Dict, List, Type, Union
 
+import numpy as np
 import ray
 from ray.rllib.agents.ppo import PPOTorchPolicy, PPOTrainer
 from ray.rllib.agents.ppo.ppo_tf_policy import setup_config
@@ -25,9 +26,9 @@ from ray.rllib.utils.torch_utils import (
     sequence_mask,
 )
 from ray.rllib.utils.typing import TensorType
-import numpy as np
 
-DELTA = 0.1 / 30
+DELTA = 0.1 / (30 * 60)
+# scaling factor: 30 iterations x 60 episodes each agent will lead (60 games/training it)
 
 torch, nn = try_import_torch()
 
@@ -152,11 +153,14 @@ class BasicNamingPolicy(PPOTorchPolicy):
                     leader_goal = m["leader_goal"]
                     follower_goal = m["follower_goal"]
                     if train_batch["rewards"][i]:
-                        model._communication_matrix[leader_goal, :] -= DELTA
-                        model._communication_matrix[leader_goal, follower_goal] += (
-                            2 * DELTA
-                        )
+                        with torch.no_grad():
+                            model._communication_matrix[leader_goal, :] -= DELTA
+                            model._communication_matrix[leader_goal, follower_goal] += (
+                                2 * DELTA
+                            )
                     else:
-                        model._communication_matrix[leader_goal, follower_goal] -= DELTA
-                    np.clip(model._communication_matrix, 0.0, 1.0)
+                        with torch.no_grad():
+                            model._communication_matrix[
+                                leader_goal, follower_goal
+                            ] -= DELTA
         return total_loss

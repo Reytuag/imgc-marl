@@ -711,10 +711,17 @@ class LargeGoalLinesBasicNamingGame(LargeGoalLinesCallback):
         leader_goal = base_env.envs[0].goal_space[leader_goal_index]
         if np.random.random() > 0.5:
             # agent 0 lead
-            scores = policies["agent_0"].model._communication_matrix[leader_goal_index]
-            follower_goal_index = np.random.choice(
-                np.flatnonzero(scores == scores.max())
-            )
+            with torch.no_grad():
+                scores = (
+                    torch.nn.functional.softmax(
+                        policies["agent_0"].model._communication_matrix[
+                            leader_goal_index
+                        ]
+                    )
+                    .detach()
+                    .numpy()
+                )
+            follower_goal_index = np.random.choice(range(len(scores)), 1, p=scores)[0]
             follower_goal = base_env.envs[0].goal_space[follower_goal_index]
             agent_0_goal = leader_goal
             agent_1_goal = follower_goal
@@ -726,10 +733,17 @@ class LargeGoalLinesBasicNamingGame(LargeGoalLinesCallback):
             }
         else:
             # agent 1 lead
-            scores = policies["agent_1"].model._communication_matrix[leader_goal_index]
-            follower_goal_index = np.random.choice(
-                np.flatnonzero(scores == scores.max())
-            )
+            with torch.no_grad():
+                scores = (
+                    torch.nn.functional.softmax(
+                        policies["agent_1"].model._communication_matrix[
+                            leader_goal_index
+                        ]
+                    )
+                    .detach()
+                    .numpy()
+                )
+            follower_goal_index = np.random.choice(range(len(scores)), 1, p=scores)[0]
             follower_goal = base_env.envs[0].goal_space[follower_goal_index]
             agent_1_goal = leader_goal
             agent_0_goal = follower_goal

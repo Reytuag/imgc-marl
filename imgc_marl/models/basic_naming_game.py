@@ -136,20 +136,14 @@ class BasicNamingNetwork(TorchModelV2, nn.Module):
         self._last_flat_in = None
 
         # Custom communication branch
-        # self._communication_matrix = nn.Parameter(
-        #     torch.zeros(
-        #         [
-        #             model_config["custom_model_config"]["number_of_goals"],
-        #             model_config["custom_model_config"]["number_of_goals"],
-        #         ]
-        #     ),
-        #     requires_grad=True,
-        # )
-        self._communication_matrix = np.zeros(
-            [
-                model_config["custom_model_config"]["number_of_goals"],
-                model_config["custom_model_config"]["number_of_goals"],
-            ]
+        self._communication_matrix = nn.Parameter(
+            torch.zeros(
+                [
+                    model_config["custom_model_config"]["number_of_goals"],
+                    model_config["custom_model_config"]["number_of_goals"],
+                ]
+            ),
+            requires_grad=True,
         )
 
     @override(TorchModelV2)
