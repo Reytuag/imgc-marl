@@ -1485,9 +1485,11 @@ class VeryLargeGoalLinesEnv(GoalLinesEnv):
         # Epsilon greedy exploration for communication policy
         self.eps_communication = config.get("eps_communication", 0.1)
         # If consider all goals or only collective ones
-        self.all_goals = config.get("all_goals", False)
+        self.all_goals = config.get("all_goals", True)
         # If consider new reward scheme (individual == collective)
         self.new_reward = config.get("new_reward", False)
+        # If agents will be blind to each other
+        self.blind_agents = config.get("blind_agents", False)
 
         # Goal space
         landmarks = 6
@@ -1503,7 +1505,9 @@ class VeryLargeGoalLinesEnv(GoalLinesEnv):
             )
         self.goal_space_dim = len(self.goal_space)
         self.goal_repr_dim = landmarks
-
+        # Only allowing some goals during training to test generalization
+        self.allowed_training_goals = config.get("allowed_goals", self.goal_space)
+        self.n_allowed_training_goals = len(self.allowed_training_goals)
         self.episodes = 0
         self.time_steps = 0
 
@@ -1560,7 +1564,7 @@ class VeryLargeGoalLinesEnv(GoalLinesEnv):
         )
 
         # Agent 0
-        agent = BaseAgent(
+        agent_0 = BaseAgent(
             controller=External(),
             interactive=False,
             name="agent_0",
@@ -1568,22 +1572,8 @@ class VeryLargeGoalLinesEnv(GoalLinesEnv):
                 color=(0, 200, 0), color_stripe=(0, 0, 200), size_stripe=4
             ),
         )
-        ignore_elements = [agent.parts, agent.base_platform]
-        agent.add_sensor(
-            PerfectSemantic(
-                agent.base_platform,
-                invisible_elements=ignore_elements,
-                min_range=0,
-                max_range=400,
-                name="sensor",
-                normalize=True,
-            )
-        )
-        agent.message = None
-        self.playground.add_agent(agent, agent_sampler)
-        self._agent_ids.add("agent_0")
         # Agent 1
-        agent = BaseAgent(
+        agent_1 = BaseAgent(
             controller=External(),
             interactive=False,
             name="agent_1",
@@ -1591,10 +1581,13 @@ class VeryLargeGoalLinesEnv(GoalLinesEnv):
                 color=(0, 0, 200), color_stripe=(0, 200, 0), size_stripe=4
             ),
         )
-        ignore_elements = [agent.parts, agent.base_platform]
-        agent.add_sensor(
+
+        ignore_elements = [agent_0.parts, agent_0.base_platform]
+        if self.blind_agents:
+            ignore_elements += [agent_1.parts, agent_1.base_platform]
+        agent_0.add_sensor(
             PerfectSemantic(
-                agent.base_platform,
+                agent_0.base_platform,
                 invisible_elements=ignore_elements,
                 min_range=0,
                 max_range=400,
@@ -1602,8 +1595,24 @@ class VeryLargeGoalLinesEnv(GoalLinesEnv):
                 normalize=True,
             )
         )
-        agent.message = None
-        self.playground.add_agent(agent, agent_sampler)
+        agent_0.message = None
+        self.playground.add_agent(agent_0, agent_sampler)
+        self._agent_ids.add("agent_0")
+
+        if not self.blind_agents:
+            ignore_elements = [agent_1.parts, agent_1.base_platform]
+        agent_1.add_sensor(
+            PerfectSemantic(
+                agent_1.base_platform,
+                invisible_elements=ignore_elements,
+                min_range=0,
+                max_range=400,
+                name="sensor",
+                normalize=True,
+            )
+        )
+        agent_1.message = None
+        self.playground.add_agent(agent_1, agent_sampler)
         self._agent_ids.add("agent_1")
 
         # Init engine
@@ -1612,7 +1621,7 @@ class VeryLargeGoalLinesEnv(GoalLinesEnv):
         )
 
         # Define action and observation space
-        actuators = agent.controller.controlled_actuators
+        actuators = agent_0.controller.controlled_actuators
         if not self.continuous:
             # Discrete action space
             act_spaces = []
@@ -1637,7 +1646,10 @@ class VeryLargeGoalLinesEnv(GoalLinesEnv):
 
         # Continuous observation space + goal representation as ohe
         # if double condition (we condition on both goals) obs space + other goal ohe + own goal ohe
-        number_of_elements = len(self.playground.elements) + 1
+        if self.blind_agents:
+            number_of_elements = len(self.playground.elements)
+        else:
+            number_of_elements = len(self.playground.elements) + 1
         if not self.double_condition:
             self.observation_space = spaces.Box(
                 low=np.hstack(
@@ -1687,9 +1699,10 @@ class VeryLargeGoalLinesEnv(GoalLinesEnv):
             agent.COORDINATE_MAP = {
                 element: 2 * i for i, element in enumerate(self.playground.elements)
             }
-            agent.COORDINATE_MAP[self.playground.agents[j - 1].parts[0]] = (
-                len(self.playground.elements) * 2
-            )
+            if not self.blind_agents:
+                agent.COORDINATE_MAP[self.playground.agents[j - 1].parts[0]] = (
+                    len(self.playground.elements) * 2
+                )
         # List of active agents, agents can exit early if completed their goal
         self._active_agents = self.playground.agents.copy()
 
@@ -1783,7 +1796,9 @@ class VeryLargeGoalLinesEnv(GoalLinesEnv):
         if not self.fixed_goal:
             if self.centralized or np.random.random() < self.alignment_percentage:
                 # Centralized uniform (or e-greedy if LP)
-                goal = self.goal_space[np.random.randint(0, self.goal_space_dim)]
+                goal = self.allowed_training_goals[
+                    np.random.randint(0, self.n_allowed_training_goals)
+                ]
                 for agent in self.playground.agents:
                     agent.goal = goal
             else:
@@ -1818,8 +1833,8 @@ class VeryLargeGoalLinesEnv(GoalLinesEnv):
                 #
                 # Uncomment to allow all gols during training
                 for agent in self.playground.agents:
-                    agent.goal = self.goal_space[
-                        np.random.randint(0, self.goal_space_dim)
+                    agent.goal = self.allowed_training_goals[
+                        np.random.randint(0, self.n_allowed_training_goals)
                     ]
         for agent in self.playground.agents:
             agent.message = None
