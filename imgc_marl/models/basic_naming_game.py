@@ -146,6 +146,9 @@ class BasicNamingNetwork(TorchModelV2, nn.Module):
             requires_grad=True,
         )
 
+        # flag to control when to train the communication matrix
+        self._train_matrix = model_config["custom_model_config"]["train_matrix"]
+
     @override(TorchModelV2)
     def forward(
         self,

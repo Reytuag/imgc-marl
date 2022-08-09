@@ -1,5 +1,5 @@
 training:
-  training_steps: 1000
+  training_steps: 500
   num_workers: 6
 env_config:
   centralized: False
@@ -7,3 +7,5 @@ env_config:
   all_goals: True
   new_reward: False
 communication: "basic_naming"
+# train_matrix: True
+# checkpoint: "/home/elias/workspace/imgc-marl/scripts/testing420/2022-08-09_15-00-54jkrbth14/checkpoint_000001/checkpoint-1"

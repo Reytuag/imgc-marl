@@ -5,18 +5,26 @@ import numpy as np
 import ray
 from ray.rllib.agents.ppo import PPOTorchPolicy, PPOTrainer
 from ray.rllib.agents.ppo.ppo_tf_policy import setup_config
-from ray.rllib.evaluation.postprocessing import (Postprocessing,
-                                                 compute_gae_for_sample_batch)
+from ray.rllib.evaluation.postprocessing import (
+    Postprocessing,
+    compute_gae_for_sample_batch,
+)
 from ray.rllib.models.action_dist import ActionDistribution
 from ray.rllib.models.modelv2 import ModelV2
 from ray.rllib.policy.sample_batch import SampleBatch
-from ray.rllib.policy.torch_policy import (EntropyCoeffSchedule,
-                                           LearningRateSchedule, TorchPolicy)
+from ray.rllib.policy.torch_policy import (
+    EntropyCoeffSchedule,
+    LearningRateSchedule,
+    TorchPolicy,
+)
 from ray.rllib.utils.annotations import override
 from ray.rllib.utils.framework import try_import_torch
 from ray.rllib.utils.numpy import convert_to_numpy
-from ray.rllib.utils.torch_utils import (apply_grad_clipping,
-                                         explained_variance, sequence_mask)
+from ray.rllib.utils.torch_utils import (
+    apply_grad_clipping,
+    explained_variance,
+    sequence_mask,
+)
 from ray.rllib.utils.typing import TensorType
 
 DELTA = 0.1 / (30 * 60)
@@ -138,21 +146,23 @@ class BasicNamingPolicy(PPOTorchPolicy):
         model.tower_stats["mean_kl_loss"] = mean_kl_loss
 
         # Add custom naming game weight update
-        if isinstance(train_batch["infos"][0], Dict):
-            for i, info in enumerate(train_batch["infos"]):
-                m = info.get("message")
-                if m is not None:
-                    leader_goal = m["leader_goal"]
-                    follower_goal = m["follower_goal"]
-                    if train_batch["rewards"][i]:
-                        with torch.no_grad():
-                            model._communication_matrix[leader_goal, :] -= DELTA
-                            model._communication_matrix[leader_goal, follower_goal] += (
-                                2 * DELTA
-                            )
-                    # else:
-                    #     with torch.no_grad():
-                    #         model._communication_matrix[
-                    #             leader_goal, follower_goal
-                    #         ] -= DELTA
+        # only if specified we need to train it
+        if model._train_matrix:
+            if isinstance(train_batch["infos"][0], Dict):
+                for i, info in enumerate(train_batch["infos"]):
+                    m = info.get("message")
+                    if m is not None:
+                        leader_goal = m["leader_goal"]
+                        follower_goal = m["follower_goal"]
+                        if train_batch["rewards"][i]:
+                            with torch.no_grad():
+                                model._communication_matrix[leader_goal, :] -= DELTA
+                                model._communication_matrix[
+                                    leader_goal, follower_goal
+                                ] += (2 * DELTA)
+                        # else:
+                        #     with torch.no_grad():
+                        #         model._communication_matrix[
+                        #             leader_goal, follower_goal
+                        #         ] -= DELTA
         return total_loss

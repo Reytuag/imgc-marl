@@ -243,13 +243,18 @@ def train(environment, config, custom_logdir, seed):
                 )
                 config["model"] = {
                     "custom_model": "BasicNamingNetwork",
-                    "custom_model_config": {"number_of_goals": goal_space_dim},
+                    "custom_model_config": {
+                        "number_of_goals": goal_space_dim,
+                        "train_matrix": user_config.get("train_matrix", False),
+                    },
                 }
                 trainer = BasicNamingTrainer(
                     config=config,
                     env=multiagent.VeryLargeGoalLinesEnv,
                     logger_creator=custom_logger_creator,
                 )
+                if user_config.get("checkpoint") is not None:
+                    trainer.restore(user_config.get("checkpoint"))
         else:
             config["callbacks"] = LargeGoalLinesCallback
             trainer = PPOTrainer(
