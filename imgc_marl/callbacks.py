@@ -778,3 +778,25 @@ class LargeGoalLinesBasicNamingGame(LargeGoalLinesCallback):
             episode.hist_data["agent 1 position for " + goal_name] = []
         episode.hist_data["agent 0 goal"] = []
         episode.hist_data["agent 1 goal"] = []
+
+    def on_train_result(self, *, trainer: "Trainer", result: dict, **kwargs) -> None:
+        """Called at the end of Trainable.train().
+
+        Args:
+            trainer: Current trainer instance.
+            result: Dict of results returned from trainer.train() call.
+                You can mutate this object to add additional metrics.
+            kwargs: Forward compatibility placeholder.
+        """
+        result["naming_matrix_0"] = (
+            trainer.get_policy("agent_0")
+            .model._communication_matrix.detach()
+            .cpu()
+            .numpy()
+        )
+        result["naming_matrix_1"] = (
+            trainer.get_policy("agent_1")
+            .model._communication_matrix.detach()
+            .cpu()
+            .numpy()
+        )

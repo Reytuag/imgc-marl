@@ -264,6 +264,10 @@ def train(environment, config, custom_logdir, seed):
     best_reward = 0.0
     for _ in range(user_config["training"]["training_steps"]):
         result = trainer.train()
+        # Saving naming matrix during training
+        if result.get("naming_matrix_0") is not None:
+            np.save(f"{trainer.logdir}/naming_0_{_}", result.get("naming_matrix_0"))
+            np.save(f"{trainer.logdir}/naming_1_{_}", result.get("naming_matrix_1"))
         print(pretty_print(keep_relevant_results(result)))
         eval_results = result.get("evaluation")
         if (
