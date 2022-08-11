@@ -1,0 +1,10 @@
+training:
+  training_steps: 300
+  num_workers: 6
+env_config:
+  centralized: True
+  continuous: False
+  allowed_goals: [[0,0,1], [0,1,0], [1,0,0]]
+  new_reward: True
+  blind_agents: False
+  traversable_agents: True

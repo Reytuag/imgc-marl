@@ -24,6 +24,7 @@ from simple_playgrounds.element.elements.activable import (
 from simple_playgrounds.element.elements.basic import Wall
 from simple_playgrounds.engine import Engine
 from simple_playgrounds.playground.layouts import LineRooms, SingleRoom
+import pymunk
 
 font = cv2.FONT_HERSHEY_SIMPLEX
 
@@ -243,6 +244,8 @@ class GoalLinesEnv(MultiAgentEnv):
         self.new_reward = config.get("new_reward", False)
         # If agents will be blind to each other
         self.blind_agents = config.get("blind_agents", False)
+        # If agents have collisions or not
+        self.traversable_agents = config.get("traversable_agents", False)
 
         # Goal space
         self.goal_space = [
@@ -305,6 +308,11 @@ class GoalLinesEnv(MultiAgentEnv):
                 color=(0, 200, 0), color_stripe=(0, 0, 200), size_stripe=4
             ),
         )
+        if self.traversable_agents:
+            categories = 2**3
+            for p in agent_0.parts:
+                p.pm_visible_shape.filter = pymunk.ShapeFilter(categories)
+
         agent_0.learning_progress = {
             "".join(str(t) for t in goal): 0.0 for goal in self.goal_space
         }
@@ -332,6 +340,10 @@ class GoalLinesEnv(MultiAgentEnv):
                 color=(0, 0, 200), color_stripe=(0, 200, 0), size_stripe=4
             ),
         )
+        if self.traversable_agents:
+            for p in agent_1.parts:
+                p.pm_visible_shape.filter = pymunk.ShapeFilter(categories)
+
         agent_1.learning_progress = {
             "".join(str(t) for t in goal): 0.0 for goal in self.goal_space
         }
@@ -1490,6 +1502,8 @@ class VeryLargeGoalLinesEnv(GoalLinesEnv):
         self.new_reward = config.get("new_reward", False)
         # If agents will be blind to each other
         self.blind_agents = config.get("blind_agents", False)
+        # If agents have collisions or not
+        self.traversable_agents = config.get("traversable_agents", False)
 
         # Goal space
         landmarks = 6
@@ -1572,6 +1586,11 @@ class VeryLargeGoalLinesEnv(GoalLinesEnv):
                 color=(0, 200, 0), color_stripe=(0, 0, 200), size_stripe=4
             ),
         )
+        if self.traversable_agents:
+            categories = 2**3
+            for p in agent_0.parts:
+                p.pm_visible_shape.filter = pymunk.ShapeFilter(categories)
+
         # Agent 1
         agent_1 = BaseAgent(
             controller=External(),
@@ -1581,6 +1600,9 @@ class VeryLargeGoalLinesEnv(GoalLinesEnv):
                 color=(0, 0, 200), color_stripe=(0, 200, 0), size_stripe=4
             ),
         )
+        if self.traversable_agents:
+            for p in agent_1.parts:
+                p.pm_visible_shape.filter = pymunk.ShapeFilter(categories)
 
         ignore_elements = [agent_0.parts, agent_0.base_platform]
         if self.blind_agents:
