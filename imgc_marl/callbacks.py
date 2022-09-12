@@ -584,6 +584,82 @@ class LargeGoalLinesBasicCommunicationCallback(LargeGoalLinesCallback):
         episode.hist_data["agent 1 goal"] = []
 
 
+# Add this for backward compatibility
+class LargeGoalLinesCommunicationCallback(LargeGoalLinesCallback):
+    def on_episode_start(
+        self,
+        *,
+        worker: RolloutWorker,
+        base_env: BaseEnv,
+        policies: Dict[str, Policy],
+        episode: Episode,
+        env_index: int,
+        **kwargs,
+    ):
+        # e-greedy threshold
+        e_greedy = base_env.envs[0].eps_communication
+        # decide which agent will take the lead
+        sampled_goal = base_env.envs[0].goal_space[
+            np.random.randint(0, base_env.envs[0].goal_space_dim)
+        ]
+        if np.random.random() > 0.5:
+            # agent 0 lead
+            with torch.no_grad():
+                predicted_values = policies["agent_0"].model._communication_branch(
+                    torch.tensor(sampled_goal, dtype=torch.float)
+                )
+            # e-greedy
+            if np.random.random() < e_greedy:
+                selected_goal_index = np.random.randint(
+                    0, base_env.envs[0].goal_space_dim
+                )
+            else:
+                selected_goal_index = predicted_values.argmax().item()
+
+            agent_1_goal = base_env.envs[0].goal_space[selected_goal_index]
+            agent_0_goal = sampled_goal
+            message = {
+                "agent_0": {
+                    "input_goal": sampled_goal,
+                    "output_goal_index": selected_goal_index,
+                }
+            }
+        else:
+            # agent 1 lead
+            with torch.no_grad():
+                predicted_values = policies["agent_1"].model._communication_branch(
+                    torch.tensor(sampled_goal, dtype=torch.float)
+                )
+            # e-greedy
+            if np.random.random() < e_greedy:
+                selected_goal_index = np.random.randint(
+                    0, base_env.envs[0].goal_space_dim
+                )
+            else:
+                selected_goal_index = predicted_values.argmax().item()
+
+            agent_1_goal = sampled_goal
+            agent_0_goal = base_env.envs[0].goal_space[selected_goal_index]
+            message = {
+                "agent_1": {
+                    "input_goal": sampled_goal,
+                    "output_goal_index": selected_goal_index,
+                }
+            }
+
+        goals = {"agent_0": agent_0_goal, "agent_1": agent_1_goal}
+
+        worker.foreach_env(lambda env: env.set_goal_and_message(goals, message))
+
+        for goal in base_env.envs[0].goal_space:
+            goal_name = "".join(str(t) for t in goal)
+            episode.hist_data["agent 0 position for " + goal_name] = []
+            episode.hist_data["agent 1 position for " + goal_name] = []
+        episode.hist_data["agent 0 goal"] = []
+        episode.hist_data["agent 1 goal"] = []
+
+
+
 class LargeGoalLinesFullCommunicationCallback(LargeGoalLinesCallback):
     def on_episode_start(
         self,
