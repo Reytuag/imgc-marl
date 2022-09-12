@@ -6,11 +6,32 @@ import click
 import yaml
 from imgc_marl.callbacks import after_training_eval_rllib
 from imgc_marl.envs import multiagent
-from imgc_marl.models import CustomNetwork
-from imgc_marl.policy import CustomPPOTrainer
+from ray.rllib.agents.ppo import DEFAULT_CONFIG, PPOTrainer
+from imgc_marl.policies import (
+    BasicCommunicationTrainer,
+    FullCommunicationTrainer,
+    BasicNamingTrainer,
+)
 from ray.rllib.agents.ppo import DEFAULT_CONFIG, PPOTrainer
 from ray.rllib.models import ModelCatalog
 from ray.rllib.policy.policy import PolicySpec
+from imgc_marl.callbacks import (
+    GoalLinesCallback,
+    LargeGoalLinesCallback,
+    LargeGoalLinesBasicCommunicationCallback,
+    LargeGoalLinesFullCommunicationCallback,
+    NewEnvCallback,
+    LargeGoalLinesBasicNamingGame,
+    after_training_eval_rllib,
+    goal_lines_last_callback,
+    legacy_after_training_eval_rllib,
+)
+from imgc_marl.evaluation import custom_eval_function
+from imgc_marl.models import (
+    BasicCommunicationNetwork,
+    FullCommunicationNetwork,
+    BasicNamingNetwork,
+)
 
 
 @click.command()
@@ -52,19 +73,55 @@ def make_video(checkpoint, config):
     }
     config["log_level"] = "ERROR"
     if use_communication:
-        ModelCatalog.register_custom_model("CustomNetwork", CustomNetwork)
-        config["model"] = {
-            "custom_model": "CustomNetwork",
-            "custom_model_config": {
-                "number_of_messages": goal_space_dim,
-                "input_dim": goal_repr_dim,
-            },
-        }
-        trainer = CustomPPOTrainer(
-            config=config,
-            env=multiagent.VeryLargeGoalLinesEnv,
-        )
+        if use_communication == "basic":
+            config["callbacks"] = LargeGoalLinesBasicCommunicationCallback
+            ModelCatalog.register_custom_model(
+                "BasicCommunicationNetwork", BasicCommunicationNetwork
+            )
+            config["model"] = {
+                "custom_model": "BasicCommunicationNetwork",
+                "custom_model_config": {
+                    "number_of_messages": goal_space_dim,
+                    "input_dim": goal_repr_dim,
+                },
+            }
+            trainer = BasicCommunicationTrainer(
+                config=config,
+                env=multiagent.VeryLargeGoalLinesEnv,
+            )
+        if use_communication == "full":
+            config["callbacks"] = LargeGoalLinesFullCommunicationCallback
+            ModelCatalog.register_custom_model(
+                "FullCommunicationNetwork", FullCommunicationNetwork
+            )
+            config["model"] = {
+                "custom_model": "FullCommunicationNetwork",
+                "custom_model_config": {
+                    "input_dim": goal_repr_dim + goal_space_dim,
+                },
+            }
+            trainer = FullCommunicationTrainer(
+                config=config,
+                env=multiagent.VeryLargeGoalLinesEnv,
+            )
+        if use_communication == "basic_naming":
+            config["callbacks"] = LargeGoalLinesBasicNamingGame
+            ModelCatalog.register_custom_model("BasicNamingNetwork", BasicNamingNetwork)
+            config["model"] = {
+                "custom_model": "BasicNamingNetwork",
+                "custom_model_config": {
+                    "number_of_goals": goal_space_dim,
+                    "train_matrix": user_config.get("train_matrix", False),
+                },
+            }
+            trainer = BasicNamingTrainer(
+                config=config,
+                env=multiagent.VeryLargeGoalLinesEnv,
+            )
+            if user_config.get("checkpoint") is not None:
+                trainer.restore(user_config.get("checkpoint"))
     else:
+        config["callbacks"] = LargeGoalLinesCallback
         trainer = PPOTrainer(
             config=config,
             env=multiagent.VeryLargeGoalLinesEnv,
