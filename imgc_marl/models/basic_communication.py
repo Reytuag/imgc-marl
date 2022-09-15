@@ -136,11 +136,14 @@ class BasicCommunicationNetwork(TorchModelV2, nn.Module):
         self._last_flat_in = None
 
         # Custom communication branch
+        n_neurons = model_config["custom_model_config"].get("n_neurons", 32)
         self._communication_branch = nn.Sequential(
-            torch.nn.Linear(model_config["custom_model_config"]["input_dim"], 64),
+            torch.nn.Linear(
+                model_config["custom_model_config"]["input_dim"], n_neurons
+            ),
             torch.nn.ReLU(),
             torch.nn.Linear(
-                64, model_config["custom_model_config"]["number_of_messages"]
+                n_neurons, model_config["custom_model_config"]["number_of_messages"]
             ),
         )
 
