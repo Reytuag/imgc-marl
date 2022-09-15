@@ -90,7 +90,7 @@ def train(config, custom_logdir, seed):
             {f"agent_{n}": i for n in range(config["env_config"]["population_size"])}
             for i in range(goal_space_dim)
         ],
-        "record_env": "videos",
+        #"record_env": "videos",
     }
     if use_communication:
         # If we want to evaluate without centralization:
