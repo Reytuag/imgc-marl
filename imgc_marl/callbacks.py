@@ -533,6 +533,7 @@ class LargeGoalLinesBasicCommunicationCallback(LargeGoalLinesCallback):
                 predicted_values = policies["agent_0"].model._communication_branch(
                     torch.tensor(sampled_goal, dtype=torch.float)
                 )
+
             # e-greedy
             if np.random.random() < e_greedy:
                 selected_goal_index = np.random.randint(
@@ -540,6 +541,15 @@ class LargeGoalLinesBasicCommunicationCallback(LargeGoalLinesCallback):
                 )
             else:
                 selected_goal_index = predicted_values.argmax().item()
+
+            # boltzman sampling
+            # with torch.no_grad():
+            #     p = torch.nn.functional.softmax(predicted_values).numpy().astype('float64')
+            #     p = p / sum(p)
+            #     selected_goal_index = np.random.choice(
+            #         range(len(base_env.envs[0].goal_space)),
+            #         p=p,
+            #     )
 
             agent_1_goal = base_env.envs[0].goal_space[selected_goal_index]
             agent_0_goal = sampled_goal
@@ -555,6 +565,7 @@ class LargeGoalLinesBasicCommunicationCallback(LargeGoalLinesCallback):
                 predicted_values = policies["agent_1"].model._communication_branch(
                     torch.tensor(sampled_goal, dtype=torch.float)
                 )
+
             # e-greedy
             if np.random.random() < e_greedy:
                 selected_goal_index = np.random.randint(
@@ -562,6 +573,15 @@ class LargeGoalLinesBasicCommunicationCallback(LargeGoalLinesCallback):
                 )
             else:
                 selected_goal_index = predicted_values.argmax().item()
+
+            # boltzman sampling
+            # with torch.no_grad():
+            #     p = torch.nn.functional.softmax(predicted_values).numpy().astype('float64')
+            #     p = p / sum(p)
+            #     selected_goal_index = np.random.choice(
+            #         range(len(base_env.envs[0].goal_space)),
+            #         p=p,
+            #     )
 
             agent_1_goal = sampled_goal
             agent_0_goal = base_env.envs[0].goal_space[selected_goal_index]
