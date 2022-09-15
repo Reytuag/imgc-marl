@@ -1,0 +1,11 @@
+training:
+  training_steps: 300
+  num_workers: 6
+env_config:
+  centralized: False
+  continuous: False
+  eps_communication: 0.15
+  all_goals: True
+  new_reward: False
+  population_size: 4
+communication: True

@@ -4,3 +4,4 @@ training:
 env_config:
   centralized: False
   continuous: False
+  population_size: 4

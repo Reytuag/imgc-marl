@@ -659,7 +659,6 @@ class LargeGoalLinesCommunicationCallback(LargeGoalLinesCallback):
         episode.hist_data["agent 1 goal"] = []
 
 
-
 class LargeGoalLinesFullCommunicationCallback(LargeGoalLinesCallback):
     def on_episode_start(
         self,
@@ -906,3 +905,213 @@ class LargeGoalLinesBasicNamingGame(LargeGoalLinesCallback):
             .cpu()
             .numpy()
         )
+
+
+class PopGoalLinesCallback(DefaultCallbacks):
+    def on_episode_end(
+        self,
+        *,
+        worker: RolloutWorker,
+        base_env: BaseEnv,
+        policies: Dict[str, Policy],
+        episode: Episode,
+        env_index: int,
+        **kwargs,
+    ):
+        agent_a = base_env.envs[0].playground.agents[0]
+        agent_b = base_env.envs[0].playground.agents[0]
+        agent_a_name = agent_a.name
+        agent_b_name = agent_b.name
+        goal_repr_dim = base_env.envs[0].goal_repr_dim
+        agent_a_info = episode.last_info_for(agent_a_name)
+        agent_b_info = episode.last_info_for(agent_b_name)
+        agent_a_goal = episode.last_observation_for(agent_a_name)[
+            -goal_repr_dim:
+        ].astype(int)
+        agent_a_goal_name = "".join(str(t) for t in agent_a_goal)
+        agent_a_reward = episode.last_reward_for(agent_a_name)
+        agent_b_goal = episode.last_observation_for(agent_b_name)[
+            -goal_repr_dim:
+        ].astype(int)
+        agent_b_goal_name = "".join(str(t) for t in agent_b_goal)
+        agent_b_reward = episode.last_reward_for(agent_b_name)
+
+        # log reward per goal (super hacky way to encode them but it works)
+        # goal_000, goal_010, etc
+        # log for each agent and collaborative goal, which position the agent reached when solving it
+        # log reward for collective and individual goals separatelty
+        if agent_a_goal_name == agent_b_goal_name:
+            # If both agents had the same goal, log the mean of the rewards
+            episode.custom_metrics["reward for goal " + agent_a_goal_name] = (
+                agent_a_reward + agent_b_reward
+            ) / 2
+            if sum(agent_a_goal) > 1:
+                # If goal is collective, log collective goal reward + last position
+                episode.custom_metrics["reward for collective goal"] = (
+                    agent_a_reward + agent_b_reward
+                ) / 2
+                # logging position of the agent when solving the goal
+                if agent_a_reward:
+                    episode.hist_data[
+                        f"{agent_a_name} position for " + agent_a_goal_name
+                    ] = [agent_a_info["goal_line"]]
+                if agent_b_reward:
+                    episode.hist_data[
+                        f"{agent_b_name} position for " + agent_b_goal_name
+                    ] = [agent_b_info["goal_line"]]
+            else:
+                episode.custom_metrics["reward for individual goal"] = (
+                    agent_a_reward + agent_b_reward
+                ) / 2
+        else:
+            # If agents had different goals, log each of them separately
+            episode.custom_metrics[
+                "reward for goal " + agent_a_goal_name
+            ] = agent_a_reward
+            episode.custom_metrics[
+                "reward for goal " + agent_b_goal_name
+            ] = agent_b_reward
+            if sum(agent_a_goal) > 1:
+                if agent_a_reward:
+                    # logging position of the agent when solving the goal
+                    episode.hist_data[
+                        f"{agent_a_name} position for " + agent_a_goal_name
+                    ] = [agent_a_info["goal_line"]]
+                if sum(agent_b_goal) > 1:
+                    if agent_b_reward:
+                        episode.hist_data[
+                            f"{agent_b_name} position for " + agent_b_goal_name
+                        ] = [agent_b_info["goal_line"]]
+                    episode.custom_metrics["reward for collective goal"] = (
+                        agent_a_reward + agent_b_reward
+                    ) / 2
+                else:
+                    episode.custom_metrics[
+                        "reward for collective goal"
+                    ] = agent_a_reward
+                    episode.custom_metrics[
+                        "reward for individual goal"
+                    ] = agent_b_reward
+            else:
+                if sum(agent_b_goal) > 1:
+                    if agent_b_reward:
+                        episode.hist_data[
+                            f"{agent_b_name} position for " + agent_b_goal_name
+                        ] = [agent_b_info["goal_line"]]
+                    episode.custom_metrics[
+                        "reward for collective goal"
+                    ] = agent_b_reward
+                    episode.custom_metrics[
+                        "reward for individual goal"
+                    ] = agent_a_reward
+                else:
+                    episode.custom_metrics["reward for individual goal"] = (
+                        agent_a_reward + agent_b_reward
+                    ) / 2
+
+
+class PopGoalLinesCommunicationCallback(PopGoalLinesCallback):
+    def on_episode_start(
+        self,
+        *,
+        worker: RolloutWorker,
+        base_env: BaseEnv,
+        policies: Dict[str, Policy],
+        episode: Episode,
+        env_index: int,
+        **kwargs,
+    ):
+        # Greedy communication-leader strategy over fixed leader's goal (only during evaluation)
+        if base_env.envs[0].fixed_leader_goal is not None:
+            agent_a = base_env.envs[0].playground.agents[0]
+            agent_b = base_env.envs[0].playground.agents[1]
+            leader_goal = base_env.envs[0].goal_space[
+                base_env.envs[0].fixed_leader_goal
+            ]
+            if np.random.random() > 0.5:
+                # agent a lead
+                with torch.no_grad():
+                    predicted_values = policies[
+                        agent_a.name
+                    ].model._communication_branch(
+                        torch.tensor(leader_goal, dtype=torch.float)
+                    )
+                    selected_goal_index = predicted_values.argmax().item()
+                agent_a_goal_index = base_env.envs[0].fixed_leader_goal
+                agent_b_goal_index = selected_goal_index
+            else:
+                # agent b lead
+                with torch.no_grad():
+                    predicted_values = policies[
+                        agent_b.name
+                    ].model._communication_branch(
+                        torch.tensor(leader_goal, dtype=torch.float)
+                    )
+                    selected_goal_index = predicted_values.argmax().item()
+                agent_a_goal_index = selected_goal_index
+                agent_b_goal_index = base_env.envs[0].fixed_leader_goal
+            goals = {agent_a.name: agent_a_goal_index, agent_b.name: agent_b_goal_index}
+            worker.foreach_env(lambda env: env.set_external_goal(goals))
+
+        # e-greedy (during training)
+        else:
+            # e-greedy threshold
+            e_greedy = base_env.envs[0].eps_communication
+            # decide which agent will take the lead
+            sampled_goal = base_env.envs[0].goal_space[
+                np.random.randint(0, base_env.envs[0].goal_space_dim)
+            ]
+            agent_a = base_env.envs[0].playground.agents[0]
+            agent_b = base_env.envs[0].playground.agents[1]
+            if np.random.random() > 0.5:
+                # agent a lead
+                with torch.no_grad():
+                    predicted_values = policies[
+                        agent_a.name
+                    ].model._communication_branch(
+                        torch.tensor(sampled_goal, dtype=torch.float)
+                    )
+                # e-greedy
+                if np.random.random() < e_greedy:
+                    selected_goal_index = np.random.randint(
+                        0, base_env.envs[0].goal_space_dim
+                    )
+                else:
+                    selected_goal_index = predicted_values.argmax().item()
+
+                agent_b_goal = base_env.envs[0].goal_space[selected_goal_index]
+                agent_a_goal = sampled_goal
+                message = {
+                    agent_a.name: {
+                        "input_goal": sampled_goal,
+                        "output_goal_index": selected_goal_index,
+                    }
+                }
+            else:
+                # agent b lead
+                with torch.no_grad():
+                    predicted_values = policies[
+                        agent_b.name
+                    ].model._communication_branch(
+                        torch.tensor(sampled_goal, dtype=torch.float)
+                    )
+                # e-greedy
+                if np.random.random() < e_greedy:
+                    selected_goal_index = np.random.randint(
+                        0, base_env.envs[0].goal_space_dim
+                    )
+                else:
+                    selected_goal_index = predicted_values.argmax().item()
+
+                agent_b_goal = sampled_goal
+                agent_a_goal = base_env.envs[0].goal_space[selected_goal_index]
+                message = {
+                    agent_b.name: {
+                        "input_goal": sampled_goal,
+                        "output_goal_index": selected_goal_index,
+                    }
+                }
+
+            goals = {agent_a.name: agent_a_goal, agent_b.name: agent_b_goal}
+
+            worker.foreach_env(lambda env: env.set_goal_and_message(goals, message))

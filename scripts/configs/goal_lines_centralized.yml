@@ -7,3 +7,4 @@ env_config:
   # allowed_goals: [[0,0,1], [0,1,0], [1,0,0]]
   new_reward: False
   blind_agents: False
+  population_size: 4
