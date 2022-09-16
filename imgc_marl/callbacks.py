@@ -535,21 +535,21 @@ class LargeGoalLinesBasicCommunicationCallback(LargeGoalLinesCallback):
                 )
 
             # e-greedy
-            # if np.random.random() < e_greedy:
-            #     selected_goal_index = np.random.randint(
-            #         0, base_env.envs[0].goal_space_dim
-            #     )
-            # else:
-            #     selected_goal_index = predicted_values.argmax().item()
+            if np.random.random() < e_greedy:
+                selected_goal_index = np.random.randint(
+                    0, base_env.envs[0].goal_space_dim
+                )
+            else:
+                selected_goal_index = predicted_values.argmax().item()
 
             # boltzman sampling
-            with torch.no_grad():
-                p = torch.nn.functional.softmax(predicted_values).numpy().astype('float64')
-                p = p / sum(p)
-                selected_goal_index = np.random.choice(
-                    range(len(base_env.envs[0].goal_space)),
-                    p=p,
-                )
+            # with torch.no_grad():
+            #     p = torch.nn.functional.softmax(predicted_values).numpy().astype('float64')
+            #     p = p / sum(p)
+            #     selected_goal_index = np.random.choice(
+            #         range(len(base_env.envs[0].goal_space)),
+            #         p=p,
+            #     )
 
             agent_1_goal = base_env.envs[0].goal_space[selected_goal_index]
             agent_0_goal = sampled_goal
@@ -567,21 +567,21 @@ class LargeGoalLinesBasicCommunicationCallback(LargeGoalLinesCallback):
                 )
 
             # e-greedy
-            # if np.random.random() < e_greedy:
-            #     selected_goal_index = np.random.randint(
-            #         0, base_env.envs[0].goal_space_dim
-            #     )
-            # else:
-            #     selected_goal_index = predicted_values.argmax().item()
+            if np.random.random() < e_greedy:
+                selected_goal_index = np.random.randint(
+                    0, base_env.envs[0].goal_space_dim
+                )
+            else:
+                selected_goal_index = predicted_values.argmax().item()
 
             # boltzman sampling
-            with torch.no_grad():
-                p = torch.nn.functional.softmax(predicted_values).numpy().astype('float64')
-                p = p / sum(p)
-                selected_goal_index = np.random.choice(
-                    range(len(base_env.envs[0].goal_space)),
-                    p=p,
-                )
+            # with torch.no_grad():
+            #     p = torch.nn.functional.softmax(predicted_values).numpy().astype('float64')
+            #     p = p / sum(p)
+            #     selected_goal_index = np.random.choice(
+            #         range(len(base_env.envs[0].goal_space)),
+            #         p=p,
+            #     )
 
             agent_1_goal = sampled_goal
             agent_0_goal = base_env.envs[0].goal_space[selected_goal_index]
