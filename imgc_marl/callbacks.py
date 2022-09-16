@@ -939,7 +939,7 @@ class PopGoalLinesCallback(DefaultCallbacks):
         **kwargs,
     ):
         agent_a = base_env.envs[0].playground.agents[0]
-        agent_b = base_env.envs[0].playground.agents[0]
+        agent_b = base_env.envs[0].playground.agents[1]
         agent_a_name = agent_a.name
         agent_b_name = agent_b.name
         goal_repr_dim = base_env.envs[0].goal_repr_dim
