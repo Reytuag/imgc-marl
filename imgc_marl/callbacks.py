@@ -961,6 +961,7 @@ class PopGoalLinesCallback(DefaultCallbacks):
         # log for each agent and collaborative goal, which position the agent reached when solving it
         # log reward for collective and individual goals separatelty
         if agent_a_goal_name == agent_b_goal_name:
+            episode.custom_metrics["goal_alignment"] = 1
             # If both agents had the same goal, log the mean of the rewards
             episode.custom_metrics["reward for goal " + agent_a_goal_name] = (
                 agent_a_reward + agent_b_reward
@@ -984,6 +985,7 @@ class PopGoalLinesCallback(DefaultCallbacks):
                     agent_a_reward + agent_b_reward
                 ) / 2
         else:
+            episode.custom_metrics["goal_alignment"] = 0
             # If agents had different goals, log each of them separately
             episode.custom_metrics[
                 "reward for goal " + agent_a_goal_name

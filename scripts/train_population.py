@@ -94,9 +94,9 @@ def train(config, custom_logdir, seed):
     }
     if use_communication:
         # If we want to evaluate without centralization:
-        # config["custom_eval_function"] = communication_custom_eval_function
+        config["custom_eval_function"] = communication_custom_eval_function
         # If we want to evaluate centralized
-        config["custom_eval_function"] = custom_eval_function
+        # config["custom_eval_function"] = custom_eval_function
         config["callbacks"] = PopGoalLinesCommunicationCallback
         ModelCatalog.register_custom_model(
             "BasicCommunicationNetwork", BasicCommunicationNetwork
