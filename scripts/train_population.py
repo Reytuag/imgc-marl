@@ -23,12 +23,13 @@ from ray.tune.logger import UnifiedLogger, pretty_print
 
 
 @click.command()
+@click.option("--environment", type=click.Choice(["goal_lines", "large_goal_lines"]))
 @click.argument("config")
 @click.argument(
     "custom_logdir", required=False, default="/home/elias/ray_results", type=str
 )
 @click.argument("seed", required=False, default=None, type=int)
-def train(config, custom_logdir, seed):
+def train(environment, config, custom_logdir, seed):
     """Training loop using RLlib for a population of agents"""
 
     def custom_logger_creator(config):
@@ -80,8 +81,12 @@ def train(config, custom_logdir, seed):
         },
         "policy_mapping_fn": policy_mapping_fn,
     }
-
-    eval_env = population.PopGoalLinesEnv(config["env_config"])
+    if environment == "goal_lines":
+        eval_env = population.PopGoalLinesEnv(config["env_config"])
+        train_env = population.PopGoalLinesEnv
+    elif environment == "large_goal_lines":
+        eval_env = population.PopLargeGoalLinesEnv(config["env_config"])
+        train_env = population.PopLargeGoalLinesEnv
     goal_space = eval_env.goal_space
     goal_space_dim = eval_env.goal_space_dim
     goal_repr_dim = eval_env.goal_repr_dim
@@ -110,7 +115,7 @@ def train(config, custom_logdir, seed):
         }
         trainer = BasicCommunicationTrainer(
             config=config,
-            env=population.PopGoalLinesEnv,
+            env=train_env,
             logger_creator=custom_logger_creator,
         )
     else:
@@ -118,7 +123,7 @@ def train(config, custom_logdir, seed):
         config["callbacks"] = PopGoalLinesCallback
         trainer = PPOTrainer(
             config=config,
-            env=population.PopGoalLinesEnv,
+            env=train_env,
             logger_creator=custom_logger_creator,
         )
 

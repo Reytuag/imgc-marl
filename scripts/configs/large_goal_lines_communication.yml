@@ -4,7 +4,8 @@ training:
 env_config:
   centralized: False
   continuous: False
-  eps_communication: 0.05
+  eps_communication: 0.15
   all_goals: True
   new_reward: False
+  population_size: 8
 communication: "basic"

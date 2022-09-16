@@ -6,3 +6,4 @@ env_config:
   continuous: False
   all_goals: True
   new_reward: False
+  population_size: 8
