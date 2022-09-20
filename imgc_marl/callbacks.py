@@ -439,9 +439,9 @@ class LargeGoalLinesCallback(DefaultCallbacks):
             episode.custom_metrics["reward for same goal"] = (
                 agent_0_reward + agent_1_reward
             )
-            episode.custom_metrics["goal_alignment"] = 1
 
             if sum(agent_0_goal) > 1:
+                episode.custom_metrics["goal_alignment"] = 1
                 episode.custom_metrics["reward for collective goal"] = (
                     agent_0_reward + agent_1_reward
                 )
@@ -451,7 +451,6 @@ class LargeGoalLinesCallback(DefaultCallbacks):
                 )
 
         else:
-            episode.custom_metrics["goal_alignment"] = 0
 
             if np.bitwise_or.reduce(np.vstack([agent_0_goal, agent_1_goal])).sum() == 3:
                 episode.custom_metrics["reward for partially compatible goal"] = (
@@ -462,6 +461,7 @@ class LargeGoalLinesCallback(DefaultCallbacks):
                     agent_0_reward + agent_1_reward
                 )
             if sum(agent_0_goal) > 1 and sum(agent_1_goal) > 1:
+                episode.custom_metrics["goal_alignment"] = 0
                 episode.custom_metrics["reward for collective goal"] = (
                     agent_0_reward + agent_1_reward
                 )
@@ -470,9 +470,11 @@ class LargeGoalLinesCallback(DefaultCallbacks):
                     agent_0_reward + agent_1_reward
                 )
             elif sum(agent_0_goal) > 1:
+                episode.custom_metrics["goal_alignment"] = 0
                 episode.custom_metrics["reward for collective goal"] = agent_0_reward
                 episode.custom_metrics["reward for individual goal"] = agent_1_reward
             else:
+                episode.custom_metrics["goal_alignment"] = 0
                 episode.custom_metrics["reward for collective goal"] = agent_1_reward
                 episode.custom_metrics["reward for individual goal"] = agent_0_reward
 
@@ -955,18 +957,17 @@ class PopGoalLinesCallback(DefaultCallbacks):
         ].astype(int)
         agent_b_goal_name = "".join(str(t) for t in agent_b_goal)
         agent_b_reward = episode.last_reward_for(agent_b_name)
-
         # log reward per goal (super hacky way to encode them but it works)
         # goal_000, goal_010, etc
         # log for each agent and collaborative goal, which position the agent reached when solving it
         # log reward for collective and individual goals separatelty
         if agent_a_goal_name == agent_b_goal_name:
-            episode.custom_metrics["goal_alignment"] = 1
             # If both agents had the same goal, log the mean of the rewards
             episode.custom_metrics["reward for goal " + agent_a_goal_name] = (
                 agent_a_reward + agent_b_reward
             ) / 2
             if sum(agent_a_goal) > 1:
+                episode.custom_metrics["goal_alignment"] = 1
                 # If goal is collective, log collective goal reward + last position
                 episode.custom_metrics["reward for collective goal"] = (
                     agent_a_reward + agent_b_reward
@@ -985,7 +986,6 @@ class PopGoalLinesCallback(DefaultCallbacks):
                     agent_a_reward + agent_b_reward
                 ) / 2
         else:
-            episode.custom_metrics["goal_alignment"] = 0
             # If agents had different goals, log each of them separately
             episode.custom_metrics[
                 "reward for goal " + agent_a_goal_name
@@ -994,6 +994,7 @@ class PopGoalLinesCallback(DefaultCallbacks):
                 "reward for goal " + agent_b_goal_name
             ] = agent_b_reward
             if sum(agent_a_goal) > 1:
+                episode.custom_metrics["goal_alignment"] = 0
                 if agent_a_reward:
                     # logging position of the agent when solving the goal
                     episode.hist_data[
@@ -1016,6 +1017,7 @@ class PopGoalLinesCallback(DefaultCallbacks):
                     ] = agent_b_reward
             else:
                 if sum(agent_b_goal) > 1:
+                    episode.custom_metrics["goal_alignment"] = 0
                     if agent_b_reward:
                         episode.hist_data[
                             f"{agent_b_name} position for " + agent_b_goal_name
