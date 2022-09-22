@@ -8,13 +8,19 @@ import click
 import imgc_marl.envs.population as population
 import numpy as np
 import yaml
-from imgc_marl.callbacks import PopGoalLinesCallback, PopGoalLinesCommunicationCallback
+from imgc_marl.callbacks import (
+    PopGoalLinesCallback,
+    PopGoalLinesCommunicationCallback,
+    PopGoalLinesNamingCallback,
+)
 from imgc_marl.evaluation import (
-    custom_eval_function,
     communication_custom_eval_function,
+    custom_eval_function,
 )
 from imgc_marl.models.basic_communication import BasicCommunicationNetwork
+from imgc_marl.models.full_naming_game import FullNamingNetwork
 from imgc_marl.policies.basic_communication import BasicCommunicationTrainer
+from imgc_marl.policies.full_naming_game import FullNamingTrainer
 from imgc_marl.utils import keep_relevant_results
 from ray.rllib.agents.ppo import DEFAULT_CONFIG, PPOTrainer
 from ray.rllib.models import ModelCatalog
@@ -97,11 +103,11 @@ def train(environment, config, custom_logdir, seed):
         ],
         #"record_env": "videos",
     }
-    if use_communication:
+    if use_communication == "basic":
         # If we want to evaluate without centralization:
-        # config["custom_eval_function"] = communication_custom_eval_function
+        config["custom_eval_function"] = communication_custom_eval_function
         # If we want to evaluate centralized
-        config["custom_eval_function"] = custom_eval_function
+        # config["custom_eval_function"] = custom_eval_function
         config["callbacks"] = PopGoalLinesCommunicationCallback
         ModelCatalog.register_custom_model(
             "BasicCommunicationNetwork", BasicCommunicationNetwork
@@ -118,6 +124,26 @@ def train(environment, config, custom_logdir, seed):
             env=train_env,
             logger_creator=custom_logger_creator,
         )
+    elif use_communication == "naming":
+        # If we want to evaluate without centralization:
+        config["custom_eval_function"] = communication_custom_eval_function
+        # If we want to evaluate centralized
+        # config["custom_eval_function"] = custom_eval_function
+        config["callbacks"] = PopGoalLinesNamingCallback
+        ModelCatalog.register_custom_model("FullNamingNetwork", FullNamingNetwork)
+        config["model"] = {
+            "custom_model": "FullNamingNetwork",
+            "custom_model_config": {
+                "number_of_goals": goal_space_dim,
+                "train_matrix": user_config.get("train_matrix", False),
+            },
+        }
+        trainer = FullNamingTrainer(
+            config=config,
+            env=train_env,
+            logger_creator=custom_logger_creator,
+        )
+
     else:
         config["custom_eval_function"] = custom_eval_function
         config["callbacks"] = PopGoalLinesCallback
@@ -126,7 +152,9 @@ def train(environment, config, custom_logdir, seed):
             env=train_env,
             logger_creator=custom_logger_creator,
         )
-
+    # load previously trained checkpoint
+    if user_config.get("checkpoint") is not None:
+        trainer.restore(user_config.get("checkpoint"))
     # Train for training_steps iterations. A training iteration includes
     # parallel sample collection by the environment workers as well as
     # loss calculation on the collected batch and a model update.

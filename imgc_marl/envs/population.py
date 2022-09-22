@@ -1,4 +1,3 @@
-from asyncio import format_helpers
 import os
 import random
 from typing import Dict
@@ -65,19 +64,27 @@ class PopGoalLinesEnv(MultiAgentEnv):
         self.n_agents = config.get("population_size", 4)
         # Epsilon greedy exploration for communication policy
         self.eps_communication = config.get("eps_communication", 0.1)
+        # If consider all goals or only collective ones
+        self.all_goals = config.get("all_goals", True)
 
         # Goal space
-        self.goal_space = [
-            [0, 0, 1],
-            [0, 1, 0],
-            [1, 0, 0],
-            [0, 1, 1],
-            [1, 0, 1],
-            [1, 1, 0],
-        ]
+        if self.all_goals:
+            self.goal_space = [
+                [0, 0, 1],
+                [0, 1, 0],
+                [1, 0, 0],
+                [0, 1, 1],
+                [1, 0, 1],
+                [1, 1, 0],
+            ]
+        else:
+            self.goal_space = [
+                [0,1,1],
+                [1,0,1],
+                [1,1,0],
+            ]
         self.goal_space_dim = len(self.goal_space)
         self.goal_repr_dim = 3
-        # Only allowing some goals during training to test generalization
         self.episodes = 0
         self.time_steps = 0
 
@@ -417,13 +424,21 @@ class PopLargeGoalLinesEnv(PopGoalLinesEnv):
         self.n_agents = config.get("population_size", 4)
         # Epsilon greedy exploration for communication policy
         self.eps_communication = config.get("eps_communication", 0.1)
+        # If consider all goals or only collective ones
+        self.all_goals = config.get("all_goals", True)
 
         # Goal space
         landmarks = 6
-        self.goal_space = np.eye(landmarks, dtype=np.uint8).tolist()
-        self.goal_space += (
-            np.array(list(combinations(self.goal_space, 2))).sum(1).tolist()
-        )
+        if self.all_goals:
+            self.goal_space = np.eye(landmarks, dtype=np.uint8).tolist()
+            self.goal_space += (
+                np.array(list(combinations(self.goal_space, 2))).sum(1).tolist()
+            )
+        else:
+            individual_goals = np.eye(landmarks, dtype=np.uint8).tolist()
+            self.goal_space = (
+                np.array(list(combinations(individual_goals, 2))).sum(1).tolist()
+            )
         self.goal_space_dim = len(self.goal_space)
         self.goal_repr_dim = landmarks
         self.episodes = 0

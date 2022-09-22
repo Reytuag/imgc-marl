@@ -1139,3 +1139,158 @@ class PopGoalLinesCommunicationCallback(PopGoalLinesCallback):
             goals = {agent_a.name: agent_a_goal, agent_b.name: agent_b_goal}
 
             worker.foreach_env(lambda env: env.set_goal_and_message(goals, message))
+
+
+class PopGoalLinesNamingCallback(PopGoalLinesCallback):
+    def on_episode_start(
+        self,
+        *,
+        worker: RolloutWorker,
+        base_env: BaseEnv,
+        policies: Dict[str, Policy],
+        episode: Episode,
+        env_index: int,
+        **kwargs,
+    ):
+        # Greedy communication-leader strategy over fixed leader's goal (only during evaluation)
+        if base_env.envs[0].fixed_leader_goal is not None:
+            agent_a = base_env.envs[0].playground.agents[0]
+            agent_b = base_env.envs[0].playground.agents[1]
+            leader_goal = base_env.envs[0].goal_space[
+                base_env.envs[0].fixed_leader_goal
+            ]
+            leader_goal_index = base_env.envs[0].fixed_leader_goal
+            if np.random.random() > 0.5:
+                # agent a lead
+                with torch.no_grad():
+                    leader_msg_index = (
+                        policies[agent_a.name]
+                        .model._leader_matrix[leader_goal_index]
+                        .argmax()
+                        .item()
+                    )
+                    follower_goal_index = (
+                        policies[agent_b.name]
+                        .model._follower_matrix[leader_msg_index]
+                        .argmax()
+                        .item()
+                    )
+                    agent_a_goal_index = leader_goal_index
+                    agent_b_goal_index = follower_goal_index
+            else:
+                # agent b lead
+                with torch.no_grad():
+                    leader_msg_index = np.argmax(
+                        policies[agent_b.name].model._leader_matrix[leader_goal_index]
+                    )
+                    follower_goal_index = np.argmax(
+                        policies[agent_a.name].model._follower_matrix[leader_msg_index]
+                    )
+                    agent_b_goal_index = leader_goal_index
+                    agent_a_goal_index = follower_goal_index
+
+            goals = {agent_a.name: agent_a_goal_index, agent_b.name: agent_b_goal_index}
+            worker.foreach_env(lambda env: env.set_external_goal(goals))
+
+        # e-greedy (during training)
+        else:
+            # e-greedy threshold
+            e_greedy = base_env.envs[0].eps_communication
+            # decide which agent will take the lead
+            leader_goal_index = np.random.randint(0, base_env.envs[0].goal_space_dim)
+            agent_a = base_env.envs[0].playground.agents[0]
+            agent_b = base_env.envs[0].playground.agents[1]
+            if np.random.random() > 0.5:
+                # agent a lead
+                # e-greedy
+                if np.random.random() < e_greedy:
+                    leader_msg_index = np.random.randint(
+                        0, base_env.envs[0].goal_space_dim
+                    )
+                else:
+                    with torch.no_grad():
+                        leader_msgs = (
+                            policies[agent_a.name]
+                            .model._leader_matrix[leader_goal_index]
+                            .numpy()
+                        )
+                    leader_msg_index = np.random.choice(
+                        np.flatnonzero(leader_msgs == leader_msgs.max())
+                    )
+
+                if np.random.random() < e_greedy:
+                    follower_goal_index = np.random.randint(
+                        0, base_env.envs[0].goal_space_dim
+                    )
+                else:
+                    with torch.no_grad():
+                        follower_goals = (
+                            policies[agent_b.name]
+                            .model._follower_matrix[leader_msg_index]
+                            .numpy()
+                        )
+                    follower_goal_index = np.random.choice(
+                        np.flatnonzero(follower_goals == follower_goals.max())
+                    )
+
+                agent_a_goal = base_env.envs[0].goal_space[leader_goal_index]
+                agent_b_goal = base_env.envs[0].goal_space[follower_goal_index]
+                message = {
+                    agent_a.name: {
+                        "leader_goal_index": leader_goal_index,
+                        "leader_msg_index": leader_msg_index,
+                    },
+                    agent_b.name: {
+                        "follower_goal_index": follower_goal_index,
+                        "leader_msg_index": leader_msg_index,
+                    },
+                }
+            else:
+                # agent b lead
+                # e-greedy
+                if np.random.random() < e_greedy:
+                    leader_msg_index = np.random.randint(
+                        0, base_env.envs[0].goal_space_dim
+                    )
+                else:
+                    with torch.no_grad():
+                        leader_msgs = (
+                            policies[agent_b.name]
+                            .model._leader_matrix[leader_goal_index]
+                            .numpy()
+                        )
+                    leader_msg_index = np.random.choice(
+                        np.flatnonzero(leader_msgs == leader_msgs.max())
+                    )
+
+                if np.random.random() < e_greedy:
+                    follower_goal_index = np.random.randint(
+                        0, base_env.envs[0].goal_space_dim
+                    )
+                else:
+                    with torch.no_grad():
+                        follower_goals = (
+                            policies[agent_a.name]
+                            .model._follower_matrix[leader_msg_index]
+                            .numpy()
+                        )
+                    follower_goal_index = np.random.choice(
+                        np.flatnonzero(follower_goals == follower_goals.max())
+                    )
+
+                agent_b_goal = base_env.envs[0].goal_space[leader_goal_index]
+                agent_a_goal = base_env.envs[0].goal_space[follower_goal_index]
+                message = {
+                    agent_b.name: {
+                        "leader_goal_index": leader_goal_index,
+                        "leader_msg_index": leader_msg_index,
+                    },
+                    agent_a.name: {
+                        "follower_goal_index": follower_goal_index,
+                        "leader_msg_index": leader_msg_index,
+                    },
+                }
+
+            goals = {agent_a.name: agent_a_goal, agent_b.name: agent_b_goal}
+
+            worker.foreach_env(lambda env: env.set_goal_and_message(goals, message))

@@ -8,4 +8,4 @@ env_config:
   all_goals: True
   new_reward: False
   population_size: 4
-communication: True
+communication: "basic"

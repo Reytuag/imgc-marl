@@ -1,5 +1,5 @@
 training:
-  training_steps: 1000
+  training_steps: 300
   num_workers: 6
 env_config:
   centralized: False
@@ -10,4 +10,3 @@ env_config:
   population_size: 4
 communication: "naming"
 train_matrix: True
-# checkpoint: "/home/elias/workspace/imgc-marl/scripts/testing420/2022-08-09_15-00-54jkrbth14/checkpoint_000001/checkpoint-1"
