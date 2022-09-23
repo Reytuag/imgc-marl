@@ -168,13 +168,13 @@ class FullNamingPolicy(PPOTorchPolicy):
                             leader_msg_index = m["leader_msg_index"]
                             if train_batch["rewards"][i]:
                                 with torch.no_grad():
-                                    model._leader_matrix[leader_msg_index, :] -= DELTA
-                                    model._leader_matrix[
+                                    model._follower_matrix[leader_msg_index, :] -= DELTA
+                                    model._follower_matrix[
                                         leader_msg_index, follower_goal_index
                                     ] += (2 * DELTA)
                             else:
                                 with torch.no_grad():
-                                    model._leader_matrix[
+                                    model._follower_matrix[
                                         leader_msg_index, follower_goal_index
                                     ] -= DELTA
 
