@@ -105,9 +105,9 @@ def train(environment, config, custom_logdir, seed):
     }
     if use_communication == "basic":
         # If we want to evaluate without centralization:
-        config["custom_eval_function"] = communication_custom_eval_function
+        # config["custom_eval_function"] = communication_custom_eval_function
         # If we want to evaluate centralized
-        # config["custom_eval_function"] = custom_eval_function
+        config["custom_eval_function"] = custom_eval_function
         config["callbacks"] = PopGoalLinesCommunicationCallback
         ModelCatalog.register_custom_model(
             "BasicCommunicationNetwork", BasicCommunicationNetwork
@@ -126,9 +126,9 @@ def train(environment, config, custom_logdir, seed):
         )
     elif use_communication == "naming":
         # If we want to evaluate without centralization:
-        config["custom_eval_function"] = communication_custom_eval_function
+        # config["custom_eval_function"] = communication_custom_eval_function
         # If we want to evaluate centralized
-        # config["custom_eval_function"] = custom_eval_function
+        config["custom_eval_function"] = custom_eval_function
         config["callbacks"] = PopGoalLinesNamingCallback
         ModelCatalog.register_custom_model("FullNamingNetwork", FullNamingNetwork)
         config["model"] = {
