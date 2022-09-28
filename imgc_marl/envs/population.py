@@ -66,6 +66,8 @@ class PopGoalLinesEnv(MultiAgentEnv):
         self.eps_communication = config.get("eps_communication", 0.1)
         # If consider all goals or only collective ones
         self.all_goals = config.get("all_goals", True)
+        # Only compatible goals?
+        self.only_compatible = config.get("only_compatible", False)
 
         # Goal space
         if self.all_goals:
@@ -324,11 +326,28 @@ class PopGoalLinesEnv(MultiAgentEnv):
                 for agent in self.playground.agents:
                     agent.goal = goal
             else:
-                # independent uniform sampling
-                for agent in self.playground.agents:
-                    agent.goal = self.goal_space[
-                        np.random.randint(0, self.goal_space_dim)
-                    ]
+                # only safe to use with 2 agents, with more the behavior is not clear
+                if self.only_compatible:
+                    incompatible_goals = True
+                    while incompatible_goals:
+                        for agent in self.playground.agents:
+                            agent.goal = self.goal_space[
+                                np.random.randint(0, self.goal_space_dim)
+                            ]
+                        if (
+                            np.bitwise_or(
+                                self.playground.agents[0].goal,
+                                self.playground.agents[1].goal,
+                            ).sum()
+                            <= 2
+                        ):
+                            incompatible_goals = False
+                else:
+                    # independent uniform sampling
+                    for agent in self.playground.agents:
+                        agent.goal = self.goal_space[
+                            np.random.randint(0, self.goal_space_dim)
+                        ]
         for agent in self.playground.agents:
             agent.message = None
 
@@ -426,6 +445,9 @@ class PopLargeGoalLinesEnv(PopGoalLinesEnv):
         self.eps_communication = config.get("eps_communication", 0.1)
         # If consider all goals or only collective ones
         self.all_goals = config.get("all_goals", True)
+        # Only compatible goals?
+        self.only_compatible = config.get("only_compatible", False)
+
 
         # Goal space
         landmarks = 6
