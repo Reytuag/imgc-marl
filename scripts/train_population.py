@@ -12,6 +12,7 @@ from imgc_marl.callbacks import (
     PopGoalLinesCallback,
     PopGoalLinesCommunicationCallback,
     PopGoalLinesNamingCallback,
+    PopGoalLinesNamingCallback1Matrix,
 )
 from imgc_marl.evaluation import (
     communication_custom_eval_function,
@@ -19,8 +20,10 @@ from imgc_marl.evaluation import (
 )
 from imgc_marl.models.basic_communication import BasicCommunicationNetwork
 from imgc_marl.models.full_naming_game import FullNamingNetwork
+from imgc_marl.models.full_naming_game_single_matrix import FullNamingNetwork1Matrix
 from imgc_marl.policies.basic_communication import BasicCommunicationTrainer
 from imgc_marl.policies.full_naming_game import FullNamingTrainer
+from imgc_marl.policies.full_naming_game_single_matrix import FullNamingTrainer1Matrix
 from imgc_marl.utils import keep_relevant_results
 from ray.rllib.agents.ppo import DEFAULT_CONFIG, PPOTrainer
 from ray.rllib.models import ModelCatalog
@@ -129,16 +132,16 @@ def train(environment, config, custom_logdir, seed):
         # config["custom_eval_function"] = communication_custom_eval_function
         # If we want to evaluate centralized
         config["custom_eval_function"] = custom_eval_function
-        config["callbacks"] = PopGoalLinesNamingCallback
-        ModelCatalog.register_custom_model("FullNamingNetwork", FullNamingNetwork)
+        config["callbacks"] = PopGoalLinesNamingCallback1Matrix
+        ModelCatalog.register_custom_model("FullNamingNetwork1Matrix", FullNamingNetwork1Matrix)
         config["model"] = {
-            "custom_model": "FullNamingNetwork",
+            "custom_model": "FullNamingNetwork1Matrix",
             "custom_model_config": {
                 "number_of_goals": goal_space_dim,
                 "train_matrix": user_config.get("train_matrix", False),
             },
         }
-        trainer = FullNamingTrainer(
+        trainer = FullNamingTrainer1Matrix(
             config=config,
             env=train_env,
             logger_creator=custom_logger_creator,
