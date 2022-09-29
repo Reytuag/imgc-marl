@@ -4,4 +4,5 @@ training:
 env_config:
   centralized: False
   continuous: False
-  population_size: 4
+  population_size: 2
+  only_compatible: True

@@ -4,9 +4,7 @@ training:
 env_config:
   centralized: False
   continuous: False
-  eps_communication: 0
-  all_goals: False
+  all_goals: True
   new_reward: False
-  population_size: 2
-communication: "naming"
-train_matrix: True
+  population_size: 8
+  only_compatible: True

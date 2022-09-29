@@ -3,6 +3,13 @@
 #############################
 # les directives Slurm vont ici:
 
+# We consider 8 CPUs, 6 for training and 2 for evaluating 
+# The walltime we usually set for a two agents population is: 
+# 16 hours for 1000 iterations (commonly used for 6 landmarks)
+# 6 hours for 300 iterations (commonly used for 3 landmarks)
+# When considering bigger populations, scale the walltime properly (e.g 4 agents 3 landmarks = 12 hours and 600 iterations)
+
+
 # Your job name (displayed by the queue)
 #SBATCH -J JOB_NAME
 # walltime (hh:mm::ss)
@@ -12,7 +19,8 @@
 #SBATCH -N 1
 #SBATCH --ntasks-per-node=8
 #SBATCH --array=0-4
-#SBATCH --output=/gpfs/home/emasquil/logs/LOG_DIR/slurm-%A_%a.out
+# Set the directory to store logs
+#SBATCH --output=/DIRECTORY_TO_STORE_LOGS/slurm-%A_%a.out
 # change working directory
 
 # fin des directives PBS
@@ -32,8 +40,8 @@ echo "#############################"
 #############################
 
 # What you actually want to launch
-
-python train_rllib.py --environment large_goal_lines configs/CONFIG_YML /gpfs/home/emasquil/runs/RUN_DIR
+# Launch the job, change the environment if needed (3 or 6 landmarks), it can be: goal_lines or large_goal_lines
+python train_population.py --environment large_goal_lines configs/CONFIG_YML /DIRECTORY_TO_STORE_RESULTS
 
 # all done
 echo "Job finished"

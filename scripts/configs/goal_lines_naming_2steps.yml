@@ -1,0 +1,15 @@
+training:
+  training_steps: 300
+  num_workers: 6
+env_config:
+  centralized: False
+  continuous: False
+  eps_communication: 0.0
+  all_goals: False
+  new_reward: False
+  population_size: 2
+communication: "naming"
+# First run it with train_matrix: False; to train agents independently (without using nor learning the naming game matrix)
+train_matrix: False
+# Once you have the first step checkpoints trained, set train_matrix: True, and uncomment the checkpoint configuration (and set properly)
+# checkpoint: PATH_TO_A_TRAINED_CHECKPOINT_FROM_STEP_1

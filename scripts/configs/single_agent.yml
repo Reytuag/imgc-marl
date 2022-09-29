@@ -1,3 +1,0 @@
-training:
-  training_steps: 4
-  num_workers: 6

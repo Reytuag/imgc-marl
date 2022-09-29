@@ -1,10 +1,8 @@
 training:
-  training_steps: 1000
+  training_steps: 300
   num_workers: 6
 env_config:
   centralized: False
   continuous: False
-  all_goals: True
-  new_reward: False
-  population_size: 2
+  population_size: 4
   only_compatible: True
