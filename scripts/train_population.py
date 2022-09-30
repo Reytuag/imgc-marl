@@ -104,7 +104,7 @@ def train(environment, config, custom_logdir, seed):
             {f"agent_{n}": i for n in range(config["env_config"]["population_size"])}
             for i in range(goal_space_dim)
         ],
-        #"record_env": "videos",
+        # "record_env": "videos",
     }
     if use_communication == "basic":
         # If we want to evaluate without centralization:
@@ -133,7 +133,9 @@ def train(environment, config, custom_logdir, seed):
         # If we want to evaluate centralized
         config["custom_eval_function"] = custom_eval_function
         config["callbacks"] = PopGoalLinesNamingCallback1Matrix
-        ModelCatalog.register_custom_model("FullNamingNetwork1Matrix", FullNamingNetwork1Matrix)
+        ModelCatalog.register_custom_model(
+            "FullNamingNetwork1Matrix", FullNamingNetwork1Matrix
+        )
         config["model"] = {
             "custom_model": "FullNamingNetwork1Matrix",
             "custom_model_config": {
@@ -161,18 +163,13 @@ def train(environment, config, custom_logdir, seed):
     # Train for training_steps iterations. A training iteration includes
     # parallel sample collection by the environment workers as well as
     # loss calculation on the collected batch and a model update.
-    best_reward = 0.0
     for _ in range(user_config["training"]["training_steps"]):
         result = trainer.train()
         print(pretty_print(keep_relevant_results(result)))
         eval_results = result.get("evaluation")
-        if (
-            eval_results is not None
-            and eval_results["episode_reward_mean"] >= best_reward
-        ):
-            best_reward = eval_results["episode_reward_mean"]
-            save_path = trainer.save()
-            print(f"New best model found, saving it in{save_path}")
+        # Saving a checkpoint each evaluation round
+        if eval_results is not None:
+            trainer.save()
 
     # Saving most recent model as well
     trainer.save()
