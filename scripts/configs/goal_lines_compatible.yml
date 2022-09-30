@@ -3,6 +3,5 @@ training:
   num_workers: 6
 env_config:
   centralized: False
-  continuous: False
   population_size: 4
   only_compatible: True

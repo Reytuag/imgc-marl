@@ -3,8 +3,7 @@ training:
   num_workers: 6
 env_config:
   centralized: True
-  continuous: False
-  # allowed_goals: [[0,0,1], [0,1,0], [1,0,0]]
-  new_reward: False
-  blind_agents: False
   population_size: 4
+  # True -> consider all goals
+  # False -> consider only cooperative goals
+  all_goals: True

@@ -3,9 +3,9 @@ training:
   num_workers: 6
 env_config:
   centralized: False
-  continuous: False
   eps_communication: 0.15
+  # True -> consider all goals
+  # False -> consider only cooperative goals
   all_goals: True
-  new_reward: False
   population_size: 4
 communication: "basic"

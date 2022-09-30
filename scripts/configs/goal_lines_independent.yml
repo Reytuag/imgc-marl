@@ -3,6 +3,7 @@ training:
   num_workers: 6
 env_config:
   centralized: False
-  continuous: False
   population_size: 2
-  only_compatible: True
+  # True -> consider all goals
+  # False -> consider only cooperative goals
+  all_goals: True
