@@ -2,7 +2,7 @@ training:
   training_steps: 1000
   num_workers: 6
 env_config:
-  centralized: True
+  centralized: False
   population_size: 8
   # Allowed goals during training
   allowed_goals: [[0,0,0,0,0,1], [0,0,0,0,1,0], [0,0,0,1,0,0], [0,0,1,0,0,0], [0,1,0,0,0,0], [1,0,0,0,0,0]]

@@ -6,4 +6,4 @@ env_config:
   population_size: 8
   # Allowed goals during training
   allowed_goals: [[0,0,0,0,0,1], [0,0,0,0,1,0], [0,0,0,1,0,0], [0,0,1,0,0,0], [0,1,0,0,0,0], [1,0,0,0,0,0]]
-  new_reward: True
+  new_reward: False

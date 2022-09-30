@@ -1,9 +1,9 @@
 training:
-  training_steps: 300
+  training_steps: 1000
   num_workers: 6
 env_config:
-  centralized: True
-  continuous: False
+  centralized: False
+  population_size: 8
+  # Allowed goals during training
   allowed_goals: [[0,0,0,0,0,1], [0,0,0,0,1,0], [0,0,0,1,0,0], [0,0,1,0,0,0], [0,1,0,0,0,0], [1,0,0,0,0,0]]
   new_reward: False
-  blind_agents: False

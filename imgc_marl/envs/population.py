@@ -87,6 +87,12 @@ class PopGoalLinesEnv(MultiAgentEnv):
             ]
         self.goal_space_dim = len(self.goal_space)
         self.goal_repr_dim = 3
+
+        # ZERO-SHOT CONFIG ONLY: Only allowing some goals during training
+        # ZERO-SHOT ONLY WORKS WITH CENTRALIZED OR INDEPENDENT
+        self.allowed_training_goals = config.get("allowed_goals", self.goal_space)
+        self.n_allowed_training_goals = len(self.allowed_training_goals)
+
         self.episodes = 0
         self.time_steps = 0
 
@@ -322,10 +328,11 @@ class PopGoalLinesEnv(MultiAgentEnv):
         if not self.fixed_goal:
             if self.centralized or np.random.random() < self.alignment_percentage:
                 # Centralized uniform
-                goal = self.goal_space[np.random.randint(0, self.goal_space_dim)]
+                goal = self.allowed_training_goals[np.random.randint(0, self.n_allowed_training_goals)]
                 for agent in self.playground.agents:
                     agent.goal = goal
             else:
+                # ONLY COMPATIBLE GOALS IS ONLY SUPPORTED WITH 2 AGENTS
                 # only safe to use with 2 agents, with more the behavior is not clear
                 if self.only_compatible:
                     incompatible_goals = True
@@ -345,8 +352,8 @@ class PopGoalLinesEnv(MultiAgentEnv):
                 else:
                     # independent uniform sampling
                     for agent in self.playground.agents:
-                        agent.goal = self.goal_space[
-                            np.random.randint(0, self.goal_space_dim)
+                        agent.goal = self.allowed_training_goals[
+                            np.random.randint(0, self.n_allowed_training_goals)
                         ]
         for agent in self.playground.agents:
             agent.message = None
@@ -463,6 +470,12 @@ class PopLargeGoalLinesEnv(PopGoalLinesEnv):
             )
         self.goal_space_dim = len(self.goal_space)
         self.goal_repr_dim = landmarks
+
+        # ZERO-SHOT CONFIG ONLY: Only allowing some goals during training
+        # ZERO-SHOT ONLY WORKS WITH CENTRALIZED OR INDEPENDENT
+        self.allowed_training_goals = config.get("allowed_goals", self.goal_space)
+        self.n_allowed_training_goals = len(self.allowed_training_goals)
+
         self.episodes = 0
         self.time_steps = 0
 
