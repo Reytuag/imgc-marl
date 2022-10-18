@@ -140,7 +140,7 @@ class FullNamingNetwork1Matrix(TorchModelV2, nn.Module):
             torch.zeros(
                 [
                     model_config["custom_model_config"]["number_of_goals"],
-                    model_config["custom_model_config"]["number_of_goals"],
+                    model_config["custom_model_config"]["nb_msg"],
                 ]
             ),
             requires_grad=True,

@@ -1,0 +1,14 @@
+training:
+  training_steps: 1000
+  num_workers: 10
+env_config:
+  centralized: False
+  eps_communication: 0
+  population_size: 2
+  # True -> consider all goals
+  # False -> consider only cooperative goals
+  all_goals: False
+  new_reward: True
+communication: "naming"
+train_matrix: True
+checkpoint:  /gpfsscratch/rech/imi/uzw47io/elias_expe/2_agents/cooperative/modified_reward/6_landmarks/naming_game_2_steps/pre/2022-10-07_15-45-23muiisbw2/checkpoint_000500/checkpoint-500

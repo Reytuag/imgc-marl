@@ -1,8 +1,8 @@
 training:
   training_steps: 1000
-  num_workers: 6
+  num_workers: 10
 env_config:
-  centralized: True
+  centralized: False
   population_size: 2
   # True -> consider all goals
   # False -> consider only cooperative goals

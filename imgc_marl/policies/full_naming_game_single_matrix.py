@@ -24,7 +24,7 @@ from ray.rllib.utils.typing import TensorType
 
 DELTA = 0.1 / (30 * 60)
 # scaling factor: 30 iterations x 60 episodes each agent will lead (60 games/training it)
-
+ALPHA= 0.1
 torch, nn = try_import_torch()
 
 logger = logging.getLogger(__name__)
@@ -117,7 +117,6 @@ class FullNamingPolicy1Matrix(PPOTorchPolicy):
         else:
             value_fn_out = 0
             vf_loss_clipped = mean_vf_loss = 0.0
-
         total_loss = reduce_mean_valid(
             -surrogate_loss
             + self.config["vf_loss_coeff"] * vf_loss_clipped
@@ -144,6 +143,8 @@ class FullNamingPolicy1Matrix(PPOTorchPolicy):
         # only if specified we need to train it
         if model._train_matrix:
             if isinstance(train_batch["infos"][0], Dict):
+                update=torch.zeros_like(model._matrix)
+                normalization=torch.zeros_like(model._matrix)
                 for i, info in enumerate(train_batch["infos"]):
                     m = info.get("message")
                     if m is not None:
@@ -153,29 +154,22 @@ class FullNamingPolicy1Matrix(PPOTorchPolicy):
                             leader_msg_index = m["leader_msg_index"]
                             if train_batch["rewards"][i]:
                                 with torch.no_grad():
-                                    model._matrix[leader_goal_index, :] -= DELTA
-                                    model._matrix[
+                                    update[
                                         leader_goal_index, leader_msg_index
-                                    ] += (2 * DELTA)
-                            else:
-                                with torch.no_grad():
-                                    model._matrix[
-                                        leader_goal_index, leader_msg_index
-                                    ] -= DELTA
+                                    ] += train_batch["rewards"][i]
+                            normalization[leader_goal_index, leader_msg_index] +=1
                         else:
                             # agent was a follower, update follower matrix
                             follower_goal_index = m["follower_goal_index"]
                             leader_msg_index = m["leader_msg_index"]
                             if train_batch["rewards"][i]:
                                 with torch.no_grad():
-                                    model._matrix[:, leader_msg_index] -= DELTA
-                                    model._matrix[
+                                    update[
                                         follower_goal_index, leader_msg_index
-                                    ] += (2 * DELTA)
-                            else:
-                                with torch.no_grad():
-                                    model._matrix[
-                                        follower_goal_index, leader_msg_index
-                                    ] -= DELTA
+                                    ] += train_batch["rewards"][i]
+                            normalization[follower_goal_index, leader_msg_index]+=1
+                with torch.no_grad():
+                    model._matrix*=(1-ALPHA)
+                    model._matrix+=ALPHA*update/(normalization+1e-10)
 
         return total_loss

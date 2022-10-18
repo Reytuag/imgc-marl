@@ -141,9 +141,32 @@ def train(environment, config, custom_logdir, seed):
             "custom_model_config": {
                 "number_of_goals": goal_space_dim,
                 "train_matrix": user_config.get("train_matrix", False),
+                "nb_msg":user_config.get("nb_msg",30)
             },
         }
         trainer = FullNamingTrainer1Matrix(
+            config=config,
+            env=train_env,
+            logger_creator=custom_logger_creator,
+        )
+        
+    elif use_communication == "naming_2":
+        # If we want to evaluate without centralization:
+        # config["custom_eval_function"] = communication_custom_eval_function
+        # If we want to evaluate centralized
+        config["custom_eval_function"] = custom_eval_function
+        config["callbacks"] = PopGoalLinesNamingCallback
+        ModelCatalog.register_custom_model(
+            "FullNamingNetwork", FullNamingNetwork
+        )
+        config["model"] = {
+            "custom_model": "FullNamingNetwork",
+            "custom_model_config": {
+                "number_of_goals": goal_space_dim,
+                "train_matrix": user_config.get("train_matrix", False),
+            },
+        }
+        trainer = FullNamingTrainer(
             config=config,
             env=train_env,
             logger_creator=custom_logger_creator,

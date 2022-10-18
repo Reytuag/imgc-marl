@@ -1,10 +1,13 @@
 training:
   training_steps: 1000
-  num_workers: 6
+  num_workers: 10
 env_config:
-  centralized: True
+  centralized: False
+  eps_communication: 0
   population_size: 2
   # True -> consider all goals
   # False -> consider only cooperative goals
   all_goals: True
   new_reward: True
+communication: "naming"
+train_matrix: True

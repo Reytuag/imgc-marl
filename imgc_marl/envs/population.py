@@ -68,6 +68,8 @@ class PopGoalLinesEnv(MultiAgentEnv):
         self.all_goals = config.get("all_goals", True)
         # Only compatible goals?
         self.only_compatible = config.get("only_compatible", False)
+        
+        self.reward_multiplier=config.get("reward_multiplier",1.)
 
         # Goal space
         if self.all_goals:
@@ -270,8 +272,10 @@ class PopGoalLinesEnv(MultiAgentEnv):
                 if (
                     np.sum(agent.goal) > 1
                     and np.all(agent.goal == collective_achieved_goal)
-                ) or (np.all(agent.goal == individual_achieved_goals[agent.name])):
+                ) :
                     reward = 1
+                elif (np.all(agent.goal == individual_achieved_goals[agent.name])):
+                    reward = 1/self.reward_multiplier
                 else:
                     reward = 0
             else:
@@ -279,11 +283,11 @@ class PopGoalLinesEnv(MultiAgentEnv):
                 if (
                     np.sum(agent.goal) > 1
                     and np.all(agent.goal == collective_achieved_goal)
-                ) or (
-                    (np.all(agent.goal == individual_achieved_goals[agent_a]))
-                    or (np.all(agent.goal == individual_achieved_goals[agent_b]))
                 ):
                     reward = 1
+                elif ((np.all(agent.goal == individual_achieved_goals[agent_a]))
+                    or (np.all(agent.goal == individual_achieved_goals[agent_b])):
+                    reward = 1/self.reward_mutiplier
                 else:
                     reward = 0
             rewards[agent.name] = reward

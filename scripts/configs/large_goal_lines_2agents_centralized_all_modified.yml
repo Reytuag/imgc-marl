@@ -1,6 +1,6 @@
 training:
   training_steps: 1000
-  num_workers: 6
+  num_workers: 10
 env_config:
   centralized: True
   population_size: 2

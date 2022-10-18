@@ -1203,35 +1203,59 @@ class PopGoalLinesNamingCallback(PopGoalLinesCallback):
             if np.random.random() > 0.5:
                 # agent a lead
                 # e-greedy
-                if np.random.random() < e_greedy:
-                    leader_msg_index = np.random.randint(
-                        0, base_env.envs[0].goal_space_dim
-                    )
-                else:
-                    with torch.no_grad():
-                        leader_msgs = (
-                            policies[agent_a.name]
-                            .model._leader_matrix[leader_goal_index]
-                            .numpy()
-                        )
-                    leader_msg_index = np.random.choice(
-                        np.flatnonzero(leader_msgs == leader_msgs.max())
-                    )
+                #if np.random.random() < e_greedy:
+                #    leader_msg_index = np.random.randint(
+                #        0, base_env.envs[0].goal_space_dim
+                #    )
+                #else:
+                #    with torch.no_grad():
+                #        leader_msgs = (
+                #            policies[agent_a.name]
+                #            .model._leader_matrix[leader_goal_index]
+                #            .numpy()
+                #        )
+                #    leader_msg_index = np.random.choice(
+                #        np.flatnonzero(leader_msgs == leader_msgs.max())
+                #    )
+                #if np.random.random() < e_greedy:
+                #    follower_goal_index = np.random.randint(
+                #        0, base_env.envs[0].goal_space_dim
+                #    )
+                #else:
+                #    with torch.no_grad():
+                #        follower_goals = (
+                #            policies[agent_b.name]
+                #            .model._follower_matrix[leader_msg_index]
+                #            .numpy()
+                #        )
+                #    follower_goal_index = np.random.choice(
+                #        np.flatnonzero(follower_goals == follower_goals.max())
+                #    )
 
-                if np.random.random() < e_greedy:
-                    follower_goal_index = np.random.randint(
-                        0, base_env.envs[0].goal_space_dim
-                    )
-                else:
-                    with torch.no_grad():
-                        follower_goals = (
-                            policies[agent_b.name]
-                            .model._follower_matrix[leader_msg_index]
-                            .numpy()
-                        )
-                    follower_goal_index = np.random.choice(
-                        np.flatnonzero(follower_goals == follower_goals.max())
-                    )
+                # SOFTMAX
+                with torch.no_grad():
+                    scores = (
+                         torch.nn.functional.softmax(
+                            15*policies[agent_a.name].model._leader_matrix[leader_goal_index]
+                         )
+                         .detach()
+                         .numpy()
+                     )
+                    
+                
+                leader_msg_index = np.random.choice(range(len(scores)), 1, p=scores)[0]
+
+                with torch.no_grad():
+                    scores = (
+                         torch.nn.functional.softmax(
+                            15*policies[agent_b.name].model._follower_matrix[:,leader_msg_index]
+                         )
+                         .detach()
+                         .numpy()
+                     )
+                follower_goal_index = np.random.choice(range(len(scores)), 1, p=scores)[0]
+
+                    
 
                 agent_a_goal = base_env.envs[0].goal_space[leader_goal_index]
                 agent_b_goal = base_env.envs[0].goal_space[follower_goal_index]
@@ -1248,35 +1272,58 @@ class PopGoalLinesNamingCallback(PopGoalLinesCallback):
             else:
                 # agent b lead
                 # e-greedy
-                if np.random.random() < e_greedy:
-                    leader_msg_index = np.random.randint(
-                        0, base_env.envs[0].goal_space_dim
-                    )
-                else:
-                    with torch.no_grad():
-                        leader_msgs = (
-                            policies[agent_b.name]
-                            .model._leader_matrix[leader_goal_index]
-                            .numpy()
-                        )
-                    leader_msg_index = np.random.choice(
-                        np.flatnonzero(leader_msgs == leader_msgs.max())
-                    )
+                #if np.random.random() < e_greedy:
+                #    leader_msg_index = np.random.randint(
+                #        0, base_env.envs[0].goal_space_dim
+                #    )
+                #else:
+                #    with torch.no_grad():
+                #        leader_msgs = (
+                #            policies[agent_b.name]
+                #            .model._leader_matrix[leader_goal_index]
+                #            .numpy()
+                #        )
+                #    leader_msg_index = np.random.choice(
+                #        np.flatnonzero(leader_msgs == leader_msgs.max())
+                #    )
 
-                if np.random.random() < e_greedy:
-                    follower_goal_index = np.random.randint(
-                        0, base_env.envs[0].goal_space_dim
-                    )
-                else:
-                    with torch.no_grad():
-                        follower_goals = (
-                            policies[agent_a.name]
-                            .model._follower_matrix[leader_msg_index]
-                            .numpy()
-                        )
-                    follower_goal_index = np.random.choice(
-                        np.flatnonzero(follower_goals == follower_goals.max())
-                    )
+                #if np.random.random() < e_greedy:
+                #    follower_goal_index = np.random.randint(
+                #        0, base_env.envs[0].goal_space_dim
+                #    )
+                #else:
+                #    with torch.no_grad():
+                #        follower_goals = (
+                #            policies[agent_a.name]
+                #            .model._follower_matrix[leader_msg_index]
+                #            .numpy()
+                #        )
+                #    follower_goal_index = np.random.choice(
+                #        np.flatnonzero(follower_goals == follower_goals.max())
+                #    )
+                
+                
+                with torch.no_grad():
+                    scores = (
+                         torch.nn.functional.softmax(
+                            15*policies[agent_b.name].model._leader_matrix[leader_goal_index]
+                         )
+                         .detach()
+                         .numpy()
+                     )
+                    
+                
+                leader_msg_index = np.random.choice(range(len(scores)), 1, p=scores)[0]
+
+                with torch.no_grad():
+                    scores = (
+                         torch.nn.functional.softmax(
+                            15*policies[agent_a.name].model._follower_matrix[:,leader_msg_index]
+                         )
+                         .detach()
+                         .numpy()
+                     )
+                follower_goal_index = np.random.choice(range(len(scores)), 1, p=scores)[0]
 
                 agent_b_goal = base_env.envs[0].goal_space[leader_goal_index]
                 agent_a_goal = base_env.envs[0].goal_space[follower_goal_index]
@@ -1296,6 +1343,15 @@ class PopGoalLinesNamingCallback(PopGoalLinesCallback):
             worker.foreach_env(lambda env: env.set_goal_and_message(goals, message))
 
 
+
+def entropy_softmax(x,temperature1=15,temperature2=1):
+    with torch.no_grad():
+        p=torch.nn.functional.softmax(temperature1*x,dim=1)
+        ent=-(p*torch.log(p+1e-10)).sum(axis=1)
+        p_g=torch.nn.functional.softmax(temperature2*ent)
+    return p_g
+    
+temper=30
 class PopGoalLinesNamingCallback1Matrix(PopGoalLinesCallback):
     def on_episode_start(
         self,
@@ -1356,37 +1412,65 @@ class PopGoalLinesNamingCallback1Matrix(PopGoalLinesCallback):
             agent_a = base_env.envs[0].playground.agents[0]
             agent_b = base_env.envs[0].playground.agents[1]
             if np.random.random() > 0.5:
+                
                 # agent a lead
+                
+                #if selection based on entropy of the line in matrix 
+                #p_g=entropy_softmax(policies[agent_a.name].model._matrix).detach().numpy()
+                #leader_goal_index=np.random.choice(range(base_env.envs[0].goal_space_dim), 1, p=p_g)[0]
+                
+                
                 # e-greedy
-                if np.random.random() < e_greedy:
-                    leader_msg_index = np.random.randint(
-                        0, base_env.envs[0].goal_space_dim
-                    )
-                else:
-                    with torch.no_grad():
-                        leader_msgs = (
-                            policies[agent_a.name]
-                            .model._matrix[leader_goal_index]
-                            .numpy()
-                        )
-                    leader_msg_index = np.random.choice(
-                        np.flatnonzero(leader_msgs == leader_msgs.max())
-                    )
+                #if np.random.random() < e_greedy:
+                #    leader_msg_index = np.random.randint(
+                #        0, base_env.envs[0].goal_space_dim
+                #    )
+                #else:
+                #    with torch.no_grad():
+                #        leader_msgs = (
+                #            policies[agent_a.name]
+                #            .model._matrix[leader_goal_index]
+                #            .numpy()
+                #        )
+                #    leader_msg_index = np.random.choice(
+                #        np.flatnonzero(leader_msgs == leader_msgs.max())
+                #    )
 
-                if np.random.random() < e_greedy:
-                    follower_goal_index = np.random.randint(
-                        0, base_env.envs[0].goal_space_dim
-                    )
-                else:
-                    with torch.no_grad():
-                        follower_goals = (
-                            policies[agent_b.name]
-                            .model._matrix[:, leader_msg_index]
-                            .numpy()
-                        )
-                    follower_goal_index = np.random.choice(
-                        np.flatnonzero(follower_goals == follower_goals.max())
-                    )
+                #if np.random.random() < e_greedy:
+                #    follower_goal_index = np.random.randint(
+                #        0, base_env.envs[0].goal_space_dim
+                #    )
+                #else:
+                #    with torch.no_grad():
+                #        follower_goals = (
+                #            policies[agent_b.name]
+                #            .model._matrix[:, leader_msg_index]
+                #            .numpy()
+                #        )
+                #    follower_goal_index = np.random.choice(
+                #        np.flatnonzero(follower_goals == follower_goals.max())
+                #   )
+                #softmax
+                with torch.no_grad():
+                    scores = (
+                         torch.nn.functional.softmax(
+                            temper*policies[agent_a.name].model._matrix[leader_goal_index]
+                         )
+                         .detach()
+                         .numpy()
+                     )
+                leader_msg_index = np.random.choice(range(len(scores)), 1, p=scores)[0]
+
+
+                with torch.no_grad():
+                    scores = (
+                         torch.nn.functional.softmax(
+                             temper*policies[agent_b.name].model._matrix[:,leader_msg_index]
+                         )
+                         .detach()
+                         .numpy()
+                     )
+                follower_goal_index = np.random.choice(range(len(scores)), 1, p=scores)[0]
 
                 agent_a_goal = base_env.envs[0].goal_space[leader_goal_index]
                 agent_b_goal = base_env.envs[0].goal_space[follower_goal_index]
@@ -1402,36 +1486,63 @@ class PopGoalLinesNamingCallback1Matrix(PopGoalLinesCallback):
                 }
             else:
                 # agent b lead
+                
+                #p_g=entropy_softmax(policies[agent_b.name].model._matrix).detach().numpy()
+                #leader_goal_index=np.random.choice(range(base_env.envs[0].goal_space_dim), 1, p=p_g)[0]
+                
                 # e-greedy
-                if np.random.random() < e_greedy:
-                    leader_msg_index = np.random.randint(
-                        0, base_env.envs[0].goal_space_dim
-                    )
-                else:
-                    with torch.no_grad():
-                        leader_msgs = (
-                            policies[agent_b.name]
-                            .model._matrix[leader_goal_index]
-                            .numpy()
-                        )
-                    leader_msg_index = np.random.choice(
-                        np.flatnonzero(leader_msgs == leader_msgs.max())
-                    )
+                #if np.random.random() < e_greedy:
+                #    leader_msg_index = np.random.randint(
+                #        0, base_env.envs[0].goal_space_dim
+                #    )
+                #else:
+                #    with torch.no_grad():
+                #        leader_msgs = (
+                #            policies[agent_b.name]
+                #            .model._matrix[leader_goal_index]
+                #            .numpy()
+                #        )
+                #    leader_msg_index = np.random.choice(
+                #        np.flatnonzero(leader_msgs == leader_msgs.max())
+                #    )
 
-                if np.random.random() < e_greedy:
-                    follower_goal_index = np.random.randint(
-                        0, base_env.envs[0].goal_space_dim
-                    )
-                else:
-                    with torch.no_grad():
-                        follower_goals = (
-                            policies[agent_a.name]
-                            .model._matrix[:, leader_msg_index]
-                            .numpy()
-                        )
-                    follower_goal_index = np.random.choice(
-                        np.flatnonzero(follower_goals == follower_goals.max())
-                    )
+                #if np.random.random() < e_greedy:
+                #    follower_goal_index = np.random.randint(
+                #        0, base_env.envs[0].goal_space_dim
+                #    )
+                #else:
+                #    with torch.no_grad():
+                #        follower_goals = (
+                #            policies[agent_a.name]
+                #            .model._matrix[:, leader_msg_index]
+                #            .numpy()
+                #        )
+                #    follower_goal_index = np.random.choice(
+                #        np.flatnonzero(follower_goals == follower_goals.max())
+                #    )
+
+                #softmax
+                with torch.no_grad():
+                    scores = (
+                         torch.nn.functional.softmax(
+                            temper*policies[agent_b.name].model._matrix[leader_goal_index]
+                         )
+                         .detach()
+                         .numpy()
+                     )
+                leader_msg_index = np.random.choice(range(len(scores)), 1, p=scores)[0]
+
+
+                with torch.no_grad():
+                    scores = (
+                         torch.nn.functional.softmax(
+                             temper*policies[agent_a.name].model._matrix[:,leader_msg_index]
+                         )
+                         .detach()
+                         .numpy()
+                     )
+                follower_goal_index = np.random.choice(range(len(scores)), 1, p=scores)[0]
+
 
                 agent_b_goal = base_env.envs[0].goal_space[leader_goal_index]
                 agent_a_goal = base_env.envs[0].goal_space[follower_goal_index]
