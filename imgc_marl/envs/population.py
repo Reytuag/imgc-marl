@@ -286,7 +286,7 @@ class PopGoalLinesEnv(MultiAgentEnv):
                 ):
                     reward = 1
                 elif ((np.all(agent.goal == individual_achieved_goals[agent_a]))
-                    or (np.all(agent.goal == individual_achieved_goals[agent_b])):
+                    or (np.all(agent.goal == individual_achieved_goals[agent_b]))):
                     reward = 1/self.reward_mutiplier
                 else:
                     reward = 0
