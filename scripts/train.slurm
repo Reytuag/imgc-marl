@@ -40,7 +40,7 @@ echo "#############################"
 
 # What you actually want to launch
 # Launch the job, change the environment if needed (3 or 6 landmarks), it can be: goal_lines or large_goal_lines
-python train_population.py --environment goal_lines configs/goal_lines_2agents_50align_all_modified.yml ${SCRATCH}/elias_expe/2_agents/all/modified_reward/3_landmarks/naming_game_30msg/
+python train_population.py --environment goal_lines configs/goal_lines_2agents_naming_game_all_modified.yml ${SCRATCH}/elias_expe/2_agents/all/modified_reward/3_landmarks/naming_game_30msg/
 
 # all done
 echo "Job finished"

@@ -141,7 +141,7 @@ def train(environment, config, custom_logdir, seed):
             "custom_model_config": {
                 "number_of_goals": goal_space_dim,
                 "train_matrix": user_config.get("train_matrix", False),
-                "nb_msg":user_config.get("nb_msg",30)
+                "nb_msg": user_config.get("nb_msg",30)
             },
         }
         trainer = FullNamingTrainer1Matrix(
