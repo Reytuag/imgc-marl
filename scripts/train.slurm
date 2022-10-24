@@ -13,15 +13,15 @@
 # Your job name (displayed by the queue)
 #SBATCH -J imgc_marl
 # walltime (hh:mm::ss)
-#SBATCH -t 16:00:00
+#SBATCH -t 19:59:00
 #SBATCH -A imi@cpu
 # Specify the number of nodes(nodes=) and the number of cores per nodes(tasks-pernode=) to be used
 #SBATCH -N 1
-#SBATCH --cpus-per-task=12
 #SBATCH --array=0-4
+#SBATCH --cpus-per-task=12
 # Set the directory to store logs
-#SBATCH -o /gpfsscratch/rech/imi/uzw47io/elias_expe/2_agents/all/modified_reward/3_landmarks/naming_game_30msg/train-%A_%a.slurm.out
-#SBATCH -e /gpfsscratch/rech/imi/uzw47io/elias_expe/2_agents/all/modified_reward/3_landmarks/naming_game_30msg/train-%A_%a.slurm.err
+#SBATCH -o /gpfsscratch/rech/imi/uzw47io/elias_expe/2_agents/all/modified_reward/6_landmarks/50align/train-%A_%a.slurm.out
+#SBATCH -e /gpfsscratch/rech/imi/uzw47io/elias_expe/2_agents/all/modified_reward/6_landmarks/50align/train-%A_%a.slurm.err
 
 # change working directory
 
@@ -40,7 +40,7 @@ echo "#############################"
 
 # What you actually want to launch
 # Launch the job, change the environment if needed (3 or 6 landmarks), it can be: goal_lines or large_goal_lines
-python train_population.py --environment goal_lines configs/goal_lines_2agents_naming_game_all_modified.yml ${SCRATCH}/elias_expe/2_agents/all/modified_reward/3_landmarks/naming_game_30msg/
+python train_population.py --environment large_goal_lines configs/large_goal_lines_2agents_50align_all_modified.yml ${SCRATCH}/elias_expe/2_agents/all/modified_reward/6_landmarks/50align/
 
 # all done
 echo "Job finished"

@@ -1,0 +1,1586 @@
+[D 16:53:10.560 NotebookApp] Searching ['/gpfsdswork/projects/rech/imi/uzw47io/imgc-marl/scripts/configs', '/gpfs7kw/linkhome/rech/genini01/uzw47io/.jupyter', '/linkhome/rech/genini01/uzw47io/.local/etc/jupyter', '/gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/etc/jupyter', '/usr/local/etc/jupyter', '/etc/jupyter'] for config files
+[D 16:53:10.562 NotebookApp] Looking for jupyter_config in /etc/jupyter
+[D 16:53:10.562 NotebookApp] Looking for jupyter_config in /usr/local/etc/jupyter
+[D 16:53:10.562 NotebookApp] Looking for jupyter_config in /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/etc/jupyter
+[D 16:53:10.562 NotebookApp] Loaded config file: /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/etc/jupyter/jupyter_config.json
+[D 16:53:10.562 NotebookApp] Looking for jupyter_config in /linkhome/rech/genini01/uzw47io/.local/etc/jupyter
+[D 16:53:10.563 NotebookApp] Looking for jupyter_config in /gpfs7kw/linkhome/rech/genini01/uzw47io/.jupyter
+[D 16:53:10.563 NotebookApp] Looking for jupyter_config in /gpfsdswork/projects/rech/imi/uzw47io/imgc-marl/scripts/configs
+[D 16:53:10.566 NotebookApp] Looking for jupyter_notebook_config in /etc/jupyter
+[D 16:53:10.566 NotebookApp] Looking for jupyter_notebook_config in /usr/local/etc/jupyter
+[D 16:53:10.566 NotebookApp] Looking for jupyter_notebook_config in /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/etc/jupyter
+[D 16:53:10.567 NotebookApp] Loaded config file: /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/etc/jupyter/jupyter_notebook_config.json
+[D 16:53:10.567 NotebookApp] Looking for jupyter_notebook_config in /linkhome/rech/genini01/uzw47io/.local/etc/jupyter
+[D 16:53:10.567 NotebookApp] Looking for jupyter_notebook_config in /gpfs7kw/linkhome/rech/genini01/uzw47io/.jupyter
+[D 16:53:10.567 NotebookApp] Loaded config file: /gpfs7kw/linkhome/rech/genini01/uzw47io/.jupyter/jupyter_notebook_config.py
+[D 16:53:10.568 NotebookApp] Loaded config file: /gpfs7kw/linkhome/rech/genini01/uzw47io/.jupyter/jupyter_notebook_config.json
+[D 16:53:10.568 NotebookApp] Looking for jupyter_notebook_config in /gpfsdswork/projects/rech/imi/uzw47io/imgc-marl/scripts/configs
+[D 16:53:10.570 NotebookApp] [nb_conda_kernels] refreshing conda info
+[I 16:53:11.417 NotebookApp] [nb_conda_kernels] enabled, 42 kernels found
+[D 16:53:11.435 NotebookApp] Paths used for configuration of jupyter_notebook_config: 
+    	/etc/jupyter/jupyter_notebook_config.json
+[D 16:53:11.436 NotebookApp] Paths used for configuration of jupyter_notebook_config: 
+    	/usr/local/etc/jupyter/jupyter_notebook_config.json
+[D 16:53:11.437 NotebookApp] Paths used for configuration of jupyter_notebook_config: 
+    	/gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/etc/jupyter/jupyter_notebook_config.d/ipyparallel.json
+    	/gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/etc/jupyter/jupyter_notebook_config.d/jupyterlab.json
+    	/gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/etc/jupyter/jupyter_notebook_config.json
+[D 16:53:11.438 NotebookApp] Paths used for configuration of jupyter_notebook_config: 
+    	/linkhome/rech/genini01/uzw47io/.local/etc/jupyter/jupyter_notebook_config.d/jupyterlab.json
+    	/linkhome/rech/genini01/uzw47io/.local/etc/jupyter/jupyter_notebook_config.json
+[D 16:53:11.439 NotebookApp] Paths used for configuration of jupyter_notebook_config: 
+    	/gpfs7kw/linkhome/rech/genini01/uzw47io/.jupyter/jupyter_notebook_config.json
+[I 16:53:11.917 NotebookApp] Loading IPython parallel extension
+[D 16:53:11.939 NotebookApp] [jupyter_nbextensions_configurator] Loading 0.4.1
+[D 16:53:11.939 NotebookApp] [jupyter_nbextensions_configurator]   Editing templates path to add /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/jupyter_nbextensions_configurator/templates
+[D 16:53:11.943 NotebookApp] [jupyter_nbextensions_configurator]   Editing nbextensions path to add /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/jupyter_nbextensions_configurator/static
+[D 16:53:11.943 NotebookApp] [jupyter_nbextensions_configurator]   Adding new handlers
+[I 16:53:11.944 NotebookApp] [jupyter_nbextensions_configurator] enabled 0.4.1
+[I 16:53:12.723 NotebookApp] jupyter_tensorboard extension loaded.
+[W 2022-10-24 16:53:12.858 LabApp] Config option `kernel_spec_manager_class` not recognized by `LabApp`.
+[W 2022-10-24 16:53:12.862 LabApp] 'notebook_dir' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
+[W 2022-10-24 16:53:12.862 LabApp] 'notebook_dir' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
+[W 2022-10-24 16:53:12.862 LabApp] 'notebook_dir' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
+[W 2022-10-24 16:53:12.863 LabApp] 'base_url' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
+[W 2022-10-24 16:53:12.863 LabApp] 'port' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
+[W 2022-10-24 16:53:12.863 LabApp] 'ip' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
+[W 2022-10-24 16:53:12.863 LabApp] 'certfile' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
+[W 2022-10-24 16:53:12.863 LabApp] 'keyfile' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
+[W 2022-10-24 16:53:12.863 LabApp] 'keyfile' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
+[W 2022-10-24 16:53:12.863 LabApp] 'password' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
+[W 2022-10-24 16:53:12.864 LabApp] Config option `kernel_spec_manager_class` not recognized by `LabApp`.
+[I 2022-10-24 16:53:12.874 LabApp] JupyterLab extension loaded from /linkhome/rech/genini01/uzw47io/.local/lib/python3.9/site-packages/jupyterlab
+[I 2022-10-24 16:53:12.874 LabApp] JupyterLab application directory is /gpfsdswork/projects/rech/imi/uzw47io/.local/share/jupyter/lab
+[I 16:53:12.881 NotebookApp] Serving notebooks from local directory: /gpfswork/rech/imi/uzw47io
+[I 16:53:12.882 NotebookApp] Jupyter Notebook 6.4.10 is running at:
+[I 16:53:12.882 NotebookApp] https://r1i0n5:8008/r1i0n5_8008/
+[I 16:53:12.882 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+[I 16:53:21.215 NotebookApp] 302 GET /r1i0n5_8008/ (10.148.0.38) 0.970000ms
+[I 16:53:21.247 NotebookApp] 302 GET /r1i0n5_8008/tree? (10.148.0.38) 1.410000ms
+[D 16:53:21.282 NotebookApp] Using contents: services/contents
+[D 16:53:21.309 NotebookApp] Path base/images/favicon.ico served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/base/images/favicon.ico
+[D 16:53:21.309 NotebookApp] Path components/jquery-ui/themes/smoothness/jquery-ui.min.css served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/components/jquery-ui/themes/smoothness/jquery-ui.min.css
+[D 16:53:21.310 NotebookApp] Path components/jquery-typeahead/dist/jquery.typeahead.min.css served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/components/jquery-typeahead/dist/jquery.typeahead.min.css
+[D 16:53:21.310 NotebookApp] Path style/style.min.css served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/style/style.min.css
+[D 16:53:21.311 NotebookApp] Path auth/css/override.css served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/auth/css/override.css
+[D 16:53:21.311 NotebookApp] Path components/es6-promise/promise.min.js served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/components/es6-promise/promise.min.js
+[D 16:53:21.312 NotebookApp] Path components/react/react.production.min.js served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/components/react/react.production.min.js
+[D 16:53:21.312 NotebookApp] Path components/react/react-dom.production.min.js served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/components/react/react-dom.production.min.js
+[D 16:53:21.312 NotebookApp] Path components/create-react-class/index.js served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/components/create-react-class/index.js
+[D 16:53:21.312 NotebookApp] Path components/requirejs/require.js served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/components/requirejs/require.js
+[D 16:53:21.313 NotebookApp] Path base/images/logo.png served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/base/images/logo.png
+[D 16:53:21.314 NotebookApp] 200 GET /r1i0n5_8008/login?next=%2Fr1i0n5_8008%2Ftree%3F (10.148.0.38) 34.190000ms
+[D 16:53:21.386 NotebookApp] 200 GET /r1i0n5_8008/static/components/jquery-ui/themes/smoothness/jquery-ui.min.css?v=fb45616eef2c454960f91fcd2a04efeda84cfacccf0c5d741ba2793dc1dbd6d3ab01aaae6485222945774c7d7a9a2e9fb87e0d8ef1ea96893aa6906147a371bb (10.148.0.38) 1.680000ms
+[D 16:53:21.404 NotebookApp] 200 GET /r1i0n5_8008/static/components/jquery-typeahead/dist/jquery.typeahead.min.css?v=5edf53bf6bb9c3b1ddafd8594825a7e2ed621f19423e569c985162742f63911c09eba2c529f8fb47aebf27fafdfe287d563347f58c1126b278189a18871b6a9a (10.148.0.38) 1.570000ms
+[D 16:53:21.408 NotebookApp] 200 GET /r1i0n5_8008/static/style/style.min.css?v=b092d0a2da5df36f2b073ddb4eafcd6c8094c4fa21b6dcd3f7185ce16c04ad66424083d785b81607a26b4b85b69a560574ada7db75262c886655f99d651c482e (10.148.0.38) 2.110000ms
+[D 16:53:21.424 NotebookApp] 200 GET /r1i0n5_8008/static/auth/css/override.css?v=7d24c52c4d63c7ed3ca286c051f232acd6a5ee3ed2aa32f56bea22ef20a2e3d184a638aad5602a39e8d5ef9a66ed93fdbaf80cf979948a947bab117618bd6486 (10.148.0.38) 1.610000ms
+[D 16:53:21.437 NotebookApp] Path custom.css served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/custom/custom.css
+[D 16:53:21.438 NotebookApp] 200 GET /r1i0n5_8008/custom/custom.css (10.148.0.38) 1.780000ms
+[D 16:53:21.444 NotebookApp] 200 GET /r1i0n5_8008/static/components/es6-promise/promise.min.js?v=bea335d74136a63ae1b5130f5ac9a50c6256a5f435e6e09fef599491a84d834a8b0f011ca3eaaca3b4ab6a2da2d3e1191567a2f171e60da1d10e5b9d52f84184 (10.148.0.38) 1.500000ms
+[D 16:53:21.455 NotebookApp] 200 GET /r1i0n5_8008/static/components/react/react.production.min.js?v=9a0aaf84a316c8bedd6c2ff7d5b5e0a13f8f84ec02442346cba0b842c6c81a6bf6176e64f3675c2ebf357cb5bb048e0b527bd39377c95681d22468da3d5de735 (10.148.0.38) 1.450000ms
+[D 16:53:21.457 NotebookApp] 200 GET /r1i0n5_8008/static/components/react/react-dom.production.min.js?v=6fc58c1c4736868ff84f57bd8b85f2bdb985993a9392718f3b4af4bfa10fb4efba2b4ddd68644bd2a8daf0619a3844944c9c43f8528364a1aa6fc01ec1b8ae84 (10.148.0.38) 1.470000ms
+[D 16:53:21.467 NotebookApp] 200 GET /r1i0n5_8008/static/components/create-react-class/index.js?v=894ad57246e682b4cfbe7cd5e408dcd6b38d06af4de4f3425991e2676fdc2ef1732cbd19903104198878ae77de12a1996de3e7da3a467fb226bdda8f4618faec (10.148.0.38) 1.250000ms
+[D 16:53:21.484 NotebookApp] 200 GET /r1i0n5_8008/static/components/requirejs/require.js?v=d37b48bb2137faa0ab98157e240c084dd5b1b5e74911723aa1d1f04c928c2a03dedf922d049e4815f7e5a369faa2e6b6a1000aae958b7953b5cc60411154f593 (10.148.0.38) 1.820000ms
+[D 16:53:21.570 NotebookApp] 200 GET /r1i0n5_8008/static/base/images/logo.png?v=a2a176ee3cee251ffddf5fa21fe8e43727a9e5f87a06f9c91ad7b776d9e9d3d5e0159c16cc188a3965e00375fb4bc336c16067c688f5040c0c2d4bfdb852a9e4 (10.148.0.38) 1.660000ms
+[D 16:53:21.619 NotebookApp] Path auth/js/main.min.js served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/auth/js/main.min.js
+[D 16:53:21.621 NotebookApp] 200 GET /r1i0n5_8008/static/auth/js/main.min.js?v=20221024165311 (10.148.0.38) 2.300000ms
+[D 16:53:21.730 NotebookApp] 200 GET /r1i0n5_8008/static/base/images/favicon.ico?v=50afa725b5de8b00030139d09b38620224d4e7dba47c07ef0e86d4643f30c9bfe6bb7e1a4a1c561aa32834480909a4b6fe7cd1e17f7159330b6b5914bf45a880 (10.148.0.38) 1.970000ms
+[I 16:53:22.690 NotebookApp] 302 POST /r1i0n5_8008/login?next=%2Fr1i0n5_8008%2Ftree%3F (10.148.0.38) 84.730000ms
+[D 16:53:22.727 NotebookApp] Using contents: services/contents
+[D 16:53:22.758 NotebookApp] Path tree/js/main.min.js served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/tree/js/main.min.js
+[D 16:53:22.762 NotebookApp] 200 GET /r1i0n5_8008/tree? (10.148.0.38) 36.570000ms
+[D 16:53:22.857 NotebookApp] 304 GET /r1i0n5_8008/custom/custom.css (10.148.0.38) 1.710000ms
+[D 16:53:22.866 NotebookApp] 200 GET /r1i0n5_8008/static/tree/js/main.min.js?v=dab772273166ac9f0f558594df24e3c759850e5235dc1b578b63bc5acc95cdde555c0f3a598db857a1d5c72e298c6ffe30932d59a11929a5ffbd06fa69143e67 (10.148.0.38) 4.510000ms
+[D 16:53:23.224 NotebookApp] Path services/contents.js served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/services/contents.js
+[D 16:53:23.225 NotebookApp] 200 GET /r1i0n5_8008/static/services/contents.js?v=20221024165311 (10.148.0.38) 2.220000ms
+[D 16:53:23.294 NotebookApp] Paths used for configuration of tree: 
+    	/etc/jupyter/nbconfig/tree.json
+[D 16:53:23.294 NotebookApp] Paths used for configuration of tree: 
+    	/usr/local/etc/jupyter/nbconfig/tree.json
+[D 16:53:23.295 NotebookApp] Paths used for configuration of tree: 
+    	/gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/etc/jupyter/nbconfig/tree.d/ipyparallel.json
+    	/gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/etc/jupyter/nbconfig/tree.json
+[D 16:53:23.296 NotebookApp] Paths used for configuration of tree: 
+    	/linkhome/rech/genini01/uzw47io/.local/etc/jupyter/nbconfig/tree.json
+[D 16:53:23.297 NotebookApp] Paths used for configuration of tree: 
+    	/gpfs7kw/linkhome/rech/genini01/uzw47io/.jupyter/nbconfig/tree.json
+[D 16:53:23.297 NotebookApp] 200 GET /r1i0n5_8008/api/config/tree?_=1666623203189 (10.148.0.38) 10.140000ms
+[D 16:53:23.300 NotebookApp] Paths used for configuration of common: 
+    	/etc/jupyter/nbconfig/common.json
+[D 16:53:23.301 NotebookApp] Paths used for configuration of common: 
+    	/usr/local/etc/jupyter/nbconfig/common.json
+[D 16:53:23.301 NotebookApp] Paths used for configuration of common: 
+    	/gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/etc/jupyter/nbconfig/common.json
+[D 16:53:23.302 NotebookApp] Paths used for configuration of common: 
+    	/linkhome/rech/genini01/uzw47io/.local/etc/jupyter/nbconfig/common.json
+[D 16:53:23.302 NotebookApp] Paths used for configuration of common: 
+    	/gpfs7kw/linkhome/rech/genini01/uzw47io/.jupyter/nbconfig/common.json
+[D 16:53:23.303 NotebookApp] 200 GET /r1i0n5_8008/api/config/common?_=1666623203190 (10.148.0.38) 5.010000ms
+[D 16:53:23.306 NotebookApp] Found kernel xpython-raw in /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/share/jupyter/kernels
+[D 16:53:23.306 NotebookApp] Found kernel xpython in /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/share/jupyter/kernels
+[D 16:53:23.306 NotebookApp] Found kernel python3 in /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/share/jupyter/kernels
+[D 16:53:23.451 NotebookApp] 200 GET /r1i0n5_8008/api/kernelspecs (10.148.0.38) 147.870000ms
+[D 16:53:23.454 NotebookApp] 200 GET /r1i0n5_8008/api/terminals?_=1666623203191 (10.148.0.38) 1.690000ms
+[D 16:53:23.458 NotebookApp] 200 GET /r1i0n5_8008/api/terminals?_=1666623203193 (10.148.0.38) 3.610000ms
+[D 16:53:23.466 NotebookApp] 200 GET /r1i0n5_8008/api/sessions?_=1666623203192 (10.148.0.38) 6.900000ms
+[D 16:53:23.469 NotebookApp] Path components/font-awesome/fonts/fontawesome-webfont.woff2 served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/components/font-awesome/fonts/fontawesome-webfont.woff2
+[D 16:53:23.470 NotebookApp] 200 GET /r1i0n5_8008/static/components/font-awesome/fonts/fontawesome-webfont.woff2?v=4.7.0 (10.148.0.38) 2.420000ms
+[D 16:53:23.472 NotebookApp] Path custom.js served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/custom/custom.js
+[D 16:53:23.473 NotebookApp] 200 GET /r1i0n5_8008/custom/custom.js?v=20221024165311 (10.148.0.38) 1.950000ms
+[D 16:53:23.554 NotebookApp] Path nbextensions_configurator/tree_tab/main.js served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/jupyter_nbextensions_configurator/static/nbextensions_configurator/tree_tab/main.js
+[D 16:53:23.555 NotebookApp] 200 GET /r1i0n5_8008/nbextensions/nbextensions_configurator/tree_tab/main.js?v=20221024165311 (10.148.0.38) 2.230000ms
+[D 16:53:23.557 NotebookApp] Path ipyparallel/main.js served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/share/jupyter/nbextensions/ipyparallel/main.js
+[D 16:53:23.558 NotebookApp] 200 GET /r1i0n5_8008/nbextensions/ipyparallel/main.js?v=20221024165311 (10.148.0.38) 2.690000ms
+[D 16:53:23.563 NotebookApp] Path jupyter_tensorboard/tree.js served from /gpfs7kw/linkhome/rech/genini01/uzw47io/.local/share/jupyter/nbextensions/jupyter_tensorboard/tree.js
+[D 16:53:23.564 NotebookApp] 200 GET /r1i0n5_8008/nbextensions/jupyter_tensorboard/tree.js?v=20221024165311 (10.148.0.38) 4.320000ms
+[D 16:53:23.797 NotebookApp] 200 GET /r1i0n5_8008/api/contents?type=directory&_=1666623203194 (10.148.0.38) 232.200000ms
+[D 16:53:23.811 NotebookApp] Path nbextensions_configurator/main.js served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/jupyter_nbextensions_configurator/static/nbextensions_configurator/main.js
+[D 16:53:23.812 NotebookApp] 200 GET /r1i0n5_8008/nbextensions/nbextensions_configurator/main.js?v=20221024165311 (10.148.0.38) 2.860000ms
+[D 16:53:23.812 NotebookApp] Path nbextensions_configurator/render/render.js served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/jupyter_nbextensions_configurator/static/nbextensions_configurator/render/render.js
+[D 16:53:23.813 NotebookApp] 200 GET /r1i0n5_8008/nbextensions/nbextensions_configurator/render/render.js?v=20221024165311 (10.148.0.38) 3.520000ms
+[D 16:53:23.814 NotebookApp] Path jupyter_tensorboard/tensorboardlist.js served from /gpfs7kw/linkhome/rech/genini01/uzw47io/.local/share/jupyter/nbextensions/jupyter_tensorboard/tensorboardlist.js
+[D 16:53:23.814 NotebookApp] 200 GET /r1i0n5_8008/nbextensions/jupyter_tensorboard/tensorboardlist.js?v=20221024165311 (10.148.0.38) 4.470000ms
+[D 16:53:23.816 NotebookApp] Path ipyparallel/clusterlist.js served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/share/jupyter/nbextensions/ipyparallel/clusterlist.js
+[D 16:53:23.817 NotebookApp] 200 GET /r1i0n5_8008/nbextensions/ipyparallel/clusterlist.js?v=20221024165311 (10.148.0.38) 1.610000ms
+[D 16:53:24.022 NotebookApp] Path base/js/security.js served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/base/js/security.js
+[D 16:53:24.023 NotebookApp] 200 GET /r1i0n5_8008/static/base/js/security.js?v=20221024165311 (10.148.0.38) 1.540000ms
+[D 16:53:24.038 NotebookApp] Path components/codemirror/addon/runmode/runmode.js served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/components/codemirror/addon/runmode/runmode.js
+[D 16:53:24.039 NotebookApp] 200 GET /r1i0n5_8008/static/components/codemirror/addon/runmode/runmode.js?v=20221024165311 (10.148.0.38) 2.390000ms
+[D 16:53:24.041 NotebookApp] Path notebook/js/mathjaxutils.js served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/notebook/js/mathjaxutils.js
+[D 16:53:24.042 NotebookApp] 200 GET /r1i0n5_8008/static/notebook/js/mathjaxutils.js?v=20221024165311 (10.148.0.38) 2.030000ms
+[D 16:53:24.043 NotebookApp] Path components/codemirror/mode/gfm/gfm.js served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/components/codemirror/mode/gfm/gfm.js
+[D 16:53:24.044 NotebookApp] 200 GET /r1i0n5_8008/static/components/codemirror/mode/gfm/gfm.js?v=20221024165311 (10.148.0.38) 2.410000ms
+[D 16:53:24.045 NotebookApp] Path notebook/js/codemirror-ipythongfm.js served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/notebook/js/codemirror-ipythongfm.js
+[D 16:53:24.045 NotebookApp] 200 GET /r1i0n5_8008/static/notebook/js/codemirror-ipythongfm.js?v=20221024165311 (10.148.0.38) 2.780000ms
+[D 16:53:24.047 NotebookApp] Path notebook/js/codemirror-ipython.js served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/notebook/js/codemirror-ipython.js
+[D 16:53:24.048 NotebookApp] 200 GET /r1i0n5_8008/static/notebook/js/codemirror-ipython.js?v=20221024165311 (10.148.0.38) 1.750000ms
+[D 16:53:24.053 NotebookApp] Path ipyparallel/clusterlist.css served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/share/jupyter/nbextensions/ipyparallel/clusterlist.css
+[D 16:53:24.054 NotebookApp] 200 GET /r1i0n5_8008/nbextensions/ipyparallel/clusterlist.css (10.148.0.38) 1.690000ms
+[D 16:53:24.068 NotebookApp] Path jupyter_tensorboard/style.css served from /gpfs7kw/linkhome/rech/genini01/uzw47io/.local/share/jupyter/nbextensions/jupyter_tensorboard/style.css
+[D 16:53:24.069 NotebookApp] 200 GET /r1i0n5_8008/nbextensions/jupyter_tensorboard/style.css (10.148.0.38) 1.620000ms
+[D 16:53:24.088 NotebookApp] Loading profile /gpfs7kw/linkhome/rech/genini01/uzw47io/.ipython/profile_default
+[D 16:53:24.089 NotebookApp] Config changed: {'ProfileDir': {'location': '/gpfs7kw/linkhome/rech/genini01/uzw47io/.ipython/profile_default'}}
+[D 16:53:24.188 NotebookApp] Using existing profile dir: '/gpfs7kw/linkhome/rech/genini01/uzw47io/.ipython/profile_default'
+[D 16:53:24.189 NotebookApp] Searching path ['/gpfs7kw/linkhome/rech/genini01/uzw47io/.ipython/profile_default', '/gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/etc/ipython', '/usr/local/etc/ipython', '/etc/ipython'] for config files
+[D 16:53:24.189 NotebookApp] Attempting to load config file: ipython_config.py
+[D 16:53:24.189 NotebookApp] Looking for ipython_config in /etc/ipython
+[D 16:53:24.189 NotebookApp] Looking for ipython_config in /usr/local/etc/ipython
+[D 16:53:24.189 NotebookApp] Looking for ipython_config in /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/etc/ipython
+[D 16:53:24.189 NotebookApp] Looking for ipython_config in /gpfs7kw/linkhome/rech/genini01/uzw47io/.ipython/profile_default
+[D 16:53:24.190 NotebookApp] Attempting to load config file: ipcluster_config.py
+[D 16:53:24.190 NotebookApp] Looking for ipcluster_config in /etc/ipython
+[D 16:53:24.190 NotebookApp] Looking for ipcluster_config in /usr/local/etc/ipython
+[D 16:53:24.191 NotebookApp] Looking for ipcluster_config in /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/etc/ipython
+[D 16:53:24.191 NotebookApp] Looking for ipcluster_config in /gpfs7kw/linkhome/rech/genini01/uzw47io/.ipython/profile_default
+[D 16:53:24.292 NotebookApp] 200 GET /r1i0n5_8008/ipyparallel/clusters?_=1666623203195 (10.148.0.38) 211.280000ms
+[D 16:53:24.298 NotebookApp] 200 GET /r1i0n5_8008/api/tensorboard?_=1666623203196 (10.148.0.38) 2.450000ms
+[D 16:53:24.302 NotebookApp] Path nbextensions_configurator/kse_components.js served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/jupyter_nbextensions_configurator/static/nbextensions_configurator/kse_components.js
+[D 16:53:24.303 NotebookApp] 200 GET /r1i0n5_8008/nbextensions/nbextensions_configurator/kse_components.js?v=20221024165311 (10.148.0.38) 5.120000ms
+[D 16:53:24.305 NotebookApp] Path notebook/js/quickhelp.js served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/notebook/js/quickhelp.js
+[D 16:53:24.306 NotebookApp] 200 GET /r1i0n5_8008/static/notebook/js/quickhelp.js?v=20221024165311 (10.148.0.38) 2.180000ms
+[D 16:53:24.308 NotebookApp] Path components/jquery-ui/jquery-ui.min.js served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/components/jquery-ui/jquery-ui.min.js
+[D 16:53:24.310 NotebookApp] 200 GET /r1i0n5_8008/static/components/jquery-ui/jquery-ui.min.js?v=20221024165311 (10.148.0.38) 3.110000ms
+[D 16:53:24.312 NotebookApp] Path components/sanitizer/index.js served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/components/sanitizer/index.js
+[D 16:53:24.315 NotebookApp] 200 GET /r1i0n5_8008/static/components/sanitizer/index.js?v=20221024165311 (10.148.0.38) 3.660000ms
+[D 16:53:24.326 NotebookApp] Path base/js/mathjaxutils.js served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/base/js/mathjaxutils.js
+[D 16:53:24.327 NotebookApp] 200 GET /r1i0n5_8008/static/base/js/mathjaxutils.js?v=20221024165311 (10.148.0.38) 1.990000ms
+[D 16:53:24.337 NotebookApp] Path components/codemirror/mode/markdown/markdown.js served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/components/codemirror/mode/markdown/markdown.js
+[D 16:53:24.339 NotebookApp] 200 GET /r1i0n5_8008/static/components/codemirror/mode/markdown/markdown.js?v=20221024165311 (10.148.0.38) 2.080000ms
+[D 16:53:24.357 NotebookApp] Path components/codemirror/addon/mode/overlay.js served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/components/codemirror/addon/mode/overlay.js
+[D 16:53:24.358 NotebookApp] 200 GET /r1i0n5_8008/static/components/codemirror/addon/mode/overlay.js?v=20221024165311 (10.148.0.38) 2.090000ms
+[D 16:53:24.360 NotebookApp] Path components/codemirror/addon/mode/multiplex.js served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/components/codemirror/addon/mode/multiplex.js
+[D 16:53:24.361 NotebookApp] 200 GET /r1i0n5_8008/static/components/codemirror/addon/mode/multiplex.js?v=20221024165311 (10.148.0.38) 2.250000ms
+[D 16:53:24.374 NotebookApp] Path components/codemirror/mode/python/python.js served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/components/codemirror/mode/python/python.js
+[D 16:53:24.375 NotebookApp] 200 GET /r1i0n5_8008/static/components/codemirror/mode/python/python.js?v=20221024165311 (10.148.0.38) 2.110000ms
+[D 16:53:24.397 NotebookApp] Path components/codemirror/mode/stex/stex.js served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/components/codemirror/mode/stex/stex.js
+[D 16:53:24.399 NotebookApp] 200 GET /r1i0n5_8008/static/components/codemirror/mode/stex/stex.js?v=20221024165311 (10.148.0.38) 2.360000ms
+[D 16:53:24.429 NotebookApp] Path nbextensions_configurator/quickhelp_shim.js served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/jupyter_nbextensions_configurator/static/nbextensions_configurator/quickhelp_shim.js
+[D 16:53:24.430 NotebookApp] 200 GET /r1i0n5_8008/nbextensions/nbextensions_configurator/quickhelp_shim.js?v=20221024165311 (10.148.0.38) 2.630000ms
+[D 16:53:24.438 NotebookApp] Path components/codemirror/mode/xml/xml.js served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/components/codemirror/mode/xml/xml.js
+[D 16:53:24.439 NotebookApp] 200 GET /r1i0n5_8008/static/components/codemirror/mode/xml/xml.js?v=20221024165311 (10.148.0.38) 2.030000ms
+[D 16:53:24.633 NotebookApp] Paths used for configuration of notebook: 
+    	/etc/jupyter/nbconfig/notebook.json
+[D 16:53:24.634 NotebookApp] Paths used for configuration of notebook: 
+    	/usr/local/etc/jupyter/nbconfig/notebook.json
+[D 16:53:24.634 NotebookApp] Paths used for configuration of notebook: 
+    	/gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/etc/jupyter/nbconfig/notebook.d/jupyterlab-plotly.json
+    	/gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/etc/jupyter/nbconfig/notebook.d/open3d.json
+    	/gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/etc/jupyter/nbconfig/notebook.d/widgetsnbextension.json
+    	/gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/etc/jupyter/nbconfig/notebook.json
+[D 16:53:24.635 NotebookApp] Paths used for configuration of notebook: 
+    	/linkhome/rech/genini01/uzw47io/.local/etc/jupyter/nbconfig/notebook.json
+[D 16:53:24.636 NotebookApp] Paths used for configuration of notebook: 
+    	/gpfs7kw/linkhome/rech/genini01/uzw47io/.jupyter/nbconfig/notebook.json
+[D 16:53:24.637 NotebookApp] 200 GET /r1i0n5_8008/api/config/notebook?_=1666623203197 (10.148.0.38) 6.670000ms
+[D 16:53:24.638 NotebookApp] Paths used for configuration of edit: 
+    	/etc/jupyter/nbconfig/edit.json
+[D 16:53:24.638 NotebookApp] Paths used for configuration of edit: 
+    	/usr/local/etc/jupyter/nbconfig/edit.json
+[D 16:53:24.639 NotebookApp] Paths used for configuration of edit: 
+    	/gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/etc/jupyter/nbconfig/edit.json
+[D 16:53:24.639 NotebookApp] Paths used for configuration of edit: 
+    	/linkhome/rech/genini01/uzw47io/.local/etc/jupyter/nbconfig/edit.json
+[D 16:53:24.640 NotebookApp] Paths used for configuration of edit: 
+    	/gpfs7kw/linkhome/rech/genini01/uzw47io/.jupyter/nbconfig/edit.json
+[D 16:53:24.640 NotebookApp] 200 GET /r1i0n5_8008/api/config/edit?_=1666623203200 (10.148.0.38) 9.260000ms
+[D 16:53:24.641 NotebookApp] Paths used for configuration of edit: 
+    	/etc/jupyter/nbconfig/edit.json
+[D 16:53:24.642 NotebookApp] Paths used for configuration of edit: 
+    	/usr/local/etc/jupyter/nbconfig/edit.json
+[D 16:53:24.642 NotebookApp] Paths used for configuration of edit: 
+    	/gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/etc/jupyter/nbconfig/edit.json
+[D 16:53:24.643 NotebookApp] Paths used for configuration of edit: 
+    	/linkhome/rech/genini01/uzw47io/.local/etc/jupyter/nbconfig/edit.json
+[D 16:53:24.643 NotebookApp] Paths used for configuration of edit: 
+    	/gpfs7kw/linkhome/rech/genini01/uzw47io/.jupyter/nbconfig/edit.json
+[D 16:53:24.644 NotebookApp] 200 GET /r1i0n5_8008/api/config/edit?_=1666623203199 (10.148.0.38) 12.280000ms
+[D 16:53:24.646 NotebookApp] Path nbextensions_configurator/render/rendermd.css served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/jupyter_nbextensions_configurator/static/nbextensions_configurator/render/rendermd.css
+[D 16:53:24.647 NotebookApp] 200 GET /r1i0n5_8008/nbextensions/nbextensions_configurator/render/rendermd.css?v=20221024165311 (10.148.0.38) 3.080000ms
+[D 16:53:24.649 NotebookApp] Path nbextensions_configurator/main.css served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/jupyter_nbextensions_configurator/static/nbextensions_configurator/main.css
+[D 16:53:24.650 NotebookApp] 200 GET /r1i0n5_8008/nbextensions/nbextensions_configurator/main.css?v=20221024165311 (10.148.0.38) 2.580000ms
+[D 16:53:24.653 NotebookApp] Paths used for configuration of notebook: 
+    	/etc/jupyter/nbconfig/notebook.json
+[D 16:53:24.654 NotebookApp] Paths used for configuration of notebook: 
+    	/usr/local/etc/jupyter/nbconfig/notebook.json
+[D 16:53:24.654 NotebookApp] Paths used for configuration of notebook: 
+    	/gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/etc/jupyter/nbconfig/notebook.d/jupyterlab-plotly.json
+    	/gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/etc/jupyter/nbconfig/notebook.d/open3d.json
+    	/gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/etc/jupyter/nbconfig/notebook.d/widgetsnbextension.json
+    	/gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/etc/jupyter/nbconfig/notebook.json
+[D 16:53:24.655 NotebookApp] Paths used for configuration of notebook: 
+    	/linkhome/rech/genini01/uzw47io/.local/etc/jupyter/nbconfig/notebook.json
+[D 16:53:24.656 NotebookApp] Paths used for configuration of notebook: 
+    	/gpfs7kw/linkhome/rech/genini01/uzw47io/.jupyter/nbconfig/notebook.json
+[D 16:53:24.657 NotebookApp] 200 GET /r1i0n5_8008/api/config/notebook?_=1666623203198 (10.148.0.38) 5.530000ms
+[D 16:53:24.675 NotebookApp] Paths used for configuration of tree: 
+    	/etc/jupyter/nbconfig/tree.json
+[D 16:53:24.675 NotebookApp] Paths used for configuration of tree: 
+    	/usr/local/etc/jupyter/nbconfig/tree.json
+[D 16:53:24.676 NotebookApp] Paths used for configuration of tree: 
+    	/gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/etc/jupyter/nbconfig/tree.d/ipyparallel.json
+    	/gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/etc/jupyter/nbconfig/tree.json
+[D 16:53:24.677 NotebookApp] Paths used for configuration of tree: 
+    	/linkhome/rech/genini01/uzw47io/.local/etc/jupyter/nbconfig/tree.json
+[D 16:53:24.677 NotebookApp] Paths used for configuration of tree: 
+    	/gpfs7kw/linkhome/rech/genini01/uzw47io/.jupyter/nbconfig/tree.json
+[D 16:53:24.678 NotebookApp] 200 GET /r1i0n5_8008/api/config/tree?_=1666623203201 (10.148.0.38) 7.500000ms
+[D 16:53:24.684 NotebookApp] Paths used for configuration of tree: 
+    	/etc/jupyter/nbconfig/tree.json
+[D 16:53:24.685 NotebookApp] Paths used for configuration of tree: 
+    	/usr/local/etc/jupyter/nbconfig/tree.json
+[D 16:53:24.686 NotebookApp] Paths used for configuration of tree: 
+    	/gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/etc/jupyter/nbconfig/tree.d/ipyparallel.json
+    	/gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/etc/jupyter/nbconfig/tree.json
+[D 16:53:24.687 NotebookApp] Paths used for configuration of tree: 
+    	/linkhome/rech/genini01/uzw47io/.local/etc/jupyter/nbconfig/tree.json
+[D 16:53:24.687 NotebookApp] Paths used for configuration of tree: 
+    	/gpfs7kw/linkhome/rech/genini01/uzw47io/.jupyter/nbconfig/tree.json
+[D 16:53:24.688 NotebookApp] 200 GET /r1i0n5_8008/api/config/tree?_=1666623203202 (10.148.0.38) 7.670000ms
+[D 16:53:24.691 NotebookApp] Paths used for configuration of common: 
+    	/etc/jupyter/nbconfig/common.json
+[D 16:53:24.692 NotebookApp] Paths used for configuration of common: 
+    	/usr/local/etc/jupyter/nbconfig/common.json
+[D 16:53:24.692 NotebookApp] Paths used for configuration of common: 
+    	/gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/etc/jupyter/nbconfig/common.json
+[D 16:53:24.693 NotebookApp] Paths used for configuration of common: 
+    	/linkhome/rech/genini01/uzw47io/.local/etc/jupyter/nbconfig/common.json
+[D 16:53:24.693 NotebookApp] Paths used for configuration of common: 
+    	/gpfs7kw/linkhome/rech/genini01/uzw47io/.jupyter/nbconfig/common.json
+[D 16:53:24.694 NotebookApp] 200 GET /r1i0n5_8008/api/config/common?_=1666623203203 (10.148.0.38) 5.230000ms
+[D 16:53:24.696 NotebookApp] Paths used for configuration of common: 
+    	/etc/jupyter/nbconfig/common.json
+[D 16:53:24.697 NotebookApp] Paths used for configuration of common: 
+    	/usr/local/etc/jupyter/nbconfig/common.json
+[D 16:53:24.697 NotebookApp] Paths used for configuration of common: 
+    	/gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/etc/jupyter/nbconfig/common.json
+[D 16:53:24.698 NotebookApp] Paths used for configuration of common: 
+    	/linkhome/rech/genini01/uzw47io/.local/etc/jupyter/nbconfig/common.json
+[D 16:53:24.698 NotebookApp] Paths used for configuration of common: 
+    	/gpfs7kw/linkhome/rech/genini01/uzw47io/.jupyter/nbconfig/common.json
+[D 16:53:24.699 NotebookApp] 200 GET /r1i0n5_8008/api/config/common?_=1666623203204 (10.148.0.38) 4.660000ms
+[D 16:53:24.735 NotebookApp] [jupyter_nbextensions_configurator] Looking for nbextension yaml descriptor files in /gpfs7kw/linkhome/rech/genini01/uzw47io/.local/share/jupyter/nbextensions
+[D 16:53:24.736 NotebookApp] [jupyter_nbextensions_configurator] Looking for nbextension yaml descriptor files in /linkhome/rech/genini01/uzw47io/.local/share/jupyter/nbextensions
+[D 16:53:24.736 NotebookApp] [jupyter_nbextensions_configurator] Looking for nbextension yaml descriptor files in /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/share/jupyter/nbextensions
+[D 16:53:24.736 NotebookApp] [jupyter_nbextensions_configurator] Looking for nbextension yaml descriptor files in /usr/local/share/jupyter/nbextensions
+[D 16:53:24.736 NotebookApp] [jupyter_nbextensions_configurator] Looking for nbextension yaml descriptor files in /usr/share/jupyter/nbextensions
+[D 16:53:24.737 NotebookApp] [jupyter_nbextensions_configurator] Looking for nbextension yaml descriptor files in /gpfs7kw/linkhome/rech/genini01/uzw47io/.ipython/nbextensions
+[D 16:53:24.737 NotebookApp] [jupyter_nbextensions_configurator] Looking for nbextension yaml descriptor files in /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/jupyter_nbextensions_configurator/static
+[D 16:53:24.738 NotebookApp] [jupyter_nbextensions_configurator] Found nbextension 'Nbextensions edit menu item' in nbextensions_configurator/config_menu/config_menu.yaml
+[D 16:53:24.738 NotebookApp] [jupyter_nbextensions_configurator] Found nbextension 'Nbextensions dashboard tab' in nbextensions_configurator/tree_tab/tree_tab.yaml
+[D 16:53:24.739 NotebookApp] 200 GET /r1i0n5_8008/nbextensions/nbextensions_configurator/list?_=1666623203205 (10.148.0.38) 5.020000ms
+[D 16:53:25.044 NotebookApp] 200 GET /r1i0n5_8008/api/contents/imgc-marl?type=directory&_=1666623203206 (10.148.0.38) 42.150000ms
+[D 16:53:25.682 NotebookApp] 200 GET /r1i0n5_8008/api/contents/imgc-marl/notebooks?type=directory&_=1666623203207 (10.148.0.38) 8.770000ms
+[D 16:53:26.504 NotebookApp] Using contents: services/contents
+[D 16:53:26.681 NotebookApp] Path base/images/favicon-notebook.ico served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/base/images/favicon-notebook.ico
+[D 16:53:26.682 NotebookApp] Path components/bootstrap-tour/build/css/bootstrap-tour.min.css served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/components/bootstrap-tour/build/css/bootstrap-tour.min.css
+[D 16:53:26.682 NotebookApp] Path components/codemirror/lib/codemirror.css served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/components/codemirror/lib/codemirror.css
+[D 16:53:26.682 NotebookApp] Path notebook/css/override.css served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/notebook/css/override.css
+[D 16:53:27.995 NotebookApp] Path components/text-encoding/lib/encoding.js served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/components/text-encoding/lib/encoding.js
+[D 16:53:27.996 NotebookApp] Path notebook/js/main.min.js served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/notebook/js/main.min.js
+[D 16:53:28.031 NotebookApp] 200 GET /r1i0n5_8008/notebooks/imgc-marl/notebooks/results.ipynb (10.148.0.38) 1528.750000ms
+[D 16:53:28.189 NotebookApp] 200 GET /r1i0n5_8008/static/notebook/css/override.css?v=16733f6ba5f2224692fe4e654f3cbb2e3cae82f1df06ca53aa1cb88b147465f16c968c0898e2b0203a7ad3a469f82b959e26bb4b27b790f7f364c4336449b0aa (10.148.0.38) 2.280000ms
+[D 16:53:28.190 NotebookApp] 200 GET /r1i0n5_8008/static/components/bootstrap-tour/build/css/bootstrap-tour.min.css?v=95c93e52db61ab29625defe55361384ce6776a7d303b97da5a73fef5ddf8e391a6223599a0b58669476bd71645a4f0022df0517c88b0c05df80ba465e36f5417 (10.148.0.38) 2.610000ms
+[D 16:53:28.191 NotebookApp] 200 GET /r1i0n5_8008/static/components/codemirror/lib/codemirror.css?v=81fecb54f83101e2bbe6d2e3131e252ac83f2910366100ca83ba4834f5d41754c837f306eecfdceed05f9c9111614942e2ced5acdd8040746b66c6bef0141d0e (10.148.0.38) 3.090000ms
+[D 16:53:28.193 NotebookApp] Path components/MathJax/MathJax.js served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/components/MathJax/MathJax.js
+[D 16:53:28.194 NotebookApp] 200 GET /r1i0n5_8008/static/components/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML-full,Safe&delayStartupUntil=configured (10.148.0.38) 2.350000ms
+[D 16:53:28.196 NotebookApp] 304 GET /r1i0n5_8008/custom/custom.css (10.148.0.38) 1.330000ms
+[D 16:53:28.244 NotebookApp] 200 GET /r1i0n5_8008/static/components/text-encoding/lib/encoding.js?v=737ac6f9f978afb6348b5914877e7d7136de7465cd4cdf389bad9a6b3ad5ceffbfb23febc75c23378967d7d36f98f5388208e8eb78c80f2bf47e8f8c000481ad (10.148.0.38) 2.020000ms
+[D 16:53:28.287 NotebookApp] Path components/MathJax/config/TeX-AMS-MML_HTMLorMML-full.js served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/components/MathJax/config/TeX-AMS-MML_HTMLorMML-full.js
+[D 16:53:28.290 NotebookApp] 200 GET /r1i0n5_8008/static/components/MathJax/config/TeX-AMS-MML_HTMLorMML-full.js?V=2.7.9 (10.148.0.38) 3.890000ms
+[D 16:53:28.321 NotebookApp] 200 GET /r1i0n5_8008/static/notebook/js/main.min.js?v=d20cedcdfe41831d9a4ce0b46c51f1c5b6783a774c68a8f8282f390e1f7eef860df037874bac2a7dd7328cae8a84bebab3b573164a3a7dab138c32db01461d3c (10.148.0.38) 62.230000ms
+[D 16:53:28.393 NotebookApp] Path components/MathJax/config/Safe.js served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/components/MathJax/config/Safe.js
+[D 16:53:28.395 NotebookApp] 200 GET /r1i0n5_8008/static/components/MathJax/config/Safe.js?V=2.7.9 (10.148.0.38) 2.940000ms
+[D 16:53:28.832 NotebookApp] 200 GET /r1i0n5_8008/static/base/images/favicon-notebook.ico?v=eb02bb6f6435d048eba1bf1bd3b3621f8c14f26518dbadd8efd4ee6ee2721caf2367bc0cbc27d2ee2c35bc3b035aad07c6d625422b9445bf301897f493d0edc5 (10.148.0.38) 2.050000ms
+[D 16:53:28.837 NotebookApp] Paths used for configuration of notebook: 
+    	/etc/jupyter/nbconfig/notebook.json
+[D 16:53:28.838 NotebookApp] Paths used for configuration of notebook: 
+    	/usr/local/etc/jupyter/nbconfig/notebook.json
+[D 16:53:28.839 NotebookApp] Paths used for configuration of notebook: 
+    	/gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/etc/jupyter/nbconfig/notebook.d/jupyterlab-plotly.json
+    	/gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/etc/jupyter/nbconfig/notebook.d/open3d.json
+    	/gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/etc/jupyter/nbconfig/notebook.d/widgetsnbextension.json
+    	/gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/etc/jupyter/nbconfig/notebook.json
+[D 16:53:28.840 NotebookApp] Paths used for configuration of notebook: 
+    	/linkhome/rech/genini01/uzw47io/.local/etc/jupyter/nbconfig/notebook.json
+[D 16:53:28.840 NotebookApp] Paths used for configuration of notebook: 
+    	/gpfs7kw/linkhome/rech/genini01/uzw47io/.jupyter/nbconfig/notebook.json
+[D 16:53:28.841 NotebookApp] 200 GET /r1i0n5_8008/api/config/notebook?_=1666623208695 (10.148.0.38) 7.340000ms
+[D 16:53:28.843 NotebookApp] Paths used for configuration of common: 
+    	/etc/jupyter/nbconfig/common.json
+[D 16:53:28.844 NotebookApp] Paths used for configuration of common: 
+    	/usr/local/etc/jupyter/nbconfig/common.json
+[D 16:53:28.844 NotebookApp] Paths used for configuration of common: 
+    	/gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/etc/jupyter/nbconfig/common.json
+[D 16:53:28.845 NotebookApp] Paths used for configuration of common: 
+    	/linkhome/rech/genini01/uzw47io/.local/etc/jupyter/nbconfig/common.json
+[D 16:53:28.845 NotebookApp] Paths used for configuration of common: 
+    	/gpfs7kw/linkhome/rech/genini01/uzw47io/.jupyter/nbconfig/common.json
+[D 16:53:28.846 NotebookApp] 200 GET /r1i0n5_8008/api/config/common?_=1666623208696 (10.148.0.38) 4.110000ms
+[D 16:53:28.857 NotebookApp] Path components/MathJax/extensions/MathML/content-mathml.js served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/components/MathJax/extensions/MathML/content-mathml.js
+[D 16:53:28.858 NotebookApp] 200 GET /r1i0n5_8008/static/components/MathJax/extensions/MathML/content-mathml.js?V=2.7.9 (10.148.0.38) 2.180000ms
+[D 16:53:28.859 NotebookApp] Path components/MathJax/extensions/TeX/begingroup.js served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/components/MathJax/extensions/TeX/begingroup.js
+[D 16:53:28.860 NotebookApp] 200 GET /r1i0n5_8008/static/components/MathJax/extensions/TeX/begingroup.js?V=2.7.9 (10.148.0.38) 2.760000ms
+[D 16:53:28.862 NotebookApp] Path components/MathJax/extensions/TeX/newcommand.js served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/components/MathJax/extensions/TeX/newcommand.js
+[D 16:53:28.863 NotebookApp] 200 GET /r1i0n5_8008/static/components/MathJax/extensions/TeX/newcommand.js?V=2.7.9 (10.148.0.38) 2.080000ms
+[D 16:53:28.874 NotebookApp] Found kernel xpython-raw in /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/share/jupyter/kernels
+[D 16:53:28.874 NotebookApp] Found kernel xpython in /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/share/jupyter/kernels
+[D 16:53:28.874 NotebookApp] Found kernel python3 in /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/share/jupyter/kernels
+[D 16:53:28.882 NotebookApp] 304 GET /r1i0n5_8008/api/kernelspecs (10.148.0.38) 10.020000ms
+[D 16:53:29.070 NotebookApp] 200 GET /r1i0n5_8008/api/contents/imgc-marl/notebooks/results.ipynb?type=notebook&_=1666623208697 (10.148.0.38) 100.990000ms
+[D 16:53:29.087 NotebookApp] Path components/MathJax/jax/output/HTML-CSS/fonts/STIX-Web/fontdata.js served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/components/MathJax/jax/output/HTML-CSS/fonts/STIX-Web/fontdata.js
+[D 16:53:29.088 NotebookApp] 200 GET /r1i0n5_8008/static/components/MathJax/jax/output/HTML-CSS/fonts/STIX-Web/fontdata.js?V=2.7.9 (10.148.0.38) 3.280000ms
+[D 16:53:29.089 NotebookApp] 304 GET /r1i0n5_8008/custom/custom.js?v=20221024165311 (10.148.0.38) 3.410000ms
+[D 16:53:29.090 NotebookApp] Path components/MathJax/extensions/Safe.js served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/components/MathJax/extensions/Safe.js
+[D 16:53:29.091 NotebookApp] 200 GET /r1i0n5_8008/static/components/MathJax/extensions/Safe.js?V=2.7.9 (10.148.0.38) 3.990000ms
+[D 16:53:29.091 NotebookApp] Path jupyterlab-plotly/extension.js served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/share/jupyter/nbextensions/jupyterlab-plotly/extension.js
+[D 16:53:29.092 NotebookApp] 200 GET /r1i0n5_8008/nbextensions/jupyterlab-plotly/extension.js?v=20221024165311 (10.148.0.38) 4.900000ms
+[D 16:53:29.094 NotebookApp] Path open3d/extension.js served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/share/jupyter/nbextensions/open3d/extension.js
+[D 16:53:29.095 NotebookApp] 200 GET /r1i0n5_8008/nbextensions/open3d/extension.js?v=20221024165311 (10.148.0.38) 2.340000ms
+[D 16:53:29.145 NotebookApp] Path jupyter-js-widgets/extension.js served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/share/jupyter/nbextensions/jupyter-js-widgets/extension.js
+[D 16:53:29.165 NotebookApp] 200 GET /r1i0n5_8008/nbextensions/jupyter-js-widgets/extension.js?v=20221024165311 (10.148.0.38) 21.540000ms
+[D 16:53:29.168 NotebookApp] Path nbextensions_configurator/config_menu/main.js served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/jupyter_nbextensions_configurator/static/nbextensions_configurator/config_menu/main.js
+[D 16:53:29.169 NotebookApp] 200 GET /r1i0n5_8008/nbextensions/nbextensions_configurator/config_menu/main.js?v=20221024165311 (10.148.0.38) 2.150000ms
+[D 16:53:29.509 NotebookApp] Instantiating kernel 'Python 3 (ipykernel)' with kernel provisioner: local-provisioner
+[D 16:53:29.533 NotebookApp] Starting kernel: ['/gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/bin/python', '-m', 'ipykernel_launcher', '-f', '/gpfsdswork/projects/rech/imi/uzw47io/.local/share/jupyter/runtime/kernel-2c046926-36cb-434a-96d3-331e65843a89.json']
+[D 16:53:29.537 NotebookApp] 200 GET /r1i0n5_8008/api/contents/imgc-marl/notebooks/results.ipynb/checkpoints?_=1666623208698 (10.148.0.38) 29.530000ms
+[D 16:53:29.555 NotebookApp] Connecting to: tcp://127.0.0.1:34851
+[D 16:53:29.562 NotebookApp] Serving kernel resource from: /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/share/jupyter/kernels/python3
+[D 16:53:29.564 NotebookApp] 200 GET /r1i0n5_8008/kernelspecs/python3/logo-64x64.png (10.148.0.38) 3.910000ms
+[D 16:53:29.570 NotebookApp] Connecting to: tcp://127.0.0.1:54365
+[I 16:53:29.572 NotebookApp] Kernel started: 2c046926-36cb-434a-96d3-331e65843a89, name: python3
+[D 16:53:29.572 NotebookApp] Kernel args: {'kernel_name': 'python3', 'cwd': '/gpfswork/rech/imi/uzw47io/imgc-marl/notebooks'}
+[D 16:53:29.574 NotebookApp] 201 POST /r1i0n5_8008/api/sessions (10.148.0.38) 72.630000ms
+[D 16:53:29.680 NotebookApp] Initializing websocket connection /r1i0n5_8008/api/kernels/2c046926-36cb-434a-96d3-331e65843a89/channels
+[D 16:53:29.682 NotebookApp] Requesting kernel info from 2c046926-36cb-434a-96d3-331e65843a89
+[D 16:53:29.682 NotebookApp] Connecting to: tcp://127.0.0.1:60391
+[D 16:53:30.634 NotebookApp] Path base/images/favicon-busy-1.ico served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/base/images/favicon-busy-1.ico
+[D 16:53:30.635 NotebookApp] 200 GET /r1i0n5_8008/static/base/images/favicon-busy-1.ico (10.148.0.38) 2.680000ms
+[D 16:53:30.850 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (starting)
+[D 16:53:30.852 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (busy)
+[D 16:53:30.853 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (idle)
+[D 16:53:30.853 NotebookApp] Received kernel info: {'status': 'ok', 'protocol_version': '5.3', 'implementation': 'ipython', 'implementation_version': '8.2.0', 'language_info': {'name': 'python', 'version': '3.9.12', 'mimetype': 'text/x-python', 'codemirror_mode': {'name': 'ipython', 'version': 3}, 'pygments_lexer': 'ipython3', 'nbconvert_exporter': 'python', 'file_extension': '.py'}, 'banner': "Python 3.9.12 | packaged by conda-forge | (main, Mar 24 2022, 23:25:59) \nType 'copyright', 'credits' or 'license' for more information\nIPython 8.2.0 -- An enhanced Interactive Python. Type '?' for help.\n", 'help_links': [{'text': 'Python Reference', 'url': 'https://docs.python.org/3.9'}, {'text': 'IPython Reference', 'url': 'https://ipython.org/documentation.html'}, {'text': 'NumPy Reference', 'url': 'https://docs.scipy.org/doc/numpy/reference/'}, {'text': 'SciPy Reference', 'url': 'https://docs.scipy.org/doc/scipy/reference/'}, {'text': 'Matplotlib Reference', 'url': 'https://matplotlib.org/contents.html'}, {'text': 'SymPy Reference', 'url': 'http://docs.sympy.org/latest/index.html'}, {'text': 'pandas Reference', 'url': 'https://pandas.pydata.org/pandas-docs/stable/'}]}
+[D 16:53:30.854 NotebookApp] 101 GET /r1i0n5_8008/api/kernels/2c046926-36cb-434a-96d3-331e65843a89/channels?session_id=95ba708b664c4c7d8dfcd98a5200f6cc (10.148.0.38) 1174.580000ms
+[D 16:53:30.854 NotebookApp] Opening websocket /r1i0n5_8008/api/kernels/2c046926-36cb-434a-96d3-331e65843a89/channels
+[D 16:53:30.854 NotebookApp] Getting buffer for 2c046926-36cb-434a-96d3-331e65843a89
+[D 16:53:30.854 NotebookApp] Connecting to: tcp://127.0.0.1:54365
+[D 16:53:30.854 NotebookApp] Connecting to: tcp://127.0.0.1:60391
+[D 16:53:30.855 NotebookApp] Connecting to: tcp://127.0.0.1:34851
+[D 16:53:30.855 NotebookApp] Connecting to: tcp://127.0.0.1:37567
+[D 16:53:30.855 NotebookApp] Connecting to: tcp://127.0.0.1:60391
+[D 16:53:30.855 NotebookApp] Connecting to: tcp://127.0.0.1:34851
+[D 16:53:30.856 NotebookApp] Nudge: attempt 1 on kernel 2c046926-36cb-434a-96d3-331e65843a89
+[D 16:53:30.859 NotebookApp] Nudge: IOPub received: 2c046926-36cb-434a-96d3-331e65843a89
+[D 16:53:30.860 NotebookApp] Nudge: resolving iopub future: 2c046926-36cb-434a-96d3-331e65843a89
+[D 16:53:30.860 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (busy)
+[D 16:53:30.860 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (busy)
+[D 16:53:30.860 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (idle)
+[D 16:53:30.861 NotebookApp] Nudge: shell info reply received: 2c046926-36cb-434a-96d3-331e65843a89
+[D 16:53:30.861 NotebookApp] Nudge: resolving shell future: 2c046926-36cb-434a-96d3-331e65843a89
+[D 16:53:30.862 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (idle)
+[D 16:53:30.891 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (busy)
+[D 16:53:30.891 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (idle)
+[IPKernelApp] ERROR | No such comm target registered: jupyter.widget.control
+[D 16:53:30.895 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (busy)
+[D 16:53:30.896 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: comm_close
+[IPKernelApp] WARNING | No such comm: a5d75e5d-aa06-42cb-ad9f-c53d6e266358
+[D 16:53:30.897 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (idle)
+[D 16:53:30.898 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (busy)
+[D 16:53:30.899 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (idle)
+[D 16:53:30.917 NotebookApp] 200 GET /r1i0n5_8008/static/base/images/favicon-notebook.ico (10.148.0.38) 1.560000ms
+[D 16:53:30.960 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (busy)
+[D 16:53:30.961 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (idle)
+[D 16:53:31.626 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (busy)
+[D 16:53:31.627 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: execute_input
+[D 16:53:32.663 NotebookApp] 304 GET /r1i0n5_8008/static/base/images/favicon-busy-1.ico (10.148.0.38) 1.610000ms
+[D 16:53:35.770 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (idle)
+[D 16:53:35.776 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (busy)
+[D 16:53:35.776 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: execute_input
+[D 16:53:35.779 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (idle)
+[D 16:53:35.820 NotebookApp] 304 GET /r1i0n5_8008/static/base/images/favicon-notebook.ico (10.148.0.38) 1.520000ms
+[D 16:53:50.033 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (busy)
+[D 16:53:50.034 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: execute_input
+[D 16:53:50.035 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (idle)
+[D 16:53:55.996 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (busy)
+[D 16:53:55.997 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: execute_input
+[D 16:53:55.998 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (idle)
+[D 16:53:57.733 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (busy)
+[D 16:53:57.734 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: execute_input
+[D 16:53:57.941 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 16:53:58.376 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 16:53:58.820 NotebookApp] 304 GET /r1i0n5_8008/static/base/images/favicon-busy-1.ico (10.148.0.38) 1.480000ms
+[D 16:53:58.831 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 16:53:59.305 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 16:53:59.704 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 16:54:00.177 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 16:54:00.974 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 16:54:01.805 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 16:54:02.667 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 16:54:03.538 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 16:54:04.402 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 16:54:04.603 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 16:54:04.813 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 16:54:05.016 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 16:54:05.231 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 16:54:05.440 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 16:54:05.796 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 16:54:06.129 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 16:54:06.131 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (idle)
+[D 16:54:06.147 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (busy)
+[D 16:54:06.147 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: execute_input
+[D 16:54:06.274 NotebookApp] 304 GET /r1i0n5_8008/static/base/images/favicon-notebook.ico (10.148.0.38) 1.800000ms
+[D 16:54:06.788 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: display_data
+[D 16:54:06.789 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (idle)
+[D 16:54:06.799 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (busy)
+[D 16:54:06.807 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: execute_input
+[D 16:54:07.860 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: display_data
+[D 16:54:07.864 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (idle)
+[D 16:54:07.908 NotebookApp] 304 GET /r1i0n5_8008/static/base/images/favicon-busy-1.ico (10.148.0.38) 1.580000ms
+[D 16:54:07.976 NotebookApp] 304 GET /r1i0n5_8008/static/base/images/favicon-notebook.ico (10.148.0.38) 1.600000ms
+[D 16:54:09.990 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (busy)
+[D 16:54:09.996 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: execute_input
+[D 16:54:10.338 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: display_data
+[D 16:54:10.338 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (idle)
+[D 16:54:11.064 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (busy)
+[D 16:54:11.069 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: execute_input
+[D 16:54:11.619 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: display_data
+[D 16:54:11.620 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (idle)
+[D 16:54:41.174 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (busy)
+[D 16:54:41.175 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: execute_input
+[D 16:54:41.176 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (idle)
+[D 16:54:46.528 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (busy)
+[D 16:54:46.529 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: execute_input
+[D 16:54:46.531 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (idle)
+[D 16:54:48.134 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (busy)
+[D 16:54:48.142 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: execute_input
+[D 16:54:48.348 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 16:54:48.553 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 16:54:48.756 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 16:54:48.979 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 16:54:49.188 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 16:54:49.213 NotebookApp] 304 GET /r1i0n5_8008/static/base/images/favicon-busy-1.ico (10.148.0.38) 1.260000ms
+[D 16:54:49.297 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 16:54:49.298 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (idle)
+[D 16:54:49.336 NotebookApp] 304 GET /r1i0n5_8008/static/base/images/favicon-notebook.ico (10.148.0.38) 1.550000ms
+[D 16:54:50.562 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (busy)
+[D 16:54:50.573 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: execute_input
+[D 16:54:51.025 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: display_data
+[D 16:54:51.025 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (idle)
+[D 16:54:53.624 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (busy)
+[D 16:54:53.639 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: execute_input
+[D 16:54:54.264 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: display_data
+[D 16:54:54.265 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (idle)
+[D 16:55:25.709 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (busy)
+[D 16:55:25.712 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: execute_input
+[D 16:55:26.149 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: display_data
+[D 16:55:26.150 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (idle)
+[D 16:55:28.451 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (busy)
+[D 16:55:28.458 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: execute_input
+[D 16:55:29.256 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: display_data
+[D 16:55:29.256 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (idle)
+[D 16:55:29.564 NotebookApp] 200 GET /r1i0n5_8008/api/contents/imgc-marl/notebooks/results.ipynb?content=0&_=1666623208699 (10.148.0.38) 1.780000ms
+[I 16:55:29.691 NotebookApp] Saving file at /imgc-marl/notebooks/results.ipynb
+[D 16:55:29.691 NotebookApp] Saving /gpfswork/rech/imi/uzw47io/imgc-marl/notebooks/results.ipynb
+[D 16:55:29.796 NotebookApp] 200 PUT /r1i0n5_8008/api/contents/imgc-marl/notebooks/results.ipynb (10.148.0.38) 160.600000ms
+[D 16:56:23.951 NotebookApp] 200 GET /r1i0n5_8008/api/sessions?_=1666623203208 (10.148.0.38) 1.590000ms
+[D 16:56:23.965 NotebookApp] 200 GET /r1i0n5_8008/api/terminals?_=1666623203209 (10.148.0.38) 1.330000ms
+[D 16:56:24.009 NotebookApp] 200 GET /r1i0n5_8008/api/contents/imgc-marl/notebooks?type=directory&_=1666623203210 (10.148.0.38) 3.670000ms
+[D 16:56:30.071 NotebookApp] Using contents: services/contents
+[D 16:56:31.071 NotebookApp] 200 GET /r1i0n5_8008/notebooks/imgc-marl/notebooks/naming_game_results.ipynb (10.148.0.38) 1000.570000ms
+[D 16:56:31.176 NotebookApp] 304 GET /r1i0n5_8008/static/components/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML-full,Safe&delayStartupUntil=configured (10.148.0.38) 1.160000ms
+[D 16:56:31.206 NotebookApp] 304 GET /r1i0n5_8008/custom/custom.css (10.148.0.38) 1.180000ms
+[D 16:56:31.251 NotebookApp] 304 GET /r1i0n5_8008/static/components/MathJax/config/TeX-AMS-MML_HTMLorMML-full.js?V=2.7.9 (10.148.0.38) 1.240000ms
+[D 16:56:31.458 NotebookApp] 304 GET /r1i0n5_8008/static/components/MathJax/config/Safe.js?V=2.7.9 (10.148.0.38) 1.500000ms
+[D 16:56:31.464 NotebookApp] Paths used for configuration of notebook: 
+    	/etc/jupyter/nbconfig/notebook.json
+[D 16:56:31.465 NotebookApp] Paths used for configuration of notebook: 
+    	/usr/local/etc/jupyter/nbconfig/notebook.json
+[D 16:56:31.465 NotebookApp] Paths used for configuration of notebook: 
+    	/gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/etc/jupyter/nbconfig/notebook.d/jupyterlab-plotly.json
+    	/gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/etc/jupyter/nbconfig/notebook.d/open3d.json
+    	/gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/etc/jupyter/nbconfig/notebook.d/widgetsnbextension.json
+    	/gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/etc/jupyter/nbconfig/notebook.json
+[D 16:56:31.466 NotebookApp] Paths used for configuration of notebook: 
+    	/linkhome/rech/genini01/uzw47io/.local/etc/jupyter/nbconfig/notebook.json
+[D 16:56:31.467 NotebookApp] Paths used for configuration of notebook: 
+    	/gpfs7kw/linkhome/rech/genini01/uzw47io/.jupyter/nbconfig/notebook.json
+[D 16:56:31.468 NotebookApp] 200 GET /r1i0n5_8008/api/config/notebook?_=1666623391303 (10.148.0.38) 4.970000ms
+[D 16:56:31.488 NotebookApp] Paths used for configuration of common: 
+    	/etc/jupyter/nbconfig/common.json
+[D 16:56:31.488 NotebookApp] Paths used for configuration of common: 
+    	/usr/local/etc/jupyter/nbconfig/common.json
+[D 16:56:31.489 NotebookApp] Paths used for configuration of common: 
+    	/gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/etc/jupyter/nbconfig/common.json
+[D 16:56:31.489 NotebookApp] Paths used for configuration of common: 
+    	/linkhome/rech/genini01/uzw47io/.local/etc/jupyter/nbconfig/common.json
+[D 16:56:31.489 NotebookApp] Paths used for configuration of common: 
+    	/gpfs7kw/linkhome/rech/genini01/uzw47io/.jupyter/nbconfig/common.json
+[D 16:56:31.490 NotebookApp] 200 GET /r1i0n5_8008/api/config/common?_=1666623391304 (10.148.0.38) 4.240000ms
+[D 16:56:31.499 NotebookApp] Found kernel xpython-raw in /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/share/jupyter/kernels
+[D 16:56:31.499 NotebookApp] Found kernel xpython in /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/share/jupyter/kernels
+[D 16:56:31.499 NotebookApp] Found kernel python3 in /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/share/jupyter/kernels
+[D 16:56:31.499 NotebookApp] [nb_conda_kernels] refreshing conda info
+[D 16:56:32.360 NotebookApp] 304 GET /r1i0n5_8008/api/kernelspecs (10.148.0.38) 862.000000ms
+[D 16:56:32.417 NotebookApp] 200 GET /r1i0n5_8008/api/contents/imgc-marl/notebooks/naming_game_results.ipynb?type=notebook&_=1666623391305 (10.148.0.38) 40.320000ms
+[D 16:56:32.418 NotebookApp] 304 GET /r1i0n5_8008/custom/custom.js?v=20221024165311 (10.148.0.38) 40.720000ms
+[D 16:56:32.419 NotebookApp] 304 GET /r1i0n5_8008/nbextensions/jupyterlab-plotly/extension.js?v=20221024165311 (10.148.0.38) 41.220000ms
+[D 16:56:32.420 NotebookApp] 304 GET /r1i0n5_8008/nbextensions/open3d/extension.js?v=20221024165311 (10.148.0.38) 41.670000ms
+[D 16:56:32.422 NotebookApp] 304 GET /r1i0n5_8008/nbextensions/jupyter-js-widgets/extension.js?v=20221024165311 (10.148.0.38) 1.400000ms
+[D 16:56:32.453 NotebookApp] 304 GET /r1i0n5_8008/nbextensions/nbextensions_configurator/config_menu/main.js?v=20221024165311 (10.148.0.38) 1.460000ms
+[D 16:56:32.470 NotebookApp] 304 GET /r1i0n5_8008/static/components/MathJax/extensions/TeX/begingroup.js?V=2.7.9 (10.148.0.38) 2.980000ms
+[D 16:56:32.471 NotebookApp] 304 GET /r1i0n5_8008/static/components/MathJax/extensions/MathML/content-mathml.js?V=2.7.9 (10.148.0.38) 2.930000ms
+[D 16:56:32.472 NotebookApp] 304 GET /r1i0n5_8008/static/components/MathJax/extensions/TeX/newcommand.js?V=2.7.9 (10.148.0.38) 3.220000ms
+[D 16:56:32.475 NotebookApp] 304 GET /r1i0n5_8008/static/components/MathJax/jax/output/HTML-CSS/fonts/STIX-Web/fontdata.js?V=2.7.9 (10.148.0.38) 1.570000ms
+[D 16:56:32.482 NotebookApp] 304 GET /r1i0n5_8008/static/components/MathJax/extensions/Safe.js?V=2.7.9 (10.148.0.38) 1.700000ms
+[D 16:56:32.865 NotebookApp] Instantiating kernel 'Python 3 (ipykernel)' with kernel provisioner: local-provisioner
+[D 16:56:32.869 NotebookApp] Starting kernel: ['/gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/bin/python', '-m', 'ipykernel_launcher', '-f', '/gpfsdswork/projects/rech/imi/uzw47io/.local/share/jupyter/runtime/kernel-70710f3e-a1bc-4fd8-9a17-2de25359e9d5.json']
+[D 16:56:32.872 NotebookApp] 200 GET /r1i0n5_8008/api/contents/imgc-marl/notebooks/naming_game_results.ipynb/checkpoints?_=1666623391306 (10.148.0.38) 8.660000ms
+[D 16:56:32.888 NotebookApp] Connecting to: tcp://127.0.0.1:45751
+[D 16:56:32.900 NotebookApp] Connecting to: tcp://127.0.0.1:39361
+[I 16:56:32.902 NotebookApp] Kernel started: 70710f3e-a1bc-4fd8-9a17-2de25359e9d5, name: python3
+[D 16:56:32.902 NotebookApp] Kernel args: {'kernel_name': 'python3', 'cwd': '/gpfswork/rech/imi/uzw47io/imgc-marl/notebooks'}
+[D 16:56:32.904 NotebookApp] 201 POST /r1i0n5_8008/api/sessions (10.148.0.38) 44.900000ms
+[D 16:56:33.020 NotebookApp] Initializing websocket connection /r1i0n5_8008/api/kernels/70710f3e-a1bc-4fd8-9a17-2de25359e9d5/channels
+[D 16:56:33.023 NotebookApp] Requesting kernel info from 70710f3e-a1bc-4fd8-9a17-2de25359e9d5
+[D 16:56:33.023 NotebookApp] Connecting to: tcp://127.0.0.1:37589
+[D 16:56:33.984 NotebookApp] 304 GET /r1i0n5_8008/static/base/images/favicon-busy-1.ico (10.148.0.38) 1.760000ms
+[D 16:56:34.075 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (starting)
+[D 16:56:34.096 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (busy)
+[D 16:56:34.096 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (idle)
+[D 16:56:34.096 NotebookApp] Received kernel info: {'status': 'ok', 'protocol_version': '5.3', 'implementation': 'ipython', 'implementation_version': '8.2.0', 'language_info': {'name': 'python', 'version': '3.9.12', 'mimetype': 'text/x-python', 'codemirror_mode': {'name': 'ipython', 'version': 3}, 'pygments_lexer': 'ipython3', 'nbconvert_exporter': 'python', 'file_extension': '.py'}, 'banner': "Python 3.9.12 | packaged by conda-forge | (main, Mar 24 2022, 23:25:59) \nType 'copyright', 'credits' or 'license' for more information\nIPython 8.2.0 -- An enhanced Interactive Python. Type '?' for help.\n", 'help_links': [{'text': 'Python Reference', 'url': 'https://docs.python.org/3.9'}, {'text': 'IPython Reference', 'url': 'https://ipython.org/documentation.html'}, {'text': 'NumPy Reference', 'url': 'https://docs.scipy.org/doc/numpy/reference/'}, {'text': 'SciPy Reference', 'url': 'https://docs.scipy.org/doc/scipy/reference/'}, {'text': 'Matplotlib Reference', 'url': 'https://matplotlib.org/contents.html'}, {'text': 'SymPy Reference', 'url': 'http://docs.sympy.org/latest/index.html'}, {'text': 'pandas Reference', 'url': 'https://pandas.pydata.org/pandas-docs/stable/'}]}
+[D 16:56:34.097 NotebookApp] 101 GET /r1i0n5_8008/api/kernels/70710f3e-a1bc-4fd8-9a17-2de25359e9d5/channels?session_id=021e9614a0a5498e9ab2592933791f82 (10.148.0.38) 1077.880000ms
+[D 16:56:34.098 NotebookApp] Opening websocket /r1i0n5_8008/api/kernels/70710f3e-a1bc-4fd8-9a17-2de25359e9d5/channels
+[D 16:56:34.098 NotebookApp] Getting buffer for 70710f3e-a1bc-4fd8-9a17-2de25359e9d5
+[D 16:56:34.098 NotebookApp] Connecting to: tcp://127.0.0.1:39361
+[D 16:56:34.098 NotebookApp] Connecting to: tcp://127.0.0.1:37589
+[D 16:56:34.098 NotebookApp] Connecting to: tcp://127.0.0.1:45751
+[D 16:56:34.098 NotebookApp] Connecting to: tcp://127.0.0.1:53827
+[D 16:56:34.099 NotebookApp] Connecting to: tcp://127.0.0.1:37589
+[D 16:56:34.099 NotebookApp] Connecting to: tcp://127.0.0.1:45751
+[D 16:56:34.099 NotebookApp] Nudge: attempt 1 on kernel 70710f3e-a1bc-4fd8-9a17-2de25359e9d5
+[D 16:56:34.102 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (busy)
+[D 16:56:34.103 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (busy)
+[D 16:56:34.103 NotebookApp] Nudge: IOPub received: 70710f3e-a1bc-4fd8-9a17-2de25359e9d5
+[D 16:56:34.103 NotebookApp] Nudge: resolving iopub future: 70710f3e-a1bc-4fd8-9a17-2de25359e9d5
+[D 16:56:34.103 NotebookApp] Nudge: shell info reply received: 70710f3e-a1bc-4fd8-9a17-2de25359e9d5
+[D 16:56:34.103 NotebookApp] Nudge: resolving shell future: 70710f3e-a1bc-4fd8-9a17-2de25359e9d5
+[D 16:56:34.104 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (idle)
+[D 16:56:34.104 NotebookApp] Nudge: control info reply received: 70710f3e-a1bc-4fd8-9a17-2de25359e9d5
+[D 16:56:34.104 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (idle)
+[D 16:56:34.189 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (busy)
+[D 16:56:34.190 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (idle)
+[IPKernelApp] ERROR | No such comm target registered: jupyter.widget.control
+[D 16:56:34.192 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (busy)
+[D 16:56:34.192 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: comm_close
+[IPKernelApp] WARNING | No such comm: aeb97e7b-dadc-423e-bba7-3c9eaa65cdd0
+[D 16:56:34.193 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (idle)
+[D 16:56:34.193 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (busy)
+[D 16:56:34.194 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (idle)
+[D 16:56:34.214 NotebookApp] 304 GET /r1i0n5_8008/static/base/images/favicon-notebook.ico (10.148.0.38) 1.460000ms
+[D 16:56:34.238 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (busy)
+[D 16:56:34.239 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (idle)
+[D 16:56:52.297 NotebookApp] Path components/MathJax/jax/output/HTML-CSS/fonts/STIX-Web/Main/Italic/Main.js served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/components/MathJax/jax/output/HTML-CSS/fonts/STIX-Web/Main/Italic/Main.js
+[D 16:56:52.304 NotebookApp] 200 GET /r1i0n5_8008/static/components/MathJax/jax/output/HTML-CSS/fonts/STIX-Web/Main/Italic/Main.js?V=2.7.9 (10.148.0.38) 48.500000ms
+[D 16:56:52.387 NotebookApp] Path components/MathJax/jax/output/HTML-CSS/fonts/STIX-Web/Normal/Italic/Main.js served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/components/MathJax/jax/output/HTML-CSS/fonts/STIX-Web/Normal/Italic/Main.js
+[D 16:56:52.389 NotebookApp] 200 GET /r1i0n5_8008/static/components/MathJax/jax/output/HTML-CSS/fonts/STIX-Web/Normal/Italic/Main.js?V=2.7.9 (10.148.0.38) 40.850000ms
+[D 16:56:52.535 NotebookApp] Path components/MathJax/fonts/HTML-CSS/STIX-Web/woff/STIXMathJax_Normal-Italic.woff served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/components/MathJax/fonts/HTML-CSS/STIX-Web/woff/STIXMathJax_Normal-Italic.woff
+[D 16:56:52.545 NotebookApp] 200 GET /r1i0n5_8008/static/components/MathJax/fonts/HTML-CSS/STIX-Web/woff/STIXMathJax_Normal-Italic.woff?V=2.7.9 (10.148.0.38) 61.670000ms
+[D 16:56:52.626 NotebookApp] Path components/MathJax/jax/output/HTML-CSS/fonts/STIX-Web/Main/Regular/Main.js served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/components/MathJax/jax/output/HTML-CSS/fonts/STIX-Web/Main/Regular/Main.js
+[D 16:56:52.637 NotebookApp] 200 GET /r1i0n5_8008/static/components/MathJax/jax/output/HTML-CSS/fonts/STIX-Web/Main/Regular/Main.js?V=2.7.9 (10.148.0.38) 19.990000ms
+[D 16:56:52.742 NotebookApp] Path components/MathJax/fonts/HTML-CSS/STIX-Web/woff/STIXMathJax_Main-Regular.woff served from /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/notebook/static/components/MathJax/fonts/HTML-CSS/STIX-Web/woff/STIXMathJax_Main-Regular.woff
+[D 16:56:52.752 NotebookApp] 200 GET /r1i0n5_8008/static/components/MathJax/fonts/HTML-CSS/STIX-Web/woff/STIXMathJax_Main-Regular.woff?V=2.7.9 (10.148.0.38) 12.870000ms
+[D 16:58:11.745 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (busy)
+[D 16:58:11.746 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: execute_input
+[D 16:58:11.810 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 16:58:11.915 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (idle)
+[D 16:58:26.429 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (busy)
+[D 16:58:26.433 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: execute_input
+[D 16:58:26.489 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 16:58:26.593 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (idle)
+[D 16:58:32.944 NotebookApp] 200 GET /r1i0n5_8008/api/contents/imgc-marl/notebooks/naming_game_results.ipynb?content=0&_=1666623391307 (10.148.0.38) 2.470000ms
+[I 16:58:33.005 NotebookApp] Saving file at /imgc-marl/notebooks/naming_game_results.ipynb
+[D 16:58:33.005 NotebookApp] Saving /gpfswork/rech/imi/uzw47io/imgc-marl/notebooks/naming_game_results.ipynb
+[D 16:58:33.037 NotebookApp] 200 PUT /r1i0n5_8008/api/contents/imgc-marl/notebooks/naming_game_results.ipynb (10.148.0.38) 43.820000ms
+[D 16:58:45.005 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (busy)
+[D 16:58:45.006 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: execute_input
+[D 16:58:45.060 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 16:58:45.164 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (idle)
+[D 16:58:51.325 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (busy)
+[D 16:58:51.329 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: execute_input
+[D 16:58:51.383 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 16:58:51.487 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (idle)
+[D 16:58:58.819 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (busy)
+[D 16:58:58.820 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: execute_input
+[D 16:58:58.878 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 16:58:58.981 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (idle)
+[D 16:59:02.428 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (busy)
+[D 16:59:02.432 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: execute_input
+[D 16:59:02.488 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 16:59:02.592 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (idle)
+[D 16:59:06.069 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (busy)
+[D 16:59:06.071 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: execute_input
+[D 16:59:06.131 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 16:59:06.234 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (idle)
+[D 16:59:27.377 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (busy)
+[D 16:59:27.377 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: execute_input
+[D 16:59:28.479 NotebookApp] 304 GET /r1i0n5_8008/static/base/images/favicon-busy-1.ico (10.148.0.38) 1.710000ms
+[D 16:59:49.513 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: error
+[D 16:59:49.515 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (idle)
+[D 16:59:49.667 NotebookApp] 304 GET /r1i0n5_8008/static/base/images/favicon-notebook.ico (10.148.0.38) 1.370000ms
+[D 17:00:05.520 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (busy)
+[D 17:00:05.523 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: execute_input
+[D 17:00:05.524 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: error
+[D 17:00:05.526 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (idle)
+[D 17:00:10.602 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (busy)
+[D 17:00:10.604 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: execute_input
+[D 17:00:11.697 NotebookApp] 304 GET /r1i0n5_8008/static/base/images/favicon-busy-1.ico (10.148.0.38) 1.070000ms
+[D 17:00:13.629 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (idle)
+[D 17:00:13.768 NotebookApp] 304 GET /r1i0n5_8008/static/base/images/favicon-notebook.ico (10.148.0.38) 1.880000ms
+[D 17:00:15.511 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (busy)
+[D 17:00:15.511 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: execute_input
+[D 17:00:15.513 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (idle)
+[D 17:00:17.425 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (busy)
+[D 17:00:17.426 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: execute_input
+[D 17:00:17.427 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: error
+[D 17:00:17.429 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (idle)
+[D 17:00:32.937 NotebookApp] 200 GET /r1i0n5_8008/api/contents/imgc-marl/notebooks/naming_game_results.ipynb?content=0&_=1666623391308 (10.148.0.38) 2.290000ms
+[I 17:00:33.007 NotebookApp] Saving file at /imgc-marl/notebooks/naming_game_results.ipynb
+[D 17:00:33.008 NotebookApp] Saving /gpfswork/rech/imi/uzw47io/imgc-marl/notebooks/naming_game_results.ipynb
+[D 17:00:33.040 NotebookApp] 200 PUT /r1i0n5_8008/api/contents/imgc-marl/notebooks/naming_game_results.ipynb (10.148.0.38) 43.690000ms
+[D 17:00:35.464 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (busy)
+[D 17:00:35.465 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: execute_input
+[D 17:00:35.467 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (idle)
+[D 17:00:39.741 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (busy)
+[D 17:00:39.741 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: execute_input
+[D 17:00:39.748 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:00:40.406 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:00:40.406 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:00:40.407 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:00:40.408 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:00:40.409 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:00:40.409 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:00:40.413 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:00:40.434 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:00:40.458 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:00:40.476 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:00:40.494 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:00:40.504 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:00:40.509 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (idle)
+[D 17:00:46.556 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (busy)
+[D 17:00:46.557 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: execute_input
+[D 17:00:46.761 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:00:47.639 NotebookApp] 304 GET /r1i0n5_8008/static/base/images/favicon-busy-1.ico (10.148.0.38) 1.350000ms
+[D 17:01:13.161 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:13.169 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:13.544 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:13.549 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:13.649 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:13.923 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:13.932 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:14.032 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:14.310 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:14.319 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:14.388 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:14.688 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:14.691 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:14.805 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:15.387 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:15.392 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:15.515 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:15.750 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:15.754 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:15.876 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:16.147 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:16.164 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:16.238 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:16.546 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:16.553 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:16.639 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:16.932 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:16.935 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:17.026 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:17.297 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:17.298 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:17.395 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:17.678 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:17.685 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:17.778 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:18.047 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:18.049 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:18.148 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:18.431 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:18.439 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:18.536 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:18.830 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:18.834 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:18.910 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:19.242 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:19.242 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:19.308 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:19.580 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:19.582 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:19.720 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:19.962 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:19.962 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:20.055 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:20.328 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:20.335 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:20.770 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:21.035 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:21.041 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:21.164 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:21.411 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:21.421 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:21.513 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:21.739 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:21.740 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:21.877 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:22.123 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:22.131 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:22.239 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:22.499 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:22.500 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:22.610 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:22.845 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:22.852 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:22.962 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:23.209 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:23.215 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:23.303 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:23.561 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:23.563 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:23.662 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:23.911 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:23.917 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:24.021 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:24.246 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:24.246 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:24.368 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:24.620 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:24.628 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:24.712 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:24.977 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:24.979 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:25.074 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:25.361 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:25.369 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:25.448 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:25.722 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:25.733 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:25.817 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:26.442 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:26.443 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:26.555 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:26.821 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:26.824 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:26.894 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:27.174 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:27.183 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:27.267 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:27.514 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:27.516 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:27.646 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:27.866 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:27.868 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:27.978 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:28.196 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:28.200 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:28.321 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:28.559 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:28.559 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:28.664 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:28.906 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:28.908 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:29.014 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:29.211 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:29.213 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:29.356 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:29.557 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:29.563 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:29.649 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:29.923 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:29.930 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:30.019 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:30.275 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:30.279 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:30.368 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:30.588 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:30.589 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:30.743 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:30.956 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:30.960 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:31.415 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:31.667 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:31.673 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:31.768 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:32.024 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:32.025 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:32.137 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:32.336 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:32.340 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:32.465 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:32.695 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:32.697 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:32.792 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:33.057 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:33.058 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:33.163 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:33.423 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:33.428 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:33.528 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:33.800 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:33.800 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:33.886 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:34.159 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:34.165 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:34.256 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:34.522 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:34.527 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:34.648 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:34.879 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:34.881 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:34.990 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:35.235 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:35.236 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:35.329 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:35.602 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:35.604 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:35.709 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:35.960 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:35.969 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:36.069 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:36.323 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:36.327 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:36.431 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:37.037 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:37.039 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:37.158 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:37.381 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:37.386 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:37.514 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:37.739 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:37.740 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:37.839 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:38.080 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:38.087 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:38.182 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:38.419 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:38.426 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:38.544 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:38.771 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:38.773 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:38.892 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:39.136 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:39.137 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:39.231 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:39.505 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:39.510 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:39.596 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:39.868 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:39.873 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:39.961 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:40.226 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:40.235 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:40.345 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:40.550 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:40.552 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:40.685 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:40.858 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:40.860 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:40.988 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:41.123 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:41.123 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:41.258 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:41.411 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:41.416 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:41.868 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:42.090 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:42.093 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:42.226 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:42.496 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:42.507 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:42.553 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:42.825 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:42.825 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:42.957 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:43.181 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:43.183 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:43.274 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:43.544 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:43.551 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:43.640 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:43.900 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:43.901 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:43.993 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:44.244 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:44.244 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:44.346 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:44.559 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:44.564 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:44.678 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:44.882 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:44.889 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:45.018 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:45.231 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:45.233 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:45.339 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:45.564 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:45.576 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:45.693 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:45.930 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:45.936 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:46.038 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:46.311 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:46.315 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:46.401 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:46.668 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:46.673 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:46.766 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:47.351 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:47.353 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:47.479 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:47.715 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:47.724 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:47.809 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:48.031 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:48.032 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:48.161 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:48.387 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:48.388 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:48.492 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:48.744 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:48.749 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:48.843 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:49.095 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:49.101 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:49.225 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:49.474 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:49.479 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:49.564 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:49.829 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:49.835 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:49.936 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:50.176 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:50.181 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:50.287 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:50.555 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:50.556 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:50.633 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:50.922 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:50.924 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:51.027 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:51.419 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: display_data
+[D 17:01:51.421 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (idle)
+[D 17:01:51.429 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (busy)
+[D 17:01:51.430 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: execute_input
+[D 17:01:51.658 NotebookApp] 304 GET /r1i0n5_8008/static/base/images/favicon-notebook.ico (10.148.0.38) 1.460000ms
+Failed to create secure directory (/pulse): Permission denied
+ALSA lib confmisc.c:855:(parse_card) cannot find card '0'
+ALSA lib conf.c:5178:(_snd_config_evaluate) function snd_func_card_inum returned error: No such file or directory
+ALSA lib confmisc.c:422:(snd_func_concat) error evaluating strings
+ALSA lib conf.c:5178:(_snd_config_evaluate) function snd_func_concat returned error: No such file or directory
+ALSA lib confmisc.c:1334:(snd_func_refer) error evaluating name
+ALSA lib conf.c:5178:(_snd_config_evaluate) function snd_func_refer returned error: No such file or directory
+ALSA lib conf.c:5701:(snd_config_expand) Evaluate error: No such file or directory
+ALSA lib pcm.c:2664:(snd_pcm_open_noupdate) Unknown PCM default
+Failed to create secure directory (/pulse): Permission denied
+ALSA lib confmisc.c:855:(parse_card) cannot find card '0'
+ALSA lib conf.c:5178:(_snd_config_evaluate) function snd_func_card_inum returned error: No such file or directory
+ALSA lib confmisc.c:422:(snd_func_concat) error evaluating strings
+ALSA lib conf.c:5178:(_snd_config_evaluate) function snd_func_concat returned error: No such file or directory
+ALSA lib confmisc.c:1334:(snd_func_refer) error evaluating name
+ALSA lib conf.c:5178:(_snd_config_evaluate) function snd_func_refer returned error: No such file or directory
+ALSA lib conf.c:5701:(snd_config_expand) Evaluate error: No such file or directory
+ALSA lib pcm.c:2664:(snd_pcm_open_noupdate) Unknown PCM default
+[D 17:01:52.274 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:01:52.282 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (idle)
+[D 17:01:52.282 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (busy)
+[D 17:01:52.307 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: execute_input
+[D 17:01:53.162 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: display_data
+[D 17:01:53.166 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (idle)
+[D 17:02:32.954 NotebookApp] 200 GET /r1i0n5_8008/api/contents/imgc-marl/notebooks/naming_game_results.ipynb?content=0&_=1666623391309 (10.148.0.38) 2.460000ms
+[I 17:02:33.068 NotebookApp] Saving file at /imgc-marl/notebooks/naming_game_results.ipynb
+[D 17:02:33.069 NotebookApp] Saving /gpfswork/rech/imi/uzw47io/imgc-marl/notebooks/naming_game_results.ipynb
+[D 17:02:33.143 NotebookApp] 200 PUT /r1i0n5_8008/api/contents/imgc-marl/notebooks/naming_game_results.ipynb (10.148.0.38) 115.770000ms
+[D 17:04:32.928 NotebookApp] 200 GET /r1i0n5_8008/api/contents/imgc-marl/notebooks/naming_game_results.ipynb?content=0&_=1666623391310 (10.148.0.38) 1.680000ms
+[I 17:04:33.031 NotebookApp] Saving file at /imgc-marl/notebooks/naming_game_results.ipynb
+[D 17:04:33.032 NotebookApp] Saving /gpfswork/rech/imi/uzw47io/imgc-marl/notebooks/naming_game_results.ipynb
+[D 17:04:33.101 NotebookApp] 200 PUT /r1i0n5_8008/api/contents/imgc-marl/notebooks/naming_game_results.ipynb (10.148.0.38) 109.600000ms
+[D 17:05:40.288 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (busy)
+[D 17:05:40.288 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: execute_input
+[D 17:05:40.368 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:40.370 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:40.493 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:40.896 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:40.902 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:40.994 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:41.371 NotebookApp] 304 GET /r1i0n5_8008/static/base/images/favicon-busy-1.ico (10.148.0.38) 1.480000ms
+[D 17:05:41.956 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:41.962 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:42.064 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:42.548 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:42.560 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:42.691 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:43.138 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:43.141 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:43.217 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:43.726 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:43.735 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:43.850 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:44.353 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:44.356 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:44.432 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:44.948 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:44.949 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:45.463 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:45.953 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:45.959 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:46.060 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:46.520 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:46.522 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:46.626 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:47.120 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:47.130 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:47.260 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:47.747 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:47.758 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:47.847 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:48.346 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:48.357 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:48.471 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:48.949 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:48.953 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:49.348 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:49.905 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:49.907 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:50.009 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:50.521 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:50.522 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:50.644 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:51.082 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:51.086 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:51.260 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:51.677 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:51.680 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:51.840 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:52.279 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:52.280 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:52.374 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:52.874 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:52.876 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:53.332 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:53.893 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:53.898 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:53.999 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:54.541 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:54.544 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:54.645 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:55.170 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:55.172 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:55.275 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:55.779 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:55.783 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:55.880 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:56.391 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:56.399 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:56.487 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:56.957 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:56.959 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:57.403 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:57.960 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:57.968 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:58.064 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:58.611 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:58.615 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:58.717 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:59.221 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:59.223 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:59.291 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:59.836 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:59.838 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:05:59.987 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:00.412 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:00.415 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:00.559 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:00.978 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:00.979 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:01.436 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:01.991 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:02.003 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:02.113 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:02.619 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:02.620 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:02.726 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:03.251 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:03.252 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:03.349 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:03.894 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:03.900 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:03.975 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:04.499 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:04.505 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:04.598 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:05.135 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:05.142 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:05.493 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:05.835 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:05.836 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:06.015 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:06.423 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:06.424 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:06.557 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:07.037 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:07.047 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:07.130 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:07.676 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:07.684 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:07.781 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:08.268 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:08.272 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:08.430 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:08.889 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:08.890 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:09.196 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:09.816 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:09.824 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:09.916 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:10.389 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:10.394 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:10.541 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:11.019 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:11.024 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:11.115 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:11.626 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:11.636 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:11.716 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:12.236 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:12.241 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:12.372 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:12.816 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:12.819 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:13.299 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:13.864 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:13.879 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:13.967 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:14.514 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:14.523 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:14.613 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:15.153 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:15.158 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:15.242 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:15.749 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:15.755 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:15.842 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:16.398 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:16.405 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:16.502 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:17.008 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:17.018 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:17.497 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:18.010 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:18.016 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:18.154 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:18.622 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:18.628 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:18.718 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:19.255 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:19.257 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:19.336 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:19.881 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:19.881 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:19.982 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:20.482 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:20.483 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:20.629 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:21.051 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:21.052 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:21.529 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:21.993 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:21.993 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:22.149 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:22.535 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:22.539 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:22.681 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:23.137 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:23.142 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:23.302 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:23.769 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:23.770 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:23.871 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:24.383 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:24.388 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:24.479 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:24.932 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:24.934 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:25.278 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:25.817 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:25.819 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:25.918 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:26.436 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:26.443 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:26.522 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:27.035 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:27.044 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:27.151 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:27.652 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:27.661 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:27.739 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:28.185 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:28.191 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:28.334 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:28.786 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:28.792 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:29.204 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:29.736 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:29.737 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:29.839 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:30.346 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:30.352 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:30.438 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:30.923 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:30.929 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:31.015 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:31.472 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:31.473 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:31.628 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:32.069 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:32.070 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:32.165 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:32.647 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:32.652 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:32.923 NotebookApp] 200 GET /r1i0n5_8008/api/contents/imgc-marl/notebooks/naming_game_results.ipynb?content=0&_=1666623391311 (10.148.0.38) 2.160000ms
+[I 17:06:33.016 NotebookApp] Saving file at /imgc-marl/notebooks/naming_game_results.ipynb
+[D 17:06:33.016 NotebookApp] Saving /gpfswork/rech/imi/uzw47io/imgc-marl/notebooks/naming_game_results.ipynb
+[D 17:06:33.074 NotebookApp] 200 PUT /r1i0n5_8008/api/contents/imgc-marl/notebooks/naming_game_results.ipynb (10.148.0.38) 84.280000ms
+[D 17:06:33.075 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:33.593 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:33.597 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:33.717 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:34.148 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:34.150 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:34.249 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:34.733 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:34.739 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:34.828 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:35.316 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:35.318 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:35.421 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:35.908 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:35.912 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:36.028 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:36.518 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:36.523 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:36.849 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:37.367 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:37.368 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:37.525 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:37.973 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:37.981 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:38.069 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:38.570 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:38.570 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:38.667 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:39.160 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:39.161 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:39.253 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:39.725 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:39.735 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:39.830 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:40.674 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:40.683 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:40.782 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:41.282 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:41.282 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:41.378 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:41.858 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:41.858 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:41.998 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:42.393 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:42.394 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:42.543 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:42.806 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:42.817 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:42.973 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:43.374 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:43.380 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:43.458 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:44.351 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:44.353 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:44.442 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:44.975 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:44.975 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:45.069 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:45.571 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:45.572 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:45.677 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: stream
+[D 17:06:46.451 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: display_data
+[D 17:06:46.462 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (idle)
+[D 17:06:46.464 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (busy)
+[D 17:06:46.465 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: execute_input
+[D 17:06:46.468 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (idle)
+[D 17:06:46.469 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (busy)
+[D 17:06:46.470 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: execute_input
+[D 17:06:46.639 NotebookApp] 304 GET /r1i0n5_8008/static/base/images/favicon-notebook.ico (10.148.0.38) 1.710000ms
+[D 17:06:47.508 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: display_data
+[D 17:06:47.514 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (idle)
+[D 17:06:47.599 NotebookApp] 304 GET /r1i0n5_8008/static/base/images/favicon-busy-1.ico (10.148.0.38) 1.180000ms
+[D 17:06:47.741 NotebookApp] 304 GET /r1i0n5_8008/static/base/images/favicon-notebook.ico (10.148.0.38) 1.440000ms
+[D 17:08:32.945 NotebookApp] 200 GET /r1i0n5_8008/api/contents/imgc-marl/notebooks/naming_game_results.ipynb?content=0&_=1666623391312 (10.148.0.38) 2.110000ms
+[I 17:08:33.118 NotebookApp] Saving file at /imgc-marl/notebooks/naming_game_results.ipynb
+[D 17:08:33.118 NotebookApp] Saving /gpfswork/rech/imi/uzw47io/imgc-marl/notebooks/naming_game_results.ipynb
+[D 17:08:33.188 NotebookApp] 200 PUT /r1i0n5_8008/api/contents/imgc-marl/notebooks/naming_game_results.ipynb (10.148.0.38) 153.790000ms
+[D 17:12:04.348 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (busy)
+[D 17:12:04.348 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: execute_input
+[D 17:12:04.553 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 17:12:04.805 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 17:12:05.076 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 17:12:05.417 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 17:12:05.465 NotebookApp] 304 GET /r1i0n5_8008/static/base/images/favicon-busy-1.ico (10.148.0.38) 1.670000ms
+[D 17:12:05.624 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 17:12:05.845 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 17:12:05.863 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (idle)
+[D 17:12:05.991 NotebookApp] 304 GET /r1i0n5_8008/static/base/images/favicon-notebook.ico (10.148.0.38) 1.590000ms
+[D 17:12:06.445 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (busy)
+[D 17:12:06.461 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: execute_input
+[D 17:12:06.927 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: display_data
+[D 17:12:06.928 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (idle)
+[D 17:12:16.368 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (busy)
+[D 17:12:16.373 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: execute_input
+[D 17:12:17.008 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: display_data
+[D 17:12:17.012 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (idle)
+[D 17:12:36.099 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (busy)
+[D 17:12:36.122 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: execute_input
+[D 17:12:36.513 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: display_data
+[D 17:12:36.514 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (idle)
+[D 17:12:39.290 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (busy)
+[D 17:12:39.300 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: execute_input
+[D 17:12:39.875 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: display_data
+[D 17:12:39.875 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (idle)
+[D 17:13:29.576 NotebookApp] 200 GET /r1i0n5_8008/api/contents/imgc-marl/notebooks/results.ipynb?content=0&_=1666623208700 (10.148.0.38) 1.840000ms
+[I 17:13:29.725 NotebookApp] Saving file at /imgc-marl/notebooks/results.ipynb
+[D 17:13:29.725 NotebookApp] Saving /gpfswork/rech/imi/uzw47io/imgc-marl/notebooks/results.ipynb
+[D 17:13:29.817 NotebookApp] 200 PUT /r1i0n5_8008/api/contents/imgc-marl/notebooks/results.ipynb (10.148.0.38) 161.990000ms
+[D 17:36:11.541 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (busy)
+[D 17:36:11.551 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: execute_input
+[D 17:36:11.745 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 17:36:11.990 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 17:36:12.286 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 17:36:12.500 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 17:36:12.691 NotebookApp] 304 GET /r1i0n5_8008/static/base/images/favicon-busy-1.ico (10.148.0.38) 1.710000ms
+[D 17:36:12.829 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 17:36:13.061 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 17:36:13.305 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 17:36:13.525 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 17:36:13.746 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 17:36:13.772 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (idle)
+[D 17:36:13.800 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (busy)
+[D 17:36:13.815 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: execute_input
+[D 17:36:13.831 NotebookApp] 304 GET /r1i0n5_8008/static/base/images/favicon-notebook.ico (10.148.0.38) 0.900000ms
+[D 17:36:14.199 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: display_data
+[D 17:36:14.199 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (idle)
+[D 17:36:21.431 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (busy)
+[D 17:36:21.442 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: execute_input
+[D 17:36:22.097 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: display_data
+[D 17:36:22.098 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (idle)
+[D 17:36:49.990 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (busy)
+[D 17:36:50.006 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: execute_input
+[D 17:36:50.566 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: display_data
+[D 17:36:50.567 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (idle)
+[D 17:37:06.973 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (busy)
+[D 17:37:06.988 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: execute_input
+[D 17:37:07.455 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: display_data
+[D 17:37:07.455 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (idle)
+[D 17:37:29.557 NotebookApp] 200 GET /r1i0n5_8008/api/contents/imgc-marl/notebooks/results.ipynb?content=0&_=1666623208701 (10.148.0.38) 2.180000ms
+[I 17:37:29.703 NotebookApp] Saving file at /imgc-marl/notebooks/results.ipynb
+[D 17:37:29.704 NotebookApp] Saving /gpfswork/rech/imi/uzw47io/imgc-marl/notebooks/results.ipynb
+[D 17:37:29.824 NotebookApp] 200 PUT /r1i0n5_8008/api/contents/imgc-marl/notebooks/results.ipynb (10.148.0.38) 175.670000ms
+[D 17:45:46.745 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (busy)
+[D 17:45:46.753 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: execute_input
+[D 17:45:47.358 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: display_data
+[D 17:45:47.360 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (idle)
+[D 17:45:51.760 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (busy)
+[D 17:45:51.768 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: execute_input
+[D 17:45:51.973 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 17:45:52.254 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 17:45:52.475 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 17:45:52.839 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 17:45:52.884 NotebookApp] 304 GET /r1i0n5_8008/static/base/images/favicon-busy-1.ico (10.148.0.38) 1.830000ms
+[D 17:45:53.242 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 17:45:53.505 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 17:45:53.782 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 17:45:54.013 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 17:45:54.255 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 17:45:54.335 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (idle)
+[D 17:45:54.359 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (busy)
+[D 17:45:54.364 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: execute_input
+[D 17:45:54.387 NotebookApp] 304 GET /r1i0n5_8008/static/base/images/favicon-notebook.ico (10.148.0.38) 0.920000ms
+[D 17:45:54.879 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: display_data
+[D 17:45:54.883 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (idle)
+[D 17:45:55.181 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (busy)
+[D 17:45:55.182 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: execute_input
+[D 17:45:56.050 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: display_data
+[D 17:45:56.054 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (idle)
+[D 17:45:57.983 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (busy)
+[D 17:45:57.995 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: execute_input
+[D 17:45:58.484 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: display_data
+[D 17:45:58.484 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (idle)
+[D 17:46:00.071 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (busy)
+[D 17:46:00.082 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: execute_input
+[D 17:46:00.668 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: display_data
+[D 17:46:00.669 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (idle)
+[D 17:47:30.325 NotebookApp] 200 GET /r1i0n5_8008/api/contents/imgc-marl/notebooks/results.ipynb?content=0&_=1666623208702 (10.148.0.38) 2.430000ms
+[I 17:47:30.459 NotebookApp] Saving file at /imgc-marl/notebooks/results.ipynb
+[D 17:47:30.460 NotebookApp] Saving /gpfswork/rech/imi/uzw47io/imgc-marl/notebooks/results.ipynb
+[D 17:47:30.524 NotebookApp] 200 PUT /r1i0n5_8008/api/contents/imgc-marl/notebooks/results.ipynb (10.148.0.38) 120.060000ms
+[D 17:49:25.761 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (busy)
+[D 17:49:25.785 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: execute_input
+[D 17:49:26.438 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: display_data
+[D 17:49:26.444 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (idle)
+[D 17:49:27.001 NotebookApp] 304 GET /r1i0n5_8008/static/base/images/favicon-busy-1.ico (10.148.0.38) 1.670000ms
+[D 17:49:27.035 NotebookApp] 304 GET /r1i0n5_8008/static/base/images/favicon-notebook.ico (10.148.0.38) 1.690000ms
+[D 17:50:32.953 NotebookApp] 200 GET /r1i0n5_8008/api/contents/imgc-marl/notebooks/naming_game_results.ipynb?content=0&_=1666623391313 (10.148.0.38) 1.880000ms
+[I 17:50:33.057 NotebookApp] Saving file at /imgc-marl/notebooks/naming_game_results.ipynb
+[D 17:50:33.057 NotebookApp] Saving /gpfswork/rech/imi/uzw47io/imgc-marl/notebooks/naming_game_results.ipynb
+[D 17:50:33.171 NotebookApp] 200 PUT /r1i0n5_8008/api/contents/imgc-marl/notebooks/naming_game_results.ipynb (10.148.0.38) 155.820000ms
+[D 17:53:43.488 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (busy)
+[D 17:53:43.489 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: execute_input
+[D 17:53:44.507 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: display_data
+[D 17:53:44.513 NotebookApp] activity on 70710f3e-a1bc-4fd8-9a17-2de25359e9d5: status (idle)
+[D 17:53:44.620 NotebookApp] 304 GET /r1i0n5_8008/static/base/images/favicon-busy-1.ico (10.148.0.38) 1.560000ms
+[D 17:53:44.696 NotebookApp] 304 GET /r1i0n5_8008/static/base/images/favicon-notebook.ico (10.148.0.38) 1.360000ms
+[D 17:54:33.182 NotebookApp] 200 GET /r1i0n5_8008/api/contents/imgc-marl/notebooks/naming_game_results.ipynb?content=0&_=1666623391314 (10.148.0.38) 2.170000ms
+[I 17:54:33.599 NotebookApp] Saving file at /imgc-marl/notebooks/naming_game_results.ipynb
+[D 17:54:33.599 NotebookApp] Saving /gpfswork/rech/imi/uzw47io/imgc-marl/notebooks/naming_game_results.ipynb
+[D 17:54:33.699 NotebookApp] 200 PUT /r1i0n5_8008/api/contents/imgc-marl/notebooks/naming_game_results.ipynb (10.148.0.38) 299.320000ms
+[D 18:02:00.291 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (busy)
+[D 18:02:00.305 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: execute_input
+[D 18:02:00.495 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 18:02:00.816 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 18:02:01.057 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 18:02:01.410 NotebookApp] 304 GET /r1i0n5_8008/static/base/images/favicon-busy-1.ico (10.148.0.38) 1.300000ms
+[D 18:02:01.482 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 18:02:01.713 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 18:02:01.956 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 18:02:02.266 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 18:02:02.511 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 18:02:02.791 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 18:02:03.071 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 18:02:03.260 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 18:02:03.262 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (idle)
+[D 18:02:03.286 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (busy)
+[D 18:02:03.292 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: execute_input
+[D 18:02:03.388 NotebookApp] 304 GET /r1i0n5_8008/static/base/images/favicon-notebook.ico (10.148.0.38) 1.500000ms
+[D 18:02:03.808 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: display_data
+[D 18:02:03.809 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (idle)
+[D 18:02:24.597 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (busy)
+[D 18:02:24.604 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: execute_input
+[D 18:02:25.184 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: display_data
+[D 18:02:25.188 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (idle)
+[D 18:02:37.068 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (busy)
+[D 18:02:37.075 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: execute_input
+[D 18:02:37.557 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: display_data
+[D 18:02:37.558 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (idle)
+[D 18:02:43.436 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (busy)
+[D 18:02:43.441 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: execute_input
+[D 18:02:44.070 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: display_data
+[D 18:02:44.075 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (idle)
+[D 18:03:29.573 NotebookApp] 200 GET /r1i0n5_8008/api/contents/imgc-marl/notebooks/results.ipynb?content=0&_=1666623208703 (10.148.0.38) 2.170000ms
+[I 18:03:29.704 NotebookApp] Saving file at /imgc-marl/notebooks/results.ipynb
+[D 18:03:29.704 NotebookApp] Saving /gpfswork/rech/imi/uzw47io/imgc-marl/notebooks/results.ipynb
+[D 18:03:29.834 NotebookApp] 200 PUT /r1i0n5_8008/api/contents/imgc-marl/notebooks/results.ipynb (10.148.0.38) 186.010000ms
+[D 18:05:41.689 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (busy)
+[D 18:05:41.690 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: execute_input
+[D 18:05:41.692 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (idle)
+[D 18:05:43.401 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (busy)
+[D 18:05:43.401 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: execute_input
+[D 18:05:43.603 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 18:05:44.088 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 18:05:44.499 NotebookApp] 304 GET /r1i0n5_8008/static/base/images/favicon-busy-1.ico (10.148.0.38) 1.700000ms
+[D 18:05:44.569 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 18:05:45.075 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 18:05:45.518 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 18:05:46.027 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 18:05:46.903 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 18:05:47.823 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 18:05:48.775 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 18:05:49.735 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 18:05:50.671 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 18:05:50.877 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 18:05:51.093 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 18:05:51.314 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 18:05:51.533 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 18:05:51.753 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 18:05:52.047 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 18:05:52.339 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 18:05:52.629 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 18:05:52.919 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: stream
+[D 18:05:52.994 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (idle)
+[D 18:05:53.009 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (busy)
+[D 18:05:53.025 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: execute_input
+[D 18:05:53.085 NotebookApp] 304 GET /r1i0n5_8008/static/base/images/favicon-notebook.ico (10.148.0.38) 1.860000ms
+[D 18:05:53.538 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: display_data
+[D 18:05:53.539 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (idle)
+[D 18:05:53.563 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (busy)
+[D 18:05:53.584 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: execute_input
+[D 18:05:54.194 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: display_data
+[D 18:05:54.198 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (idle)
+[D 18:06:07.882 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (busy)
+[D 18:06:07.885 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: execute_input
+[D 18:06:08.588 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: display_data
+[D 18:06:08.589 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (idle)
+[D 18:07:18.468 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (busy)
+[D 18:07:18.474 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: execute_input
+[D 18:07:18.899 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: display_data
+[D 18:07:18.900 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (idle)
+[D 18:07:20.852 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (busy)
+[D 18:07:20.867 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: execute_input
+[D 18:07:21.617 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: display_data
+[D 18:07:21.617 NotebookApp] activity on 2c046926-36cb-434a-96d3-331e65843a89: status (idle)
+[D 18:07:29.566 NotebookApp] 200 GET /r1i0n5_8008/api/contents/imgc-marl/notebooks/results.ipynb?content=0&_=1666623208704 (10.148.0.38) 1.970000ms
+[I 18:07:29.763 NotebookApp] Saving file at /imgc-marl/notebooks/results.ipynb
+[D 18:07:29.763 NotebookApp] Saving /gpfswork/rech/imi/uzw47io/imgc-marl/notebooks/results.ipynb
+[D 18:07:29.889 NotebookApp] 200 PUT /r1i0n5_8008/api/contents/imgc-marl/notebooks/results.ipynb (10.148.0.38) 190.020000ms
+[D 18:07:56.054 NotebookApp] 200 GET /r1i0n5_8008/api/contents/imgc-marl/notebooks/results.ipynb?content=0&_=1666623208705 (10.148.0.38) 1.160000ms
+[I 18:07:56.205 NotebookApp] Saving file at /imgc-marl/notebooks/results.ipynb
+[D 18:07:56.205 NotebookApp] Saving /gpfswork/rech/imi/uzw47io/imgc-marl/notebooks/results.ipynb
+[D 18:07:56.260 NotebookApp] 200 PUT /r1i0n5_8008/api/contents/imgc-marl/notebooks/results.ipynb (10.148.0.38) 117.530000ms
+[D 18:07:56.499 NotebookApp] 201 POST /r1i0n5_8008/api/contents/imgc-marl/notebooks/results.ipynb/checkpoints (10.148.0.38) 189.790000ms

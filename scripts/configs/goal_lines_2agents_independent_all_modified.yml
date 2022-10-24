@@ -1,5 +1,5 @@
 training:
-  training_steps: 1000
+  training_steps: 300
   num_workers: 10
 env_config:
   centralized: False
@@ -9,3 +9,5 @@ env_config:
   all_goals: True
   new_reward: True
   reward_multiplier: 4
+
+#checkpoint:  /gpfsscratch/rech/imi/uzw47io/elias_expe/2_agents/cooperative/modified_reward/6_landmarks/naming_game/p_est_soft_b/2022-10-13_09-57-25u2slsued/checkpoint_001000/checkpoint-1000

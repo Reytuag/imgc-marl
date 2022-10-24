@@ -7,5 +7,5 @@ env_config:
   # True -> consider all goals
   # False -> consider only cooperative goals
   all_goals: False
-  alignment_percentage: 0.25
+  alignment_percentage: 0.625
   new_reward: True
