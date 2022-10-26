@@ -24,7 +24,7 @@ from ray.rllib.utils.typing import TensorType
 
 DELTA = 0.1 / (30 * 60)
 # scaling factor: 30 iterations x 60 episodes each agent will lead (60 games/training it)
-ALPHA=0.05
+ALPHA=0.1
 torch, nn = try_import_torch()
 
 logger = logging.getLogger(__name__)
@@ -173,9 +173,10 @@ class FullNamingPolicy(PPOTorchPolicy):
                                     ] += 1
                             normalization_f[follower_goal_index,leader_msg_index] +=1
                 with torch.no_grad():
+                    #model._leader_matrix*=(1-ALPHA+ALPHA*(normalization_l>0))
                     model._leader_matrix*=(1-ALPHA)
                     model._leader_matrix+=ALPHA*update_l/(normalization_l+1e-10)
-                    model._follower_matrix*=(1-ALPHA)
+                    model._follower_matrix*=(1-ALPHA+ALPHA*(normalization_f>0))
                     model._follower_matrix+=ALPHA*update_f/(normalization_f+1e-10)
 
         return total_loss

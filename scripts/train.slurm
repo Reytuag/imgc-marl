@@ -20,11 +20,12 @@
 #SBATCH --array=0-4
 #SBATCH --cpus-per-task=12
 # Set the directory to store logs
-#SBATCH -o /gpfsscratch/rech/imi/uzw47io/elias_expe/2_agents/all/modified_reward/6_landmarks/50align/train-%A_%a.slurm.out
-#SBATCH -e /gpfsscratch/rech/imi/uzw47io/elias_expe/2_agents/all/modified_reward/6_landmarks/50align/train-%A_%a.slurm.err
+#SBATCH -o /gpfsscratch/rech/imi/uzw47io/elias_expe/2_agents/all/modified_reward/3_landmarks_reward2/independent/train-%A_%a.slurm.out
+#SBATCH -e /gpfsscratch/rech/imi/uzw47io/elias_expe/2_agents/all/modified_reward/3_landmarks_reward2/independent/train-%A_%a.slurm.err
 
 # change working directory
 
+export TMPDIR=$JOBSCRATCH
 # fin des directives PBS
 #############################
 
@@ -40,7 +41,7 @@ echo "#############################"
 
 # What you actually want to launch
 # Launch the job, change the environment if needed (3 or 6 landmarks), it can be: goal_lines or large_goal_lines
-python train_population.py --environment large_goal_lines configs/large_goal_lines_2agents_50align_all_modified.yml ${SCRATCH}/elias_expe/2_agents/all/modified_reward/6_landmarks/50align/
+python train_population.py --environment goal_lines configs/goal_lines_2agents_independent_all_modified.yml ${SCRATCH}/elias_expe/2_agents/all/modified_reward/3_landmarks_reward2/independent/
 
 # all done
 echo "Job finished"

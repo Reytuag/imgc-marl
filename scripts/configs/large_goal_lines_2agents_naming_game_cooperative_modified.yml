@@ -4,7 +4,7 @@ training:
 env_config:
   centralized: False
   eps_communication: 0.1
-  population_size: 4
+  population_size: 2
   # True -> consider all goals
   # False -> consider only cooperative goals
   all_goals: False
@@ -12,4 +12,4 @@ env_config:
 communication: "naming"
 train_matrix: True
 nb_msg: 30
-checkpoint:  /gpfsscratch/rech/imi/uzw47io/elias_expe/4_agents/cooperative/modified_reward/6_landmarks/naming_game_30msg/2022-10-23_13-36-48zzrz2qr6/checkpoint_001000/checkpoint-1000
+#checkpoint:  /gpfsscratch/rech/imi/uzw47io/elias_expe/4_agents/cooperative/modified_reward/6_landmarks/naming_game_30msg/2022-10-23_13-36-48zzrz2qr6/checkpoint_001000/checkpoint-1000

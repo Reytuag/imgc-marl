@@ -8,4 +8,4 @@ env_config:
   # False -> consider only cooperative goals
   all_goals: True
   new_reward: True
-  reward_multiplier: 4
+  reward_multiplier: 2

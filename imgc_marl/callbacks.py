@@ -1140,7 +1140,7 @@ class PopGoalLinesCommunicationCallback(PopGoalLinesCallback):
 
             worker.foreach_env(lambda env: env.set_goal_and_message(goals, message))
 
-
+temper=30
 class PopGoalLinesNamingCallback(PopGoalLinesCallback):
     def on_episode_start(
         self,
@@ -1236,7 +1236,7 @@ class PopGoalLinesNamingCallback(PopGoalLinesCallback):
                 with torch.no_grad():
                     scores = (
                          torch.nn.functional.softmax(
-                            15*policies[agent_a.name].model._leader_matrix[leader_goal_index]
+                            temper*policies[agent_a.name].model._leader_matrix[leader_goal_index]
                          )
                          .detach()
                          .numpy()
@@ -1248,7 +1248,7 @@ class PopGoalLinesNamingCallback(PopGoalLinesCallback):
                 with torch.no_grad():
                     scores = (
                          torch.nn.functional.softmax(
-                            15*policies[agent_b.name].model._follower_matrix[:,leader_msg_index]
+                            temper*policies[agent_b.name].model._follower_matrix[:,leader_msg_index]
                          )
                          .detach()
                          .numpy()
@@ -1306,7 +1306,7 @@ class PopGoalLinesNamingCallback(PopGoalLinesCallback):
                 with torch.no_grad():
                     scores = (
                          torch.nn.functional.softmax(
-                            15*policies[agent_b.name].model._leader_matrix[leader_goal_index]
+                            temper*policies[agent_b.name].model._leader_matrix[leader_goal_index]
                          )
                          .detach()
                          .numpy()
@@ -1318,7 +1318,7 @@ class PopGoalLinesNamingCallback(PopGoalLinesCallback):
                 with torch.no_grad():
                     scores = (
                          torch.nn.functional.softmax(
-                            15*policies[agent_a.name].model._follower_matrix[:,leader_msg_index]
+                            temper*policies[agent_a.name].model._follower_matrix[:,leader_msg_index]
                          )
                          .detach()
                          .numpy()
@@ -1351,7 +1351,7 @@ def entropy_softmax(x,temperature1=15,temperature2=1):
         p_g=torch.nn.functional.softmax(temperature2*ent)
     return p_g
     
-temper=30
+
 class PopGoalLinesNamingCallback1Matrix(PopGoalLinesCallback):
     def on_episode_start(
         self,
