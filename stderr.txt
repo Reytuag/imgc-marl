@@ -1,0 +1,57 @@
+[D 16:02:19.431 NotebookApp] Searching ['/gpfsdswork/projects/rech/imi/uzw47io/imgc-marl', '/gpfs7kw/linkhome/rech/genini01/uzw47io/.jupyter', '/linkhome/rech/genini01/uzw47io/.local/etc/jupyter', '/gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/etc/jupyter', '/usr/local/etc/jupyter', '/etc/jupyter'] for config files
+[D 16:02:19.432 NotebookApp] Looking for jupyter_config in /etc/jupyter
+[D 16:02:19.432 NotebookApp] Looking for jupyter_config in /usr/local/etc/jupyter
+[D 16:02:19.432 NotebookApp] Looking for jupyter_config in /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/etc/jupyter
+[D 16:02:19.476 NotebookApp] Loaded config file: /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/etc/jupyter/jupyter_config.json
+[D 16:02:19.477 NotebookApp] Looking for jupyter_config in /linkhome/rech/genini01/uzw47io/.local/etc/jupyter
+[D 16:02:19.477 NotebookApp] Looking for jupyter_config in /gpfs7kw/linkhome/rech/genini01/uzw47io/.jupyter
+[D 16:02:19.478 NotebookApp] Looking for jupyter_config in /gpfsdswork/projects/rech/imi/uzw47io/imgc-marl
+[D 16:02:19.581 NotebookApp] Looking for jupyter_notebook_config in /etc/jupyter
+[D 16:02:19.581 NotebookApp] Looking for jupyter_notebook_config in /usr/local/etc/jupyter
+[D 16:02:19.582 NotebookApp] Looking for jupyter_notebook_config in /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/etc/jupyter
+[D 16:02:19.602 NotebookApp] Loaded config file: /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/etc/jupyter/jupyter_notebook_config.json
+[D 16:02:19.602 NotebookApp] Looking for jupyter_notebook_config in /linkhome/rech/genini01/uzw47io/.local/etc/jupyter
+[D 16:02:19.602 NotebookApp] Looking for jupyter_notebook_config in /gpfs7kw/linkhome/rech/genini01/uzw47io/.jupyter
+[D 16:02:19.602 NotebookApp] Loaded config file: /gpfs7kw/linkhome/rech/genini01/uzw47io/.jupyter/jupyter_notebook_config.py
+[D 16:02:19.603 NotebookApp] Loaded config file: /gpfs7kw/linkhome/rech/genini01/uzw47io/.jupyter/jupyter_notebook_config.json
+[D 16:02:19.603 NotebookApp] Looking for jupyter_notebook_config in /gpfsdswork/projects/rech/imi/uzw47io/imgc-marl
+[D 16:02:19.605 NotebookApp] [nb_conda_kernels] refreshing conda info
+[I 16:02:31.856 NotebookApp] [nb_conda_kernels] enabled, 42 kernels found
+[D 16:02:32.286 NotebookApp] Paths used for configuration of jupyter_notebook_config: 
+    	/etc/jupyter/jupyter_notebook_config.json
+[D 16:02:32.287 NotebookApp] Paths used for configuration of jupyter_notebook_config: 
+    	/usr/local/etc/jupyter/jupyter_notebook_config.json
+[D 16:02:32.288 NotebookApp] Paths used for configuration of jupyter_notebook_config: 
+    	/gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/etc/jupyter/jupyter_notebook_config.d/ipyparallel.json
+    	/gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/etc/jupyter/jupyter_notebook_config.d/jupyterlab.json
+    	/gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/etc/jupyter/jupyter_notebook_config.json
+[D 16:02:32.310 NotebookApp] Paths used for configuration of jupyter_notebook_config: 
+    	/linkhome/rech/genini01/uzw47io/.local/etc/jupyter/jupyter_notebook_config.d/jupyterlab.json
+    	/linkhome/rech/genini01/uzw47io/.local/etc/jupyter/jupyter_notebook_config.json
+[D 16:02:32.311 NotebookApp] Paths used for configuration of jupyter_notebook_config: 
+    	/gpfs7kw/linkhome/rech/genini01/uzw47io/.jupyter/jupyter_notebook_config.json
+[I 16:02:40.887 NotebookApp] Loading IPython parallel extension
+[D 16:02:40.937 NotebookApp] [jupyter_nbextensions_configurator] Loading 0.4.1
+[D 16:02:40.937 NotebookApp] [jupyter_nbextensions_configurator]   Editing templates path to add /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/jupyter_nbextensions_configurator/templates
+[D 16:02:40.937 NotebookApp] [jupyter_nbextensions_configurator]   Editing nbextensions path to add /gpfslocalsup/pub/anaconda-py3/2021.05/envs/pytorch-gpu-1.11.0+py3.9.12/lib/python3.9/site-packages/jupyter_nbextensions_configurator/static
+[D 16:02:40.943 NotebookApp] [jupyter_nbextensions_configurator]   Adding new handlers
+[I 16:02:40.944 NotebookApp] [jupyter_nbextensions_configurator] enabled 0.4.1
+[I 16:02:45.078 NotebookApp] jupyter_tensorboard extension loaded.
+[W 2022-10-26 16:02:46.823 LabApp] Config option `kernel_spec_manager_class` not recognized by `LabApp`.
+[W 2022-10-26 16:02:46.826 LabApp] 'notebook_dir' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
+[W 2022-10-26 16:02:46.826 LabApp] 'notebook_dir' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
+[W 2022-10-26 16:02:46.826 LabApp] 'notebook_dir' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
+[W 2022-10-26 16:02:46.826 LabApp] 'base_url' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
+[W 2022-10-26 16:02:46.826 LabApp] 'port' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
+[W 2022-10-26 16:02:46.826 LabApp] 'ip' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
+[W 2022-10-26 16:02:46.826 LabApp] 'certfile' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
+[W 2022-10-26 16:02:46.826 LabApp] 'keyfile' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
+[W 2022-10-26 16:02:46.826 LabApp] 'keyfile' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
+[W 2022-10-26 16:02:46.826 LabApp] 'password' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
+[W 2022-10-26 16:02:46.827 LabApp] Config option `kernel_spec_manager_class` not recognized by `LabApp`.
+[I 2022-10-26 16:02:46.835 LabApp] JupyterLab extension loaded from /linkhome/rech/genini01/uzw47io/.local/lib/python3.9/site-packages/jupyterlab
+[I 2022-10-26 16:02:46.835 LabApp] JupyterLab application directory is /gpfsdswork/projects/rech/imi/uzw47io/.local/share/jupyter/lab
+[I 16:02:46.841 NotebookApp] Serving notebooks from local directory: /gpfswork/rech/imi/uzw47io
+[I 16:02:46.841 NotebookApp] Jupyter Notebook 6.4.10 is running at:
+[I 16:02:46.841 NotebookApp] https://r1i1n0:8006/r1i1n0_8006/
+[I 16:02:46.841 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
