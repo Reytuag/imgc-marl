@@ -1,5 +1,5 @@
 training:
-  training_steps: 1000
+  training_steps: 300
   num_workers: 10
 env_config:
   centralized: False
@@ -7,6 +7,6 @@ env_config:
   # True -> consider all goals
   # False -> consider only cooperative goals
   all_goals: True
-  alignment_percentage: 0.54347
+  alignment_percentage: 0.21739
   new_reward: True
   reward_multiplier: 4
