@@ -25,7 +25,7 @@ The final objective is to study how agents can sample their own goals and align 
 ## How to use
 First you need to clone the repository. For that, you can use the following command line:
 ```Bash
-git clone git@github.com:emasquil/imgc-marl.git
+git clone https://anonymous.4open.science/r/Dec-IMSAP.git
 ```
 Then we recommend using a virtual environment, this can be done by the following:
 ```Bash
