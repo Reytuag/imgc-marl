@@ -80,6 +80,7 @@ labels_to_print = {"0align": "$0%$-align",
                    "25align": "$25%$-align",
                   "100align": "$100%$-align",
                   "naming_game_30msg_alpha10_temp30": "GC-game"}
+
 labels_to_print = {"0align": "$0\%$-align",
                    "independent": "$0\%$-align",
                    "centralized": "$100\%$-align",
@@ -87,13 +88,13 @@ labels_to_print = {"0align": "$0\%$-align",
                    "25align": "$25\%$-align",
                    "50align": "$50\%$-align",
                    "100align": "$100\%$-align",
-                   "naming_game_30msg_alpha10_temp30": "GC-game"}
+                   "naming_game_30msg_alpha10_temp30": "Goal-coordination \n game"}
 
 df = pd.DataFrame(columns= ["landmarks", "method", "special"])
 
 # In[ ]:
 
-"""
+
 for landmarks, methods_dir in results_dirs.items():
     print(landmarks, methods_dir)
     NUMBER_OF_LANDMARKS = int(landmarks[0])
@@ -150,10 +151,10 @@ for landmarks, methods_dir in results_dirs.items():
 
 # view data
 print(df)
-"""
 
 
-
+with open("specialization.pkl", "wb") as f:
+    pickle.dump(df, f)
 
 with open("specialization.pkl", "rb") as f:
     df = pickle.load( f)
@@ -161,7 +162,7 @@ with open("specialization.pkl", "rb") as f:
 print(df)
 # plot grouped bar chart
 #axs = seaborn.set(rc={'figure.figsize':fig_size})
-correct_order = ["$0\%$-align", "$50\%$-align", "$100\%$-align","GC-game" ]
+correct_order = ["$0\%$-align", "$50\%$-align", "$100\%$-align", "Goal-coordination \n game" ]
 fig, axs = plt.subplots( 1,figsize=fig_size)
 
 seaborn.barplot(data=df, x="method",y="special", estimator=np.mean, ci=85, capsize=.2, order=correct_order,ax=axs)
@@ -185,6 +186,5 @@ ax.legend([handles[idx] for idx in order], [labels[idx] for idx in order])
 plt.savefig("special_cooperative.pdf")
 plt.savefig("special_cooperative.png")
 
-with open("specialization.pkl", "wb") as f:
-    pickle.dump(df, f)
+
 
