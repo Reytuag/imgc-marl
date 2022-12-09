@@ -166,11 +166,14 @@ class TorchCentralizedCriticModel(TorchModelV2, nn.Module):
     def central_value_function(self, obs, opponent_obs, opponent_actions):
         #print(obs.shape,opponent_obs.shape,opponent_actions.shape)
 
+        #print("test")
         if(obs.shape[0]>opponent_obs.shape[0]):
-            opponent_obs=torch.cat([opponent_obs,opponent_obs[-1:].tile(obs.shape[0]-opponent_obs.shape[0])])
-            opponent_actions = torch.cat([opponent_actions, opponent_actions[-1:].tile(obs.shape[0] - opponent_actions.shape[0])])
+            opponent_obs=torch.cat([opponent_obs,opponent_obs[-1:].tile((obs.shape[0] - opponent_actions.shape[0],1))])
+            opponent_actions = torch.cat([opponent_actions, opponent_actions[-1:].tile((obs.shape[0] - opponent_actions.shape[0],1))])
         elif(obs.shape[0]<opponent_obs.shape[0]):
-            obs = torch.cat([obs, obs[-1:].tile(opponent_obs.shape[0]-obs.shape[0] )])
+            opponent_obs=opponent_obs[:obs.shape[0]]
+            opponent_actions=opponent_actions[:obs.shape[0]]
+
 
         #print(obs.shape, opponent_obs.shape, opponent_actions.shape)
         input_ = torch.cat(
