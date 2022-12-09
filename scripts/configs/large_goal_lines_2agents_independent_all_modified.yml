@@ -1,6 +1,6 @@
 training:
   training_steps: 1000
-  num_workers: 10
+  num_workers: 2
 env_config:
   centralized: False
   population_size: 2
@@ -9,3 +9,4 @@ env_config:
   all_goals: True
   new_reward: True
   reward_multiplier: 2
+communication: "centralized_critic"

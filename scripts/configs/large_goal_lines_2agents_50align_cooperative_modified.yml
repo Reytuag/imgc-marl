@@ -9,3 +9,4 @@ env_config:
   all_goals: False
   alignment_percentage: 0.7321
   new_reward: True
+
