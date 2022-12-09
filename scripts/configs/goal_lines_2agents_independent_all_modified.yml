@@ -9,5 +9,5 @@ env_config:
   all_goals: True
   new_reward: True
   reward_multiplier: 2
-
+communication: "centralized_critic"
 #checkpoint:  /gpfsscratch/rech/imi/uzw47io/elias_expe/2_agents/cooperative/modified_reward/6_landmarks/naming_game/p_est_soft_b/2022-10-13_09-57-25u2slsued/checkpoint_001000/checkpoint-1000
