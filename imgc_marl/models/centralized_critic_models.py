@@ -115,7 +115,8 @@ class TorchCentralizedCriticModel(TorchModelV2, nn.Module):
         self._value_branch_separate = None
 
         # Build a parallel set of hidden layers for the value net.
-        prev_vf_layer_size = 58
+
+        prev_vf_layer_size = int(np.product(obs_space.shape))*2+2
         vf_layers = []
         for size in hiddens:
             vf_layers.append(
