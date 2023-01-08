@@ -3,7 +3,8 @@
 ![python](https://img.shields.io/badge/python-3.9-blue)
 <a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
 
-This repo contains the code base of the project Intrinsically Motivated Goal-Conditioned Reinforcement Learning in Multi-Agent Environments.
+This repo contains the code base of the project Intrinsically Motivated Goal-Conditioned Reinforcement Learning in Multi-Agent Environments. https://arxiv.org/abs/2211.06082
+
 
 ## Context
 Building autonomous machines that can explore open-ended environments, discover possible interactions and autonomously build repertoires of skills is a general objective of artificial intelligence. We’ll consider the framework of Intrinsically Motivated Goal Exploration Process (IMGEPs, see (Colas et al., 2021) for a recent review). In an IMGEP, the agent is considered as autotelic, in the sense that it self-generates its own goals.
