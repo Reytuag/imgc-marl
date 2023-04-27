@@ -21,6 +21,7 @@ import seaborn
 import math
 import pickle
 # In[18]:
+from scipy.stats import f_oneway, tukey_hsd
 
 
 cm = 1 / 2.54  # for converting inches to cm
@@ -41,6 +42,7 @@ results_dirs = {"3_landmarks": "/media/elena/LaCie/aamas_2023/paper/alignment/3_
               "6_landmarks": "/media/elena/LaCie/aamas_2023/paper/alignment/6_landmarks_reward2"}
 results_dirs = {
               "6_landmarks": "/media/elena/LaCie/aamas_2023/paper/alignment/6_landmarks_reward2"}
+results_dirs = {"6_landmarks": "/Users/eleninisioti/Desktop/workspace/playground/imgc-marl/projects/6_landmarks_reward4"}
 #results_dir = "/media/elena/LaCie/aamas_2023/paper/align_6_landmarks/independent"
 #results_dir = "/media/elena/LaCie/elias_expe/2_agents/all/modified_reward/6_landmarks/centralized"
 
@@ -94,67 +96,70 @@ df = pd.DataFrame(columns= ["landmarks", "method", "special"])
 
 # In[ ]:
 
+#
+# for landmarks, methods_dir in results_dirs.items():
+#     print(landmarks, methods_dir)
+#     NUMBER_OF_LANDMARKS = int(landmarks[0])
+#     individual_goals = np.eye(NUMBER_OF_LANDMARKS, dtype=np.uint8).tolist()
+#     collective_goals = np.array(list(combinations(individual_goals, 2))).sum(1).tolist()
+#     goals = ["".join(str(t) for t in g) for g in collective_goals]
+#     goals_index = {i: g for i, g in zip(range(len(goals)), goals)}
+#     agents = [f"agent_{i}" for i in range(n_agents)]
+#     results_dir =  [os.path.join(methods_dir, o) for o in os.listdir(methods_dir) if os.path.isdir(methods_dir + "/" + o)]
+#     methods_names =  [o for o in os.listdir(methods_dir) if os.path.isdir(methods_dir + "/" +    o)]
+#
+#     for idx,method in enumerate(results_dir):
+#             method_name = labels_to_print[methods_names[idx]]
+#
+#             specializations_during_training = []
+#             specializations_convergence = []
+#             for subdir in os.listdir(method):
+#                 if(os.path.isdir(method +"/"+subdir)):
+#
+#                     full_path = os.path.join(method, subdir, "result.json")
+#                     print(full_path)
+#                     try:
+#                         result_dump = open(full_path, "r")
+#                     except FileNotFoundError:
+#                         print("no file for ", subdir, method, "result.json")
+#                     # parse metrics
+#                     for result in result_dump:
+#                         # we always redefine this to only consider the last set of results (last evaluation)
+#                         metrics = json.loads(result).get("evaluation")
+#                         if metrics is not None:
+#                             for g in goals:
+#                                 for agent in agents:
+#                                     if (
+#                                         metrics["hist_stats"].get(f"{agent} position for {g}")
+#                                         is not None
+#                                         and len(metrics["hist_stats"].get(f"{agent} position for {g}"))
+#                                         > 0
+#                                     ):
+#                                         aux = pd.DataFrame(
+#                                             metrics["hist_stats"].get(f"{agent} position for {g}")
+#                                         ).value_counts()
+#                                         specializations_during_training.append(
+#                                             aux.value_counts().max() / aux.value_counts().sum()
+#                                         )
+#                     special = np.mean(specializations_during_training[-len(goals) * n_agents :])
+#                     print(specializations_during_training[-len(goals) * n_agents :])
+#
+#
+#                     if special != None and not math.isnan(special):
+#                         new_row = {"landmarks": landmarks, "method": method_name, "special": special}
+#                         print(new_row)
+#                         df = df.append(new_row, ignore_index=True)
+#
+#
+#
+#
+#
+# # view data
+# print(df)
 
-for landmarks, methods_dir in results_dirs.items():
-    print(landmarks, methods_dir)
-    NUMBER_OF_LANDMARKS = int(landmarks[0])
-    individual_goals = np.eye(NUMBER_OF_LANDMARKS, dtype=np.uint8).tolist()
-    collective_goals = np.array(list(combinations(individual_goals, 2))).sum(1).tolist()
-    goals = ["".join(str(t) for t in g) for g in collective_goals]
-    goals_index = {i: g for i, g in zip(range(len(goals)), goals)}
-    agents = [f"agent_{i}" for i in range(n_agents)]
-    results_dir =  [os.path.join(methods_dir, o) for o in os.listdir(methods_dir) if os.path.isdir(methods_dir + "/" + o)]
-    methods_names =  [o for o in os.listdir(methods_dir) if os.path.isdir(methods_dir + "/" +    o)]
 
-    for idx,method in enumerate(results_dir):
-            method_name = labels_to_print[methods_names[idx]]
-
-            specializations_during_training = []
-            specializations_convergence = []
-            for subdir in os.listdir(method):
-                if(os.path.isdir(method +"/"+subdir)):
-
-                    full_path = os.path.join(method, subdir, "result.json")
-                    print(full_path)
-                    result_dump = open(full_path, "r")
-                    # parse metrics
-                    for result in result_dump:
-                        # we always redefine this to only consider the last set of results (last evaluation)
-                        metrics = json.loads(result).get("evaluation")
-                        if metrics is not None:
-                            for g in goals:
-                                for agent in agents:
-                                    if (
-                                        metrics["hist_stats"].get(f"{agent} position for {g}")
-                                        is not None
-                                        and len(metrics["hist_stats"].get(f"{agent} position for {g}"))
-                                        > 0
-                                    ):
-                                        aux = pd.DataFrame(
-                                            metrics["hist_stats"].get(f"{agent} position for {g}")
-                                        ).value_counts()
-                                        specializations_during_training.append(
-                                            aux.value_counts().max() / aux.value_counts().sum()
-                                        )
-                    special = np.mean(specializations_during_training[-len(goals) * n_agents :])
-                    print(specializations_during_training[-len(goals) * n_agents :])
-
-
-                    if special != None and not math.isnan(special):
-                        new_row = {"landmarks": landmarks, "method": method_name, "special": special}
-                        print(new_row)
-                        df = df.append(new_row, ignore_index=True)
-
-            
-        
-    
-
-# view data
-print(df)
-
-
-with open("specialization.pkl", "wb") as f:
-    pickle.dump(df, f)
+# with open("specialization.pkl", "wb") as f:
+#     pickle.dump(df, f)
 
 with open("specialization.pkl", "rb") as f:
     df = pickle.load( f)
@@ -165,8 +170,10 @@ print(df)
 correct_order = ["$0\%$-align", "$50\%$-align", "$100\%$-align", "Goal-coordination \n game" ]
 fig, axs = plt.subplots( 1,figsize=fig_size)
 
-seaborn.barplot(data=df, x="method",y="special", estimator=np.mean, ci=85, capsize=.2, order=correct_order,ax=axs)
+x=seaborn.barplot(data=df, x="method",y="special", estimator=np.mean, ci=85, capsize=.2, order=correct_order,ax=axs)
+print(x)
 axs.set(xlabel="",ylabel="Specialization, $s$")
+
 #g.despine(left=True)
 #ax.set_xlabel("")
 #ax.set_ylabel("Specialization")
@@ -183,6 +190,27 @@ for el in correct_order:
             order.append(label_idx)
 ax.legend([handles[idx] for idx in order], [labels[idx] for idx in order])
 """
+
+methods = ["0", "50", "100", "GC"]
+post_hoc = [[0.6667, 0.766667, 0.666667, 0.73333, 0.76667],
+            [0.73333, 0.8333, 0.9, 0.76666, 0.8],
+            [0.9, 0.96666667, 0.7666667, 1, 0.966667],
+            [1, 1, 0.9667, 0.9, 1]]
+
+F, p = f_oneway(*post_hoc)
+if p < 0.05:
+    print("significance", str(p))
+    res = tukey_hsd(*post_hoc)
+    anal = str(res)
+    print(anal)
+    print(methods)
+else:
+    print("no significance")
+
+for el in post_hoc:
+    print(np.mean(el), np.std(el))
+
+
 plt.savefig("special_cooperative.pdf")
 plt.savefig("special_cooperative.png")
 
