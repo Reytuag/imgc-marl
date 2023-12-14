@@ -26,13 +26,9 @@ The final objective is to study how agents can sample their own goals and align 
 ## How to use
 First you need to clone the repository. For that, you can use the following command line:
 ```Bash
-git clone git@github.com:emasquil/imgc-marl.git
+git clone git@github.com:Reytuag/imgc-marl.git
 ```
-Then we recommend using a virtual environment, this can be done by the following:
-```Bash
-python3 -m venv env
-source env/bin/activate
-```
+
 Finally, in order to install the package, you can simply run:
 ```Bash
 pip install -e .
