@@ -19,11 +19,8 @@
 #SBATCH -N 1
 #SBATCH --array=0-4
 #SBATCH --cpus-per-task=12
-# Set the directory to store logs
-#SBATCH -o /gpfsscratch/rech/imi/uzw47io/elias_expe/2_agents/all/modified_reward/3_landmarks_reward2/centralized_value/train-%A_%a.slurm.out
-#SBATCH -e /gpfsscratch/rech/imi/uzw47io/elias_expe/2_agents/all/modified_reward/3_landmarks_reward2/centralized_value/train-%A_%a.slurm.err
 
-# change working directory
+
 
 export TMPDIR=$JOBSCRATCH
 # fin des directives PBS
